@@ -1,15 +1,8 @@
 #ifndef SERVER_HPP
 # define SERVER_HPP
 
-#include <string>
-#include <fstream>
-#include <iostream>
-#include <sys/types.h>
-#include <sys/socket.h>
-#include <netdb.h>
-//#include "../includes/colors.hpp"
-#include "client.hpp"
-#include <map>
+#include "../includes/base.hpp"
+
 
 class	Server 
 {
@@ -20,15 +13,33 @@ class	Server
 		Server &operator=(const Server &src);
 		~Server();
 
+		void	write(std::string msg);
+
+		//voit fonction
+
+		void	startServer();
+		void	addClient();
+		void	delClient();
+
+		void	addChannel();
+		void	AddCienttoChannel();
+
+
 	private :
 
 		std::string	_port;
 		std::string _password;
-		//voir si util
-		struct addrinfo	_hints;
-		struct addrinfo*	_servinfo;
 		int	_server_socket_fd;
-		std::map<const int, Client>	_clients;
+		sockaddr_in addr; //voir ce que cest exactement
+
+		//voir si util
+		//struct addrinfo	_hints;
+		//struct addrinfo*	_servinfo;
+		//std::map<const int, Client>	_clients;
+		//std::map<std::string, Channel>	_channels;
+		//std::string	_datetime;
+		//std::vector<server_op>	_irc_operators;
+		//std::string	_motd;
 };
 
 #endif

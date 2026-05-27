@@ -5,10 +5,23 @@
 #include <fstream>
 #include <iostream>
 
-#include "colors.hpp"
+#include <sys/types.h>
+#include <sys/socket.h>
+#include <netdb.h>
 
+
+//conteneur
+#include <map>
+#include <vector>
+
+#include "colors.hpp"
+#include "baseCmd.hpp"
+
+
+//class
 #include "../classes/server.hpp"
 #include "../classes/client.hpp"
+#include "../classes/channel.hpp"
 
 
 
