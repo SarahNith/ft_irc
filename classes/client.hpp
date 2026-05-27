@@ -6,7 +6,7 @@
 /*   By: skuor <skuor@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/27 11:03:54 by skuor             #+#    #+#             */
-/*   Updated: 2026/05/27 12:51:29 by skuor            ###   ########.fr       */
+/*   Updated: 2026/05/27 16:33:29 by skuor            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,19 @@ class Client {
 	public:
 		Client();
 		~Client();
+	
+		std::string	getNickName() const;
+		std::string	getUserName() const;
+		std::string	getRealName() const;
+		std::string	getOldNickName() const;
+		std::string getHostname() const;
+		std::string	getPrefix() const;
+
+		void	write(const std::string & msg);
+
+		void	setNickName(const std::string & newName);
+		void	setUserName(const std::string & newName);
+		void	setRealName(const std::string & newName);
 
 	private:
 		int 		_clientFd;
@@ -29,12 +42,13 @@ class Client {
 		std::string	_userName; //nom utilisateur systeme
 		std::string	_realName; //donne lors de l'inscription
 		std::string	_oldNickname;
+		std::string	_hostname;
 		
 		bool		_correctPassword;
 		bool		_allInfo;
-		bool		_completeRegis;
+		// bool		_completeRegis;
 		bool		_sentWelcome;
-		int			_nbInfo;
+		// int			_nbInfo;
 
 		std::string	_readBuff; //stocke donnees recues du clients pas encore traitees
 		std::string	_toSendBuff; //stocke donnees en attente d'etre envoyees au client;
