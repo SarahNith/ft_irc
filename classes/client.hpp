@@ -6,7 +6,7 @@
 /*   By: skuor <skuor@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/27 11:03:54 by skuor             #+#    #+#             */
-/*   Updated: 2026/05/27 16:33:29 by skuor            ###   ########.fr       */
+/*   Updated: 2026/05/28 18:03:32 by skuor            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,9 @@ class Client {
 		std::string	getRealName() const;
 		std::string	getOldNickName() const;
 		std::string getHostname() const;
-		std::string	getPrefix() const;
+		// std::string	getPrefix() const;
+		
+		int		getClientFd() const;
 
 		void	write(const std::string & msg);
 
