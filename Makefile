@@ -1,18 +1,18 @@
 NAME = ircserv
 
-CC = c++
+CXX = c++
 MAKE = make
-CFLAGS = -Wall -Wextra -Werror -std=c++98
+CXXFLAGS = -Wall -Wextra -Werror -std=c++98
 
-SRC_DIR = src/
-OBJ_DIR = obj/
-INC_DIR = includes/
+SRC_DIR = ./srcs/
+OBJ_DIR = ./obj/
+INC_DIR = ./includes/
 
-SRC_FILES = main.cpp 
+SRC_FILES = main.cpp parsing.cpp
 
 
-SRC = $(addprefix $(SRC_DIR), $(SRC_FILES))
-OBJ = 	$(addprefix $(OBJ_DIR), $(SRC_FILES:.cpp=.o))
+#SRC = $(addprefix $(SRC_DIR), $(SRC_FILES))
+OBJ = $(addprefix $(OBJ_DIR), $(SRC_FILES:.cpp=.o))
 
 
 
@@ -30,25 +30,25 @@ all: $(NAME)
 
 $(OBJ_DIR)%.o: $(SRC_DIR)%.cpp
 	@mkdir -p $(OBJ_DIR)
-	@echo -e "$(YELLOW)Compiling: $< $(DEF_COLOR)"
-	@$(CC) $(CFLAGS) $(INCLUDES) -c $< -o $@
+	@echo "$(YELLOW)Compiling: $< $(DEF_COLOR)"
+	@$(CXX) $(CXXFLAGS) $(INCLUDES) -c $< -o $@
 
 $(NAME): $(OBJ)
-	@$(CC) $(CFLAGS) $(INCLUDES) $(OBJ) -o $(NAME)
-	@echo -e "$(GREEN)$(NAME) compiled!$(DEFAULT)"
+	@$(CXX) $(CXXFLAGS) $(INCLUDES) $(OBJ) -o $(NAME)
+	@echo "$(GREEN)$(NAME) compiled!$(DEFAULT)"
 
 $(OBJ_DIR)%.o: $(SRC_DIR)%.cpp | $(OBJ_DIR)
-	@echo -e "$(YELLOW)Compiling: $< $(DEF_COLOR)"
-	@$(CC) $(CFLAGS) $(INCLUDES) -c -o $@ $<
+	@echo "$(YELLOW)Compiling: $< $(DEF_COLOR)"
+	@$(CXX) $(CXXFLAGS) $(INCLUDES) -c -o $@ $<
 
 
 clean:
 	@rm -rf $(OBJ_DIR)
-	@echo -e "$(MAGENTA)$(NAME) object directory cleaned!$(DEFAULT)"
+	@echo "$(MAGENTA)$(NAME) object directory cleaned!$(DEFAULT)"
 
 fclean: clean
 	@rm -f $(NAME)
-	@echo -e "$(CYAN)$(NAME) executables and objects removed succesfully!$(DEFAULT)"
+	@echo "$(CYAN)$(NAME) executables and objects removed succesfully!$(DEFAULT)"
 
 re: fclean clean all
 

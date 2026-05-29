@@ -27,5 +27,5 @@ typedef struct s_commandParser
 
 }						t_commandParser;
 
-
+void	test_parser();
 #endif
