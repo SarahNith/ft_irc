@@ -8,9 +8,7 @@ class	Server
 {
 	public :
 
-		Server(std::string port, std::string password);
-		Server(const Server &src);
-		Server &operator=(const Server &src);
+		Server(int port, std::string password);
 		~Server();
 
 		void	write(std::string msg);
@@ -24,13 +22,17 @@ class	Server
 		void	addChannel();
 		void	AddCienttoChannel();
 
+		
+		void	run_server();
+
 
 	private :
 
-		std::string	_port;
+		int	_port;
 		std::string _password;
 		int	_server_socket_fd;
-		sockaddr_in addr; //voir ce que cest exactement
+		sockaddr_in addr;
+		std::vector<pollfd> _listfd;
 
 		//voir si util
 		//struct addrinfo	_hints;
