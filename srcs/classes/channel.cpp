@@ -1,31 +1,39 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.cpp                                           :+:      :+:    :+:   */
+/*   channel.cpp                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: agouin <agouin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/05/26 12:00:32 by agouin            #+#    #+#             */
-/*   Updated: 2026/06/01 16:24:19 by agouin           ###   ########.fr       */
+/*   Created: 2026/05/26 12:09:02 by agouin            #+#    #+#             */
+/*   Updated: 2026/06/01 16:22:56 by agouin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "../../includes/base.hpp"
 
-#include "../includes/base.hpp"
 
-int main(int argc, char **argv)//peut etre env si on veut avoir lheure
+Channel::Channel()
 {
-	if(argc != 3)
-		return (-1);
-	//vérification du port entre 1 et 65535 vérifier
-	try
+}
+
+
+Channel::Channel(const Channel& src)
+{
+	*this = src;
+}
+	
+
+Channel &Channel::operator=(const Channel& src)
+{
+	if (this != &src)
 	{
-		Server serv(atoi(argv[1]), argv[2]);
-		serv.run_server();
+
 	}
-	catch(const std::exception& e)
-	{
-		std::cerr << e.what() << '\n';
-	}
-	return (0);
+	return (*this);
+}
+
+
+Channel::~Channel()
+{
 }

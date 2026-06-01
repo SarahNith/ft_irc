@@ -4,11 +4,12 @@ CC = c++
 MAKE = make
 CFLAGS = -Wall -Wextra -Werror -std=c++98
 
-SRC_DIR = src/
+SRC_DIR = srcs/
 OBJ_DIR = obj/
 INC_DIR = includes/
 
-SRC_FILES = main.cpp 
+SRC_FILES = main.cpp \
+			/classes/channel.cpp classes/client.cpp classes/server.cpp
 
 
 SRC = $(addprefix $(SRC_DIR), $(SRC_FILES))
@@ -29,7 +30,7 @@ MAGENTA = \033[0;95m
 all: $(NAME)
 
 $(OBJ_DIR)%.o: $(SRC_DIR)%.cpp
-	@mkdir -p $(OBJ_DIR)
+	@mkdir -p $(dir $@)
 	@echo -e "$(YELLOW)Compiling: $< $(DEF_COLOR)"
 	@$(CC) $(CFLAGS) $(INCLUDES) -c $< -o $@
 
