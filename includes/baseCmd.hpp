@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   baseCmd.hpp                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: agouin <agouin@42.fr>                      +#+  +:+       +#+        */
+/*   By: skuor <skuor@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/06 16:16:48 by mkhoury           #+#    #+#             */
-/*   Updated: 2026/05/27 16:25:25 by agouin           ###   ########.fr       */
+/*   Updated: 2026/06/02 16:02:56 by skuor            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@
 #define RPL_376 ":<server name> 376 <client nick> :End of /MOTD command."
 
 // MSG
-#define PRIVMSG ":<sender> PRIVMSG <target> <msg>"
+//#define PRIVMSG ":<sender> PRIVMSG <target> <msg>"
 #define CHANMSG ":<client nick>!~<username>@localhost PRIVMSG <target> <msg>"
 
 

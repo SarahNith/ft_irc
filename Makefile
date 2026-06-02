@@ -7,14 +7,20 @@ CXXFLAGS = -Wall -Wextra -Werror -std=c++98
 SRC_DIR = ./srcs/
 OBJ_DIR = ./obj/
 INC_DIR = ./includes/
+CMDS_DIR = $(SRC_DIR)cmds/
+CLASSES_DIR = $(SRC_DIR)classes/
 
-SRC_FILES = main.cpp parsing.cpp\
-			/classes/channel.cpp classes/client.cpp classes/server.cpp
+SRC_FILES = main.cpp parsing.cpp
+
+CLASSES_FILES = channel.cpp client.cpp server.cpp
+
+CMDS_FILES = cmdExec.cpp
 
 
 #SRC = $(addprefix $(SRC_DIR), $(SRC_FILES))
-OBJ = $(addprefix $(OBJ_DIR), $(SRC_FILES:.cpp=.o))
-
+OBJ = $(addprefix $(OBJ_DIR), $(SRC_FILES:.cpp=.o)) \
+	  $(addprefix $(OBJ_DIR), $(CLASSES_FILES:.cpp=.o)) \
+	  $(addprefix $(OBJ_DIR), $(CMDS_FILES:.cpp=.o))
 
 
 INCLUDES = -I $(INC_DIR)
@@ -29,28 +35,35 @@ MAGENTA = \033[0;95m
 
 all: $(NAME)
 
-$(OBJ_DIR)%.o: $(SRC_DIR)%.cpp
+$(OBJ_DIR):
 	@mkdir -p $(OBJ_DIR)
-	@echo "$(YELLOW)Compiling: $< $(DEF_COLOR)"
-	@$(CXX) $(CXXFLAGS) $(INCLUDES) -c $< -o $@
+# 	@echo "$(YELLOW)Compiling: $< $(DEF_COLOR)"
+# 	@$(CXX) $(CXXFLAGS) $(INCLUDES) -c $< -o $@
 
 $(NAME): $(OBJ)
+	@echo -e "$(GREEN)$(NAME) compiled!$(DEFAULT)"
 	@$(CXX) $(CXXFLAGS) $(INCLUDES) $(OBJ) -o $(NAME)
-	@echo "$(GREEN)$(NAME) compiled!$(DEFAULT)"
 
 $(OBJ_DIR)%.o: $(SRC_DIR)%.cpp | $(OBJ_DIR)
-	@echo "$(YELLOW)Compiling: $< $(DEF_COLOR)"
+	@echo -e "$(YELLOW)Compiling: $< $(DEF_COLOR)"
 	@$(CXX) $(CXXFLAGS) $(INCLUDES) -c -o $@ $<
 
+$(OBJ_DIR)%.o: $(CLASSES_DIR)%.cpp | $(OBJ_DIR)
+	@echo -e "$(YELLOW)Compiling: $< $(DEF_COLOR)"
+	@$(CXX) $(CXXFLAGS) $(INCLUDES) -c -o $@ $<
+
+$(OBJ_DIR)%.o: $(CMDS_DIR)%.cpp | $(OBJ_DIR)
+	@echo -e "$(YELLOW)Compiling: $< $(DEF_COLOR)"
+	@$(CXX) $(CXXFLAGS) $(INCLUDES) -c -o $@ $<
 
 clean:
 	@rm -rf $(OBJ_DIR)
-	@echo "$(MAGENTA)$(NAME) object directory cleaned!$(DEFAULT)"
+	@echo -e "$(MAGENTA)$(NAME) object directory cleaned!$(DEFAULT)"
 
 fclean: clean
 	@rm -f $(NAME)
-	@echo "$(CYAN)$(NAME) executables and objects removed succesfully!$(DEFAULT)"
+	@echo -e "$(CYAN)$(NAME) executables and objects removed succesfully!$(DEFAULT)"
 
-re: fclean clean all
+re: clean fclean all
 
 .PHONY: all clean fclean re

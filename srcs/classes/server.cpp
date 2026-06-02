@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   server.cpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: agouin <agouin@42.fr>                      +#+  +:+       +#+        */
+/*   By: skuor <skuor@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/26 12:09:02 by agouin            #+#    #+#             */
-/*   Updated: 2026/06/01 16:34:36 by agouin           ###   ########.fr       */
+/*   Updated: 2026/06/02 16:08:15 by skuor            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,3 +108,8 @@ void Server::write(std::string msg)//voir si je donne un nom au server
 }
 
 ///_pollfds[0].revents & POLLIN
+
+std::string	Server::getPassword() const
+{
+	return _password;
+}

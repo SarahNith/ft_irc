@@ -6,13 +6,14 @@
 /*   By: skuor <skuor@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/02 11:25:52 by skuor             #+#    #+#             */
-/*   Updated: 2026/06/02 15:18:15 by skuor            ###   ########.fr       */
+/*   Updated: 2026/06/02 17:26:46 by skuor            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/base.hpp"
 
 CmdExec::CmdExec() {}
+CmdExec::CmdExec(Server* srv) : _srv(srv) {}
 CmdExec::~CmdExec() {}
 
 /* ************ Member functions ************ */
@@ -62,20 +63,28 @@ void	CmdExec::execute(t_cmdParser & cmd, Client *Client)
 
 void	CmdExec::pass(t_cmdParser & cmd, Client *Client)
 {
-	if (cmd.params.size() < 1)
-		return ; // err 461
-	if ()
+	std::string	correctPw = this->_srv->getPassword();
 	
-		
+	if (cmd.params.size() < 1)
+		return (errorMsg(ERR_461, Client, "PASS")); // err 461
+	if (Client->getCorrectPassword())
+		return (errorMsg(ERR_462, Client)); // err 462
+
+	std::string	password = cmd.params[0];
+
+	if (password != correctPw)
+		return (errorMsg(ERR_464, Client)); // err_464
+	else
+		Client->setCorrectPassword(true);		
 }
-void	CmdExec::nick(t_cmdParser & cmd, Client *Client) {}
-void	CmdExec::user(t_cmdParser & cmd, Client *Client) {}
-void	CmdExec::join(t_cmdParser & cmd, Client *Client) {}
-void	CmdExec::privmsg(t_cmdParser & cmd, Client *Client) {}
-void	CmdExec::kick(t_cmdParser & cmd, Client *Client) {}
-void	CmdExec::invite(t_cmdParser & cmd, Client *Client) {}
-void	CmdExec::topic(t_cmdParser & cmd, Client *Client) {}
-void	CmdExec::mode(t_cmdParser & cmd, Client *Client) {}
+// void	CmdExec::nick(t_cmdParser & cmd, Client *Client) {}
+// void	CmdExec::user(t_cmdParser & cmd, Client *Client) {}
+// void	CmdExec::join(t_cmdParser & cmd, Client *Client) {}
+// void	CmdExec::privmsg(t_cmdParser & cmd, Client *Client) {}
+// void	CmdExec::kick(t_cmdParser & cmd, Client *Client) {}
+// void	CmdExec::invite(t_cmdParser & cmd, Client *Client) {}
+// void	CmdExec::topic(t_cmdParser & cmd, Client *Client) {}
+// void	CmdExec::mode(t_cmdParser & cmd, Client *Client) {}
 
 /* ************ Helpers ************ */
 
@@ -125,8 +134,13 @@ std::string	CmdExec::replaceAll(std::string str, std::string toReplace, std::str
 	return (newStr);
 }
 
-void		CmdExec::errorMsg(int errCode, Client *client, )
+void		CmdExec::errorMsg(std::string errMsg, Client *client, std::string cmd = "")
 {
+	std::string	msg = errMsg;
 	
+	msg = replaceAll(errMsg, "<nickname>", client->getNickName());
+	msg = replaceAll(msg, "<command>", cmd);
+
+	std::cout << msg << "\r\n";
 }
 

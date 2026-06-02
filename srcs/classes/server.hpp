@@ -15,6 +15,8 @@ class	Server
 
 		//voit fonction
 
+		std::string getPassword() const;
+
 		void	run_server();
 		void	AddClient();
 		void	delClient();
