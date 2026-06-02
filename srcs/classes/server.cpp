@@ -70,62 +70,69 @@ void	Server::run_server()
 	{
 		if(poll(&_listfd[0], _listfd.size(), -1) == -1)
 			throw Exception("Error : Poll failed");
-		for(long unsigned int i = 0; i < _listfd.size(); i++)
+		for(size_t i = 0; i < _listfd.size(); i++)
 		{
 			if (_listfd[i].revents & POLLIN) //est ce que revents contient POLLIN en bits
 			{
 				if(_listfd[i].fd == _server_socket_fd)
-				{
-					std::cout << YELLOW << "Nouvelle connexion" << DEFAULT << std::endl;
 					this->AddClient();
-				}
 				else
 					this->ClientData(_listfd[i].fd);
 			}	
 		}
 	}
 }
-	//pollfd clientPoll;
-	//clientPoll.fd = 4;
-	//clientPoll.events = POLLIN;
-	//clientPoll.revents = 0;
+
+
 void	Server::AddClient()
 {
-	//Client new_clien();
-
 	sockaddr_in client_addr;
 	socklen_t len = sizeof(client_addr);
+	int clientfd;
 
-	if(accept(_server_socket_fd, (sockaddr*)&client_addr, &len) == -1)
+	clientfd = accept(_server_socket_fd, (sockaddr*)&client_addr, &len);
+	if(clientfd == -1)
 		throw Exception("Error : Accept failed");
-	
+	if (fcntl(clientfd, F_SETFL, O_NONBLOCK) == -1) //non bloquant
+		throw(Exception("Error : Fnctl failed"));
 
 	pollfd clientPoll;
-	clientPoll.fd = 4;
+	clientPoll.fd = clientfd;
 	clientPoll.events = POLLIN;
 	clientPoll.revents = 0;
 	
-	//_clients.push_back(new_clien);
 	_listfd.push_back(clientPoll);
-	//create client 
-	//add to poll_fds vector 
-	//add to clients map
+
+	Client newClient(clientfd);
+	_clients[clientfd] = newClient;
+
+
+	std::cout << YELLOW << "New connection : fd = " << DEFAULT << clientfd << std::endl;
 }
 
 
 void	Server::ClientData(int fd)
 {
 	char buffer[4096];
-	size_t	buf;
+	ssize_t	buf;
 
-	buf = recv(fd, buffer, sizeof(buffer), 0);
-	if (buf <= 0)//pas bon le = 
-		throw Exception("Error : Recv failed");//je crois que je dois del client si <=0
-//	if (buf == 0)//voir parce cest le client a ferme la discussion = ^C mais quel message
-//		throw Exception("Error : ");
-
-
-
+	buf = recv(fd, buffer, sizeof(buffer) - 1, 0);
+	if (buf <= 0)
+	{
+		if(buf == 0)
+		{
+			std::cout << MAGENTA << "Client disconnected" << DEFAULT << std::endl;
+			//faut remove client
+			return;
+		}
+		if(buf < 0)
+		{
+			std::cerr << RED << "Error : Recv failed" << DEFAULT << std::endl;
+			return;
+		}
+	}
+	buffer[buf] = '\0';
+//std::cout << "Received : " << buffer << std::endl;
 }
 
 
@@ -134,4 +141,3 @@ void Server::write(std::string msg)//voir si je donne un nom au server
 	std::cout << GREEN << "Server : " << DEFAULT << msg << std::endl;	
 }
 
-///_pollfds[0].revents & POLLIN

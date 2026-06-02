@@ -38,7 +38,7 @@ int is_port_correct(std::string str)//continuer il faut juste voir si pas une st
 	}
 }
 
-std::string ObtainPort(std::string str)
+std::string obtainPort(std::string str)
 {
 	std::string port;
 //ici je veux recuperer la string valide comme ca je lenvoie dans le server au leiu de argv qui est plus problematique 
