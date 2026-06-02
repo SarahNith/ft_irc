@@ -6,23 +6,21 @@
 /*   By: agouin <agouin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/26 12:09:02 by agouin            #+#    #+#             */
-/*   Updated: 2026/05/27 17:53:47 by agouin           ###   ########.fr       */
+/*   Updated: 2026/06/01 16:34:36 by agouin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/base.hpp"
-#include <arpa/inet.h>
-#include <poll.h>
+#include "../../includes/base.hpp"
 
 
 Server::Server(int port, std::string password) : _port(port), _password(password)
 {
 	this->_server_socket_fd = socket(AF_INET, SOCK_STREAM, 0); //protocole par defaut
 	if (_server_socket_fd < 0)
-		return ;//on va faire un throw
+		throw Exception("Error : Socket creation failed");
 	this->addr.sin_family = AF_INET; //bien IPV4
 	this->addr.sin_port = htons(port);
-	this->addr.sin_addr.s_addr = INADDR_ANY;//permet d'écouter sur tout les interfaces
+	this->addr.sin_addr.s_addr = htonl(INADDR_ANY);//permet d'écouter sur tout les interfaces
 	//INADDR_ANY = 0 => écoute sur toutes les interfaces
 
 
@@ -34,9 +32,9 @@ Server::Server(int port, std::string password) : _port(port), _password(password
 	// 	throw(CustomException("Error: server fcntl failed"));
 	//"Ce socket (int) est maintenant responsable du port 8080."
 	if (bind(_server_socket_fd, (sockaddr*)&addr, sizeof(addr)) < 0)
-		return ;//mais trow
+		throw Exception("Error : Bind failed");
 	if (listen(_server_socket_fd, SOMAXCONN) < 0)//deveint socket passif = serveur = accepter les demandes de connexions
-		return ;//mais trow
+		throw Exception("Error : Listen failed");
 	//SOMAXCONN = taille de la file d'attente pour les connexions
 
 
@@ -44,7 +42,7 @@ Server::Server(int port, std::string password) : _port(port), _password(password
 // {
 //     int   fd;       // socket à surveiller
 //     short events;   // événements qui nous intéressent
-//     short revents;  // événements détectés par poll()
+//     short revents;  // événements détectés par poll() = masque de bits
 // };
 
 	pollfd	serverFd;
@@ -54,27 +52,59 @@ Server::Server(int port, std::string password) : _port(port), _password(password
 	//POLLIN = prévenu si nouvelle connexions
 	serverFd.revents = 0;
 	this->_listfd.push_back(serverFd);
+	//donc des quonn a une nouvelle connexion ou la mets dans le tableau de fd
 
 }
 
-
-Server::Server(const Server& src)
+Server::~Server()
 {
-	*this = src;
-}
 	
+}
 
 
 void	Server::run_server()
 {
 	//je pense que cest pas mal de faire une boucle en fonction du signal ?????
-	while(true)
+	while(true) // = serveur
 	{
-		//c est ici qu'on choisit poll ou select
+		if(poll(&_listfd[0], _listfd.size(), -1) == -1)
+			throw Exception("Error : Poll failed");
+		for(int i = 0; i < _listfd.size(); i++)
+		{
+			if (_listfd[i].revents & POLLIN) //est ce que revents contient POLLIN en bits
+			{
+				if(_listfd[i].fd == _server_socket_fd)
+				{
+					std::cout << YELLOW << "Nouvelle connexion" << DEFAULT << std::endl;
+					this->AddClient();
+				}
+				else
+					this->ClientData(_listfd[i].fd);
+			}	
+		}
 	}
 }
+
+
+void	Server::ClientData(int fd)
+{
+	char buffer[4096];
+	size_t	buf;
+
+	buf = recv(fd, buffer, sizeof(buffer), 0);
+	if (buf < 0)
+		throw Exception("Error : Recv failed");//je crois que je dois del client si <=0
+//	if (buf == 0)//voir parce cest le client a ferme la discussion = ^C mais quel message
+//		throw Exception("Error : ");
+
+
+
+}
+
 
 void Server::write(std::string msg)//voir si je donne un nom au server
 {
 	std::cout << GREEN << "Server : " << DEFAULT << msg << std::endl;	
 }
+
+///_pollfds[0].revents & POLLIN

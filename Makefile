@@ -8,7 +8,8 @@ SRC_DIR = ./srcs/
 OBJ_DIR = ./obj/
 INC_DIR = ./includes/
 
-SRC_FILES = main.cpp parsing.cpp
+SRC_FILES = main.cpp parsing.cpp\
+			/classes/channel.cpp classes/client.cpp classes/server.cpp
 
 
 #SRC = $(addprefix $(SRC_DIR), $(SRC_FILES))

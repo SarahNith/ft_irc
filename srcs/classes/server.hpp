@@ -1,7 +1,7 @@
 #ifndef SERVER_HPP
 # define SERVER_HPP
 
-#include "../includes/base.hpp"
+#include "../../includes/base.hpp"
 
 
 class	Server 
@@ -15,16 +15,15 @@ class	Server
 
 		//voit fonction
 
-		void	startServer();
-		void	addClient();
+		void	run_server();
+		void	AddClient();
 		void	delClient();
 
 		void	addChannel();
 		void	AddCienttoChannel();
 
+		void	ClientData(int fd);
 		
-		void	run_server();
-
 
 	private :
 
