@@ -6,12 +6,13 @@
 /*   By: agouin <agouin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/26 12:09:02 by agouin            #+#    #+#             */
-/*   Updated: 2026/06/01 16:34:36 by agouin           ###   ########.fr       */
+/*   Updated: 2026/06/02 14:46:33 by agouin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/base.hpp"
-
+#include <unistd.h>
+#include <fcntl.h>
 
 Server::Server(int port, std::string password) : _port(port), _password(password)
 {
@@ -24,12 +25,12 @@ Server::Server(int port, std::string password) : _port(port), _password(password
 	//INADDR_ANY = 0 => écoute sur toutes les interfaces
 
 
-	// int options = 1; //le premeir sur puisque sinon j'aurais eu un message comme "bind: Address already in use"
+	 int options = 1; //le premeir sur puisque sinon j'aurais eu un message comme "bind: Address already in use"
 	// deuxième je sais pas 
-	// if (setsockopt(this->_server_socket_fd, SOL_SOCKET, SO_REUSEADDR, &options, sizeof(options)) == -1)
-	// 	throw(CustomException("Error: server options could not be set"));
-	// if (fcntl(this->_server_socket_fd, F_SETFL, O_NONBLOCK) == -1)
-	// 	throw(CustomException("Error: server fcntl failed"));
+	 if (setsockopt(this->_server_socket_fd, SOL_SOCKET, SO_REUSEADDR, &options, sizeof(options)) == -1)
+	 	throw(Exception("Error: server options could not be set"));
+	 if (fcntl(this->_server_socket_fd, F_SETFL, O_NONBLOCK) == -1)
+	 	throw(Exception("Error: server fcntl failed"));
 	//"Ce socket (int) est maintenant responsable du port 8080."
 	if (bind(_server_socket_fd, (sockaddr*)&addr, sizeof(addr)) < 0)
 		throw Exception("Error : Bind failed");
@@ -69,7 +70,7 @@ void	Server::run_server()
 	{
 		if(poll(&_listfd[0], _listfd.size(), -1) == -1)
 			throw Exception("Error : Poll failed");
-		for(int i = 0; i < _listfd.size(); i++)
+		for(long unsigned int i = 0; i < _listfd.size(); i++)
 		{
 			if (_listfd[i].revents & POLLIN) //est ce que revents contient POLLIN en bits
 			{
@@ -84,6 +85,32 @@ void	Server::run_server()
 		}
 	}
 }
+	//pollfd clientPoll;
+	//clientPoll.fd = 4;
+	//clientPoll.events = POLLIN;
+	//clientPoll.revents = 0;
+void	Server::AddClient()
+{
+	//Client new_clien();
+
+	sockaddr_in client_addr;
+	socklen_t len = sizeof(client_addr);
+
+	if(accept(_server_socket_fd, (sockaddr*)&client_addr, &len) == -1)
+		throw Exception("Error : Accept failed");
+	
+
+	pollfd clientPoll;
+	clientPoll.fd = 4;
+	clientPoll.events = POLLIN;
+	clientPoll.revents = 0;
+	
+	//_clients.push_back(new_clien);
+	_listfd.push_back(clientPoll);
+	//create client 
+	//add to poll_fds vector 
+	//add to clients map
+}
 
 
 void	Server::ClientData(int fd)
@@ -92,7 +119,7 @@ void	Server::ClientData(int fd)
 	size_t	buf;
 
 	buf = recv(fd, buffer, sizeof(buffer), 0);
-	if (buf < 0)
+	if (buf <= 0)//pas bon le = 
 		throw Exception("Error : Recv failed");//je crois que je dois del client si <=0
 //	if (buf == 0)//voir parce cest le client a ferme la discussion = ^C mais quel message
 //		throw Exception("Error : ");
