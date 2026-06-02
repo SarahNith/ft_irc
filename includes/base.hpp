@@ -12,20 +12,20 @@
 #include "../classes/server.hpp"
 #include "../classes/client.hpp"
 #include "../classes/channel.hpp"
-
+#include "../srcs/cmds/cmdExec.hpp"
 
 //[:<prefix>] <command> [<parameters> [...]] [:<trailing>]
 //ex: :dan!d@localhost PRIVMSG #chan :Hey what's up!
 //ex: JOIN #channel,#channel2 key1,key2
 
-typedef struct s_commandParser
+typedef struct s_cmdParser
 {
 	std::string					prefix;
 	std::string					command;
 	std::vector<std::string>	params;
 	std::string					trailing;
 
-}						t_commandParser;
+}						t_cmdParser;
 
 void	test_parser();
 #endif

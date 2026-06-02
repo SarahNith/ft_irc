@@ -6,7 +6,7 @@
 /*   By: skuor <skuor@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/28 17:50:13 by skuor             #+#    #+#             */
-/*   Updated: 2026/05/29 14:40:38 by skuor            ###   ########.fr       */
+/*   Updated: 2026/06/02 12:20:49 by skuor            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,9 +25,9 @@ static size_t	skip_ws(std::string line, size_t i)
 	return (i);
 }
 
-t_commandParser	commandParser(std::string line)
+t_cmdParser	cmdParser(std::string line)
 {
-	t_commandParser cp;
+	t_cmdParser cp;
 	size_t	pos = 0;
 	
 	if (line.empty())
@@ -90,42 +90,42 @@ t_commandParser	commandParser(std::string line)
 // void test_parser()
 // {
 //     std::cout << "=== TEST 1 : Avec prefix, commande, plusieurs params et trailing ===" << std::endl;
-//     t_commandParser cp1 = commandParser(":nick!user@host PRIVMSG #channel :hello world");
+//     t_cmdParser cp1 = cmdParser(":nick!user@host PRIVMSG #channel :hello world");
 //     std::cout << "Prefix: [" << cp1.prefix << "], Command: [" << cp1.command << "]" << std::endl;
 //     std::cout << "Params: ";
 //     for (size_t i = 0; i < cp1.params.size(); ++i) std::cout << "[" << cp1.params[i] << "] ";
 //     std::cout << "\nTrailing: [" << cp1.trailing << "]\n" << std::endl;
     
 //     std::cout << "=== TEST 2 : Avec prefix, commande, plusieurs params, sans trailing ===" << std::endl;
-//     t_commandParser cp2 = commandParser(":nick PRIVMSG #channel arg1 arg2 arg3");
+//     t_cmdParser cp2 = cmdParser(":nick PRIVMSG #channel arg1 arg2 arg3");
 //     std::cout << "Prefix: [" << cp2.prefix << "], Command: [" << cp2.command << "]" << std::endl;
 //     std::cout << "Params: ";
 //     for (size_t i = 0; i < cp2.params.size(); ++i) std::cout << "[" << cp2.params[i] << "] ";
 //     std::cout << "\nTrailing: [" << cp2.trailing << "]\n" << std::endl;
     
 //     std::cout << "=== TEST 3 : Sans prefix, commande, plusieurs params et trailing ===" << std::endl;
-//     t_commandParser cp3 = commandParser("PRIVMSG #channel nick1 nick2 :message avec espaces");
+//     t_cmdParser cp3 = cmdParser("PRIVMSG #channel nick1 nick2 :message avec espaces");
 //     std::cout << "Prefix: [" << cp3.prefix << "], Command: [" << cp3.command << "]" << std::endl;
 //     std::cout << "Params: ";
 //     for (size_t i = 0; i < cp3.params.size(); ++i) std::cout << "[" << cp3.params[i] << "] ";
 //     std::cout << "\nTrailing: [" << cp3.trailing << "]\n" << std::endl;
     
 //     std::cout << "=== TEST 4 : Sans prefix, commande seule ===" << std::endl;
-//     t_commandParser cp4 = commandParser("PING");
+//     t_cmdParser cp4 = cmdParser("PING");
 //     std::cout << "Prefix: [" << cp4.prefix << "], Command: [" << cp4.command << "]" << std::endl;
 //     std::cout << "Params: ";
 //     for (size_t i = 0; i < cp4.params.size(); ++i) std::cout << "[" << cp4.params[i] << "] ";
 //     std::cout << "\nTrailing: [" << cp4.trailing << "]\n" << std::endl;
     
 //     std::cout << "=== TEST 5 : Sans prefix, commande avec un seul param ===" << std::endl;
-//     t_commandParser cp5 = commandParser("JOIN #channel");
+//     t_cmdParser cp5 = cmdParser("JOIN #channel");
 //     std::cout << "Prefix: [" << cp5.prefix << "], Command: [" << cp5.command << "]" << std::endl;
 //     std::cout << "Params: ";
 //     for (size_t i = 0; i < cp5.params.size(); ++i) std::cout << "[" << cp5.params[i] << "] ";
 //     std::cout << "\nTrailing: [" << cp5.trailing << "]\n" << std::endl;
     
 //     std::cout << "=== TEST 6 : Avec prefix et commande, pas de params ===" << std::endl;
-//     t_commandParser cp6 = commandParser(":server PONG");
+//     t_cmdParser cp6 = cmdParser(":server PONG");
 //     std::cout << "Prefix: [" << cp6.prefix << "], Command: [" << cp6.command << "]" << std::endl;
 //     std::cout << "Params: ";
 //     for (size_t i = 0; i < cp6.params.size(); ++i) std::cout << "[" << cp6.params[i] << "] ";

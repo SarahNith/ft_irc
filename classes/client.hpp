@@ -6,7 +6,7 @@
 /*   By: skuor <skuor@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/27 11:03:54 by skuor             #+#    #+#             */
-/*   Updated: 2026/05/28 18:03:32 by skuor            ###   ########.fr       */
+/*   Updated: 2026/06/02 11:16:31 by skuor            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,11 @@ class Client {
 		std::string getHostname() const;
 		// std::string	getPrefix() const;
 		
+		bool	getCorrectPassword() const;
+		bool	getAllInfo() const;
+		bool	getSentWelcome() const;
+		bool	getCompleteRegis() const;
+		
 		int		getClientFd() const;
 
 		void	write(const std::string & msg);
@@ -36,6 +41,12 @@ class Client {
 		void	setUserName(const std::string & newName);
 		void	setRealName(const std::string & newName);
 
+		void	setCorrectPassword(bool pw);
+		void	setAllInfo(bool allInfo);
+		void	setSentWelcome(bool isSent);
+		void	setCompleteRegis(bool completed);
+
+		
 	private:
 		int 		_clientFd;
 		bool		_toDisconnect;
@@ -48,7 +59,7 @@ class Client {
 		
 		bool		_correctPassword;
 		bool		_allInfo;
-		// bool		_completeRegis;
+		bool		_completeRegistration;
 		bool		_sentWelcome;
 		// int			_nbInfo;
 
