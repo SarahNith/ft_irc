@@ -6,7 +6,7 @@
 /*   By: skuor <skuor@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/02 11:26:00 by skuor             #+#    #+#             */
-/*   Updated: 2026/06/03 18:54:56 by skuor            ###   ########.fr       */
+/*   Updated: 2026/06/03 19:27:15 by skuor            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,15 +41,15 @@ class CmdExec {
 
 	private:
 	
-		void	pass(t_cmdParser & cmd, Client *Client);
-		void	nick(t_cmdParser & cmd, Client *Client);
-		void	user(t_cmdParser & cmd, Client *Client);
-		void	join(t_cmdParser & cmd, Client *Client);
-		void	privmsg(t_cmdParser & cmd, Client *Client);
-		void	kick(t_cmdParser & cmd, Client *Client);
-		void	invite(t_cmdParser & cmd, Client *Client);
-		void	topic(t_cmdParser & cmd, Client *Client);
-		void	mode(t_cmdParser & cmd, Client *Client);
+		void	pass(t_cmdParser & cmd, Client *c);
+		void	nick(t_cmdParser & cmd, Client *c);
+		void	user(t_cmdParser & cmd, Client *c);
+		void	join(t_cmdParser & cmd, Client *c);
+		void	privmsg(t_cmdParser & cmd, Client *c);
+		void	kick(t_cmdParser & cmd, Client *c);
+		void	invite(t_cmdParser & cmd, Client *c);
+		void	topic(t_cmdParser & cmd, Client *c);
+		void	mode(t_cmdParser & cmd, Client *c);
 		
 		Type	detectTypeCmd(std::string cmd);
 
