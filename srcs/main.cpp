@@ -6,17 +6,20 @@
 /*   By: skuor <skuor@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/26 12:00:32 by agouin            #+#    #+#             */
-/*   Updated: 2026/06/02 17:14:14 by skuor            ###   ########.fr       */
+/*   Updated: 2026/06/03 09:46:51 by skuor            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 
 #include "../includes/base.hpp"
+#include "cmds/cmdExec.hpp"
 
 int main(int argc, char **argv)//peut etre env si on veut avoir lheure
 {
-	if(argc != 3)
-		return (-1);
+    (void)argv;
+	(void)argc;
+	// if(argc != 3)
+	// 	return (-1);
 	//vérification du port entre 1 et 65535 vérifier
 	try
 	{

@@ -6,7 +6,7 @@
 /*   By: skuor <skuor@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/26 12:09:02 by agouin            #+#    #+#             */
-/*   Updated: 2026/06/02 16:08:15 by skuor            ###   ########.fr       */
+/*   Updated: 2026/06/03 12:33:48 by skuor            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,28 +62,28 @@ Server::~Server()
 }
 
 
-void	Server::run_server()
-{
-	//je pense que cest pas mal de faire une boucle en fonction du signal ?????
-	while(true) // = serveur
-	{
-		if(poll(&_listfd[0], _listfd.size(), -1) == -1)
-			throw Exception("Error : Poll failed");
-		for(int i = 0; i < _listfd.size(); i++)
-		{
-			if (_listfd[i].revents & POLLIN) //est ce que revents contient POLLIN en bits
-			{
-				if(_listfd[i].fd == _server_socket_fd)
-				{
-					std::cout << YELLOW << "Nouvelle connexion" << DEFAULT << std::endl;
-					this->AddClient();
-				}
-				else
-					this->ClientData(_listfd[i].fd);
-			}	
-		}
-	}
-}
+// void	Server::run_server()
+// {
+// 	//je pense que cest pas mal de faire une boucle en fonction du signal ?????
+// 	while(true) // = serveur
+// 	{
+// 		if(poll(&_listfd[0], _listfd.size(), -1) == -1)
+// 			throw Exception("Error : Poll failed");
+// 		for(int i = 0; i < _listfd.size(); i++)
+// 		{
+// 			if (_listfd[i].revents & POLLIN) //est ce que revents contient POLLIN en bits
+// 			{
+// 				if(_listfd[i].fd == _server_socket_fd)
+// 				{
+// 					std::cout << YELLOW << "Nouvelle connexion" << DEFAULT << std::endl;
+// 					this->AddClient();
+// 				}
+// 				else
+// 					this->ClientData(_listfd[i].fd);
+// 			}	
+// 		}
+// 	}
+// }
 
 
 void	Server::ClientData(int fd)
@@ -112,4 +112,17 @@ void Server::write(std::string msg)//voir si je donne un nom au server
 std::string	Server::getPassword() const
 {
 	return _password;
+}
+
+Client*	Server::getClientByNick(std::string nickname)
+{
+	std::map<const int, Client>::iterator it;
+	std::map<const int, Client>::iterator ite = _clients.end();
+
+	for (it = _clients.begin(); it != ite; it++)
+	{
+		if (it->second.getNickName() == nickname)
+			return &it->second;
+	}
+	return NULL;
 }

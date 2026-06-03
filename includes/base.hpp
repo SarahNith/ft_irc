@@ -23,11 +23,6 @@
 
 #include <poll.h>
 
-
-
-
-
-
 //class
 #include "../srcs/classes/server.hpp"
 #include "../srcs/classes/client.hpp"
@@ -65,7 +60,6 @@ class Exception : public std::exception
 #include "../classes/server.hpp"
 #include "../classes/client.hpp"
 #include "../classes/channel.hpp"
-#include "../srcs/cmds/cmdExec.hpp"
 
 //[:<prefix>] <command> [<parameters> [...]] [:<trailing>]
 //ex: :dan!d@localhost PRIVMSG #chan :Hey what's up!

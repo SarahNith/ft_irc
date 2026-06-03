@@ -6,11 +6,11 @@
 /*   By: skuor <skuor@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/02 11:25:52 by skuor             #+#    #+#             */
-/*   Updated: 2026/06/02 17:26:46 by skuor            ###   ########.fr       */
+/*   Updated: 2026/06/03 11:00:22 by skuor            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/base.hpp"
+#include "cmdExec.hpp"
 
 CmdExec::CmdExec() {}
 CmdExec::CmdExec(Server* srv) : _srv(srv) {}
@@ -61,23 +61,9 @@ void	CmdExec::execute(t_cmdParser & cmd, Client *Client)
 
 /* ************ COMMANDS ************ */
 
-void	CmdExec::pass(t_cmdParser & cmd, Client *Client)
-{
-	std::string	correctPw = this->_srv->getPassword();
-	
-	if (cmd.params.size() < 1)
-		return (errorMsg(ERR_461, Client, "PASS")); // err 461
-	if (Client->getCorrectPassword())
-		return (errorMsg(ERR_462, Client)); // err 462
 
-	std::string	password = cmd.params[0];
 
-	if (password != correctPw)
-		return (errorMsg(ERR_464, Client)); // err_464
-	else
-		Client->setCorrectPassword(true);		
-}
-// void	CmdExec::nick(t_cmdParser & cmd, Client *Client) {}
+
 // void	CmdExec::user(t_cmdParser & cmd, Client *Client) {}
 // void	CmdExec::join(t_cmdParser & cmd, Client *Client) {}
 // void	CmdExec::privmsg(t_cmdParser & cmd, Client *Client) {}
@@ -134,11 +120,11 @@ std::string	CmdExec::replaceAll(std::string str, std::string toReplace, std::str
 	return (newStr);
 }
 
-void		CmdExec::errorMsg(std::string errMsg, Client *client, std::string cmd = "")
+void		CmdExec::errorMsg(std::string errMsg, Client *client, std::string cmd)
 {
 	std::string	msg = errMsg;
 	
-	msg = replaceAll(errMsg, "<nickname>", client->getNickName());
+	msg = replaceAll(errMsg, "<client>", client->getNickName());
 	msg = replaceAll(msg, "<command>", cmd);
 
 	std::cout << msg << "\r\n";

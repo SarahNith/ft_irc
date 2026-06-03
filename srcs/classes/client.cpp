@@ -6,7 +6,7 @@
 /*   By: skuor <skuor@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/27 11:04:01 by skuor             #+#    #+#             */
-/*   Updated: 2026/06/02 16:00:37 by skuor            ###   ########.fr       */
+/*   Updated: 2026/06/03 12:49:46 by skuor            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,12 @@
 
 Client::Client()
 {
+	_nickName = "*";
+	_userName = "";
+	_realName = "";
+	_oldNickname = "";
+	_hostname = _clientFd;
+	
 	_toDisconnect = false;
 	_correctPassword = false;
 	_allInfo = false;

@@ -25,6 +25,8 @@ class	Server
 		void	AddCienttoChannel();
 
 		void	ClientData(int fd);
+
+		Client* getClientByNick(std::string nickname);
 		
 
 	private :
@@ -38,11 +40,12 @@ class	Server
 		//voir si util
 		//struct addrinfo	_hints;
 		//struct addrinfo*	_servinfo;
-		//std::map<const int, Client>	_clients;
+		std::map<const int, Client>	_clients;
 		//std::map<std::string, Channel>	_channels;
 		//std::string	_datetime;
 		//std::vector<server_op>	_irc_operators;
 		//std::string	_motd;
 };
+
 
 #endif
