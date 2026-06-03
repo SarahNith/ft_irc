@@ -6,7 +6,7 @@
 /*   By: skuor <skuor@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/02 11:25:52 by skuor             #+#    #+#             */
-/*   Updated: 2026/06/03 11:00:22 by skuor            ###   ########.fr       */
+/*   Updated: 2026/06/03 18:54:48 by skuor            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,13 +120,36 @@ std::string	CmdExec::replaceAll(std::string str, std::string toReplace, std::str
 	return (newStr);
 }
 
-void		CmdExec::errorMsg(std::string errMsg, Client *client, std::string cmd)
-{
-	std::string	msg = errMsg;
-	
-	msg = replaceAll(errMsg, "<client>", client->getNickName());
-	msg = replaceAll(msg, "<command>", cmd);
 
-	std::cout << msg << "\r\n";
+void	CmdExec::sendMsg(std::string msg, Client *c, std::string other)
+{
+	std::string	newMsg = msg;
+	
+	newMsg = replaceAll(msg, "<client>", c->getNickName());
+	newMsg = replaceAll(newMsg, "<command>", other);
+	if (other.empty())
+		newMsg = replaceAll(newMsg, "<nick>", c->getNickName());
+	else
+		newMsg = replaceAll(newMsg, "<nick>", other);
+	newMsg = replaceAll(newMsg, "<user>", c->getUserName());
+	newMsg = replaceAll(newMsg, "<host>", c->getHostname());
+	
+	std::string fullMsg = newMsg + "\r\n";
+	send(c->getClientFd(), fullMsg.c_str(), fullMsg.size(), 0);
 }
 
+bool	CmdExec::checkRegistration(Client *c)
+{
+	if (!c->getCorrectPassword())
+		return false;
+	else if (!c->getHasNick())
+		return false;
+	else if (!c->getHasUser())
+		return false;
+	else
+	{
+		sendMsg(RPL_001, c);
+		c->setCompleteRegis(true);
+	}
+	return true;
+}

@@ -6,7 +6,7 @@
 /*   By: skuor <skuor@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/03 10:59:08 by skuor             #+#    #+#             */
-/*   Updated: 2026/06/03 12:41:40 by skuor            ###   ########.fr       */
+/*   Updated: 2026/06/03 19:00:13 by skuor            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,18 +30,30 @@ static bool	validNickname(std::string nickname)
 
 void	CmdExec::nick(t_cmdParser & cmd, Client *c)
 {
-	if (!c->getCorrectPassword())
-		return ;
 	if (cmd.params.size() < 1)
-		return (errorMsg(ERR_431, c));
+		return (sendMsg(ERR_431, c));
 	
 	std::string nickname = cmd.params[0];
 
 	if (!validNickname(nickname))
-		return (errorMsg(ERR_432, c, nickname));
+		return (sendMsg(ERR_432, c, nickname));
 	
 	Client *foundNick = _srv->getClientByNick(nickname);
 	if (foundNick != NULL)
-		return (errorMsg(ERR_433, c, nickname));	
+		return (sendMsg(ERR_433, c, nickname));
+
+	if (c->getNickName() != "*")
+	{
+		c->setOldNickName(c->getNickName());
+		c->setNickName(nickname);
+		std::string msg = ":" + c->getOldNickName() + "!" + c->getUserName() + "@"
+			+ c->getHostname() + " NICK " + nickname;
+		sendMsg(msg, c);
+	}
+	else
+		c->setNickName(nickname);
+
+	c->setHasNick(true);
+	checkRegistration(c);
 }
 

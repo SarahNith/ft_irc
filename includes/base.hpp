@@ -11,7 +11,6 @@
 #include <arpa/inet.h>
 #include <netdb.h>
 
-
 //conteneur
 #include <map>
 #include <vector>
@@ -28,7 +27,7 @@
 #include "../srcs/classes/client.hpp"
 #include "../srcs/classes/channel.hpp"
 
-
+# define SERVER_NAME "ircserv"
 
 class Exception : public std::exception
 {
@@ -60,6 +59,8 @@ class Exception : public std::exception
 #include "../classes/server.hpp"
 #include "../classes/client.hpp"
 #include "../classes/channel.hpp"
+
+
 
 //[:<prefix>] <command> [<parameters> [...]] [:<trailing>]
 //ex: :dan!d@localhost PRIVMSG #chan :Hey what's up!

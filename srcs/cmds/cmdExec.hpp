@@ -6,7 +6,7 @@
 /*   By: skuor <skuor@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/02 11:26:00 by skuor             #+#    #+#             */
-/*   Updated: 2026/06/03 12:41:35 by skuor            ###   ########.fr       */
+/*   Updated: 2026/06/03 18:54:56 by skuor            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,19 +55,24 @@ class CmdExec {
 
 		Server*	_srv;
 
-		void		errorMsg(std::string errMsg, Client *client, std::string cmd = "");
+		bool		checkRegistration(Client *c);
+		void		sendMsg(std::string msg, Client *c, std::string other = "");
 		std::string	replaceAll(std::string msg, std::string toReplace, std::string strReplace);
 };
 
+#define RPL_PREFIX ":" SERVER_NAME " "
+
+# define RPL_001 RPL_PREFIX "001 <nick> :Welcome to the IRC network <nick>!<user>@<host>"
+
 //PASS
-# define ERR_461 "461 <client> <command> :Not enough parameters"
-# define ERR_462 "462 <client> :You may not reregister"
-# define ERR_464 "464 <client> :Password incorrect"
+# define ERR_461 RPL_PREFIX "461 <client> <command> :Not enough parameters"
+# define ERR_462 RPL_PREFIX "462 <client> :You may not reregister"
+# define ERR_464 RPL_PREFIX "464 <client> :Password incorrect"
 
 //NICK
-# define ERR_431 "431 <client> :No nickname given"
-# define ERR_432 "432 <client> <nick> :Erroneus nickname"
-# define ERR_433 "433 <client> <nick> :Nickname is already in use"
+# define ERR_431 RPL_PREFIX "431 <client> :No nickname given"
+# define ERR_432 RPL_PREFIX "432 <client> <nick> :Erroneus nickname"
+# define ERR_433 RPL_PREFIX "433 <client> <nick> :Nickname is already in use"
 
 
 

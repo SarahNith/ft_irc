@@ -6,7 +6,7 @@
 /*   By: skuor <skuor@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/27 11:03:54 by skuor             #+#    #+#             */
-/*   Updated: 2026/06/02 16:00:40 by skuor            ###   ########.fr       */
+/*   Updated: 2026/06/03 18:45:05 by skuor            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@ class Client {
 	
 	public:
 		Client();
+		Client(int fd);
 		~Client();
 	
 		std::string	getNickName() const;
@@ -32,6 +33,8 @@ class Client {
 		bool	getAllInfo() const;
 		bool	getSentWelcome() const;
 		bool	getCompleteRegis() const;
+		bool	getHasNick() const;
+		bool	getHasUser() const;
 		
 		int		getClientFd() const;
 
@@ -40,11 +43,16 @@ class Client {
 		void	setNickName(const std::string & newName);
 		void	setUserName(const std::string & newName);
 		void	setRealName(const std::string & newName);
+		void	setOldNickName(const std::string & newName);
 
+		
 		void	setCorrectPassword(bool pw);
 		void	setAllInfo(bool allInfo);
 		void	setSentWelcome(bool isSent);
 		void	setCompleteRegis(bool completed);
+		void	setHasNick(bool hasNick);
+		void	setHasUser(bool hasUser);
+
 
 		
 	private:
@@ -54,14 +62,16 @@ class Client {
 		std::string	_nickName; //affiche pour tlm
 		std::string	_userName; //nom utilisateur systeme
 		std::string	_realName; //donne lors de l'inscription
-		std::string	_oldNickname;
+		std::string	_oldNickName;
 		std::string	_hostname;
 		
 		bool		_correctPassword;
 		bool		_allInfo;
 		bool		_completeRegistration;
-		bool		_sentWelcome;
-		// int			_nbInfo;
+		// bool		_sentWelcome;
+		
+		bool		_hasNick;
+		bool		_hasUser;
 
 		std::string	_readBuff; //stocke donnees recues du clients pas encore traitees
 		std::string	_toSendBuff; //stocke donnees en attente d'etre envoyees au client;
