@@ -6,44 +6,49 @@
 /*   By: agouin <agouin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/26 12:00:32 by agouin            #+#    #+#             */
-/*   Updated: 2026/06/02 15:12:52 by agouin           ###   ########.fr       */
+/*   Updated: 2026/06/03 14:58:19 by agouin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 
 #include "../includes/base.hpp"
 
-static bool	isWhitespace(char ws)//a mettre ailleur Sarah la deja fait
+
+std::string obtainport(std::string str)
 {
-	if (ws == ' ' || ws == '\t')
-		return true;
-	return false;
+	size_t beg = 0;
+	size_t end = str.size();
+	
+	while(beg < str.size() && ((str[beg] == 32) || str[beg] == 9))
+		beg++;
+
+	while(end > 0 && ((str[end] == 32) || str[end] == 9))
+		end--;
+	return (str.substr(beg, end - beg));
 }
 
-static size_t	skip_ws(std::string line, size_t i)//a mettre ailleur Sarah la deja fait
-{
-	while (i < line.length() && isWhitespace(line[i]))
-		i++;
-	return (i);
-}
 
-int is_port_correct(std::string str)//continuer il faut juste voir si pas une string decoupe et bien dans le chanp 
+int is_port_correct(std::string str)
 {
-	if (str.empty() || skip_ws(str, 0) == str.length())
+	int c = 0;
+	if (str.empty())//+ verirfier nb port
 		return (-1);
-	for (size_t i = 0; i < str.length(); i++)
+
+	for(size_t i = 0; i < str.size(); i++)
 	{
-		if (std::isdigit(str[i]) == false)
+		if (c == 1 && ((str[i] != 32) && str[i] != 9))
+			return (-1);
+		if (std::isdigit(str[i]) == true && ((str[i + 1] == 32) || str[i + 1] == 9))
+			c = 1;
+		if (std::isdigit(str[i]) == false && ((str[i] != 32) && str[i] != 9))
 			return (-1);
 	}
+	int at = atoi(obtainport(str).c_str());
+	if (at <= 0 || at >= 65535) //voir si on prend ces ports
+		return (-1);
+	return (0);
 }
 
-std::string obtainPort(std::string str)
-{
-	std::string port;
-//ici je veux recuperer la string valide comme ca je lenvoie dans le server au leiu de argv qui est plus problematique 
-	
-}
 
 int main(int argc, char **argv)//peut etre env si on veut avoir lheure
 {
@@ -52,10 +57,9 @@ int main(int argc, char **argv)//peut etre env si on veut avoir lheure
 		std::cout << RED << "Wrong Executable : " <<  DEFAULT BOLD << "./ircserv <port> <password>" << DEFAULT << std::endl;
 		return (-1);
 	}
-	//vérification du port entre 1 et 65535 vérifier
 	try
 	{
-		Server serv(atoi(argv[1]), argv[2]);
+		Server serv(atoi(obtainport(argv[1]).c_str()), argv[2]);
 		serv.run_server();
 	}
 	catch(const std::exception& e)

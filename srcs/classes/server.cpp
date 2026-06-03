@@ -6,7 +6,7 @@
 /*   By: agouin <agouin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/26 12:09:02 by agouin            #+#    #+#             */
-/*   Updated: 2026/06/02 14:46:33 by agouin           ###   ########.fr       */
+/*   Updated: 2026/06/03 16:36:34 by agouin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,8 +103,8 @@ void	Server::AddClient()
 	
 	_listfd.push_back(clientPoll);
 
-	Client newClient(clientfd);
-	_clients[clientfd] = newClient;
+	//Client newClient(clientfd);
+	//_clients[clientfd] = newClient;
 
 
 	std::cout << YELLOW << "New connection : fd = " << DEFAULT << clientfd << std::endl;
@@ -117,19 +117,31 @@ void	Server::ClientData(int fd)
 	ssize_t	buf;
 
 	buf = recv(fd, buffer, sizeof(buffer) - 1, 0);
-	if (buf <= 0)
+
+	//std::cout << "RECV: [" << buffer << "]" << std::endl;
+	//std::string test = "CAP LS 302";
+	//size_t i = 0;
+	//while(buffer[i] == test[i])
+	//{	
+	//	i++;
+	//}
+	//if (i == test.size())
+	//{
+	//	std::string reply = ":ircserv CAP * LS :\r\n";
+	//	send(fd, reply.c_str(), reply.size(), 0);
+	//	std::cout << RED << "SEND: [" << reply << "]" << DEFAULT << std::endl;
+	//}
+
+	if(buf == 0)
 	{
-		if(buf == 0)
-		{
-			std::cout << MAGENTA << "Client disconnected" << DEFAULT << std::endl;
-			//faut remove client
-			return;
-		}
-		if(buf < 0)
-		{
-			std::cerr << RED << "Error : Recv failed" << DEFAULT << std::endl;
-			return;
-		}
+		std::cout << MAGENTA << "Client disconnected" << DEFAULT << std::endl;
+		//faut remove client mais je sias pa strop quoi faire a part le supp des listes
+		return;
+	}
+	if(buf < 0)
+	{
+		std::cerr << RED << "Error : Recv failed" << DEFAULT << std::endl;
+		return;
 	}
 	buffer[buf] = '\0';
 //std::cout << "Received : " << buffer << std::endl;
