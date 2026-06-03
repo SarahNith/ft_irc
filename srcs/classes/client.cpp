@@ -6,12 +6,17 @@
 /*   By: agouin <agouin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/27 11:04:01 by skuor             #+#    #+#             */
-/*   Updated: 2026/06/01 16:23:06 by agouin           ###   ########.fr       */
+/*   Updated: 2026/06/03 17:14:11 by agouin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/base.hpp"
 
+
+Client::Client()
+{
+
+}
 
 
 Client::Client(int fd)

@@ -6,7 +6,7 @@
 /*   By: agouin <agouin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/26 12:09:02 by agouin            #+#    #+#             */
-/*   Updated: 2026/06/03 16:36:34 by agouin           ###   ########.fr       */
+/*   Updated: 2026/06/03 17:11:05 by agouin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,8 +103,8 @@ void	Server::AddClient()
 	
 	_listfd.push_back(clientPoll);
 
-	//Client newClient(clientfd);
-	//_clients[clientfd] = newClient;
+	Client newClient(clientfd);
+	_clients[clientfd] = newClient;
 
 
 	std::cout << YELLOW << "New connection : fd = " << DEFAULT << clientfd << std::endl;
@@ -118,7 +118,7 @@ void	Server::ClientData(int fd)
 
 	buf = recv(fd, buffer, sizeof(buffer) - 1, 0);
 
-	//std::cout << "RECV: [" << buffer << "]" << std::endl;
+	std::cout << "RECV: [" << buffer << "]" << std::endl;
 	//std::string test = "CAP LS 302";
 	//size_t i = 0;
 	//while(buffer[i] == test[i])
