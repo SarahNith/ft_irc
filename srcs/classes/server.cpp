@@ -6,12 +6,13 @@
 /*   By: skuor <skuor@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/26 12:09:02 by agouin            #+#    #+#             */
-/*   Updated: 2026/06/04 12:45:48 by skuor            ###   ########.fr       */
+/*   Updated: 2026/06/04 16:50:35 by skuor            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/base.hpp"
-
+#include <unistd.h>
+#include <fcntl.h>
 
 Server::Server(int port, std::string password) : _port(port), _password(password)
 {
@@ -24,12 +25,12 @@ Server::Server(int port, std::string password) : _port(port), _password(password
 	//INADDR_ANY = 0 => écoute sur toutes les interfaces
 
 
-	// int options = 1; //le premeir sur puisque sinon j'aurais eu un message comme "bind: Address already in use"
+	 int options = 1; //le premeir sur puisque sinon j'aurais eu un message comme "bind: Address already in use"
 	// deuxième je sais pas 
-	// if (setsockopt(this->_server_socket_fd, SOL_SOCKET, SO_REUSEADDR, &options, sizeof(options)) == -1)
-	// 	throw(CustomException("Error: server options could not be set"));
-	// if (fcntl(this->_server_socket_fd, F_SETFL, O_NONBLOCK) == -1)
-	// 	throw(CustomException("Error: server fcntl failed"));
+	 if (setsockopt(this->_server_socket_fd, SOL_SOCKET, SO_REUSEADDR, &options, sizeof(options)) == -1)
+	 	throw(Exception("Error: server options could not be set"));
+	 if (fcntl(this->_server_socket_fd, F_SETFL, O_NONBLOCK) == -1)
+	 	throw(Exception("Error: server fcntl failed"));
 	//"Ce socket (int) est maintenant responsable du port 8080."
 	if (bind(_server_socket_fd, (sockaddr*)&addr, sizeof(addr)) < 0)
 		throw Exception("Error : Bind failed");
@@ -62,43 +63,88 @@ Server::~Server()
 }
 
 
-// void	Server::run_server()
-// {
-// 	//je pense que cest pas mal de faire une boucle en fonction du signal ?????
-// 	while(true) // = serveur
-// 	{
-// 		if(poll(&_listfd[0], _listfd.size(), -1) == -1)
-// 			throw Exception("Error : Poll failed");
-// 		for(int i = 0; i < _listfd.size(); i++)
-// 		{
-// 			if (_listfd[i].revents & POLLIN) //est ce que revents contient POLLIN en bits
-// 			{
-// 				if(_listfd[i].fd == _server_socket_fd)
-// 				{
-// 					std::cout << YELLOW << "Nouvelle connexion" << DEFAULT << std::endl;
-// 					this->AddClient();
-// 				}
-// 				else
-// 					this->ClientData(_listfd[i].fd);
-// 			}	
-// 		}
-// 	}
-// }
+void	Server::run_server()
+{
+	//je pense que cest pas mal de faire une boucle en fonction du signal ?????
+	while(true) // = serveur
+	{
+		if(poll(&_listfd[0], _listfd.size(), -1) == -1)
+			throw Exception("Error : Poll failed");
+		for(size_t i = 0; i < _listfd.size(); i++)
+		{
+			if (_listfd[i].revents & POLLIN) //est ce que revents contient POLLIN en bits
+			{
+				if(_listfd[i].fd == _server_socket_fd)
+					this->AddClient();
+				else
+					this->ClientData(_listfd[i].fd);
+			}	
+		}
+	}
+}
+
+
+void	Server::AddClient()
+{
+	sockaddr_in client_addr;
+	socklen_t len = sizeof(client_addr);
+	int clientfd;
+
+	clientfd = accept(_server_socket_fd, (sockaddr*)&client_addr, &len);
+	if(clientfd == -1)
+		throw Exception("Error : Accept failed");
+	if (fcntl(clientfd, F_SETFL, O_NONBLOCK) == -1) //non bloquant
+		throw(Exception("Error : Fnctl failed"));
+
+	pollfd clientPoll;
+	clientPoll.fd = clientfd;
+	clientPoll.events = POLLIN;
+	clientPoll.revents = 0;
+	
+	_listfd.push_back(clientPoll);
+
+	Client newClient(clientfd);
+	_clients[clientfd] = newClient;
+
+
+	std::cout << YELLOW << "New connection : fd = " << DEFAULT << clientfd << std::endl;
+}
 
 
 void	Server::ClientData(int fd)
 {
 	char buffer[4096];
-	size_t	buf;
+	ssize_t	buf;
 
-	buf = recv(fd, buffer, sizeof(buffer), 0);
-	if (buf < 0)
-		throw Exception("Error : Recv failed");//je crois que je dois del client si <=0
-//	if (buf == 0)//voir parce cest le client a ferme la discussion = ^C mais quel message
-//		throw Exception("Error : ");
+	buf = recv(fd, buffer, sizeof(buffer) - 1, 0);
 
+	std::cout << "RECV: [" << buffer << "]" << std::endl;
+	//std::string test = "CAP LS 302";
+	//size_t i = 0;
+	//while(buffer[i] == test[i])
+	//{	
+	//	i++;
+	//}
+	//if (i == test.size())
+	//{
+	//	std::string reply = ":ircserv CAP * LS :\r\n";
+	//	send(fd, reply.c_str(), reply.size(), 0);
+	//	std::cout << RED << "SEND: [" << reply << "]" << DEFAULT << std::endl;
+	//}
 
-
+	if(buf == 0)
+	{
+		std::cout << MAGENTA << "Client disconnected" << DEFAULT << std::endl;
+		//faut remove client mais je sias pa strop quoi faire a part le supp des listes
+		return;
+	}
+	if(buf < 0)
+	{
+		std::cerr << RED << "Error : Recv failed" << DEFAULT << std::endl;
+		return;
+	}
+	buffer[buf] = '\0';
+//std::cout << "Received : " << buffer << std::endl;
 }
 
 

@@ -38,6 +38,8 @@ class	Server
 		sockaddr_in addr;
 		std::vector<pollfd> _listfd;
 
+		std::map<int, Client> _clients;
+
 		//voir si util
 		//struct addrinfo	_hints;
 		//struct addrinfo*	_servinfo;

@@ -6,19 +6,21 @@
 /*   By: skuor <skuor@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/27 11:03:54 by skuor             #+#    #+#             */
-/*   Updated: 2026/06/03 18:45:05 by skuor            ###   ########.fr       */
+/*   Updated: 2026/06/04 16:49:33 by skuor            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef CLIENT_HPP
 # define CLIENT_HPP
 
-#include "../../includes/base.hpp"
+#include "../includes/base.hpp"
 
 class Client {
 	
 	public:
+
 		Client();
+		Client(int fd);
 		Client(int fd);
 		~Client();
 	
