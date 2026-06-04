@@ -27,7 +27,8 @@ class	Server
 
 		void	ClientData(int fd);
 
-		Client* getClientByNick(std::string nickname);
+		Client*		getClientByNick(std::string nickname);
+		Channel*	getChannelByName(std::string name);
 		
 
 	private :
@@ -38,7 +39,7 @@ class	Server
 		sockaddr_in addr;
 		std::vector<pollfd> _listfd;
 
-		std::map<int, Client> _clients;
+		// std::map<int, Client> _clients;
 
 		//voir si util
 		//struct addrinfo	_hints;

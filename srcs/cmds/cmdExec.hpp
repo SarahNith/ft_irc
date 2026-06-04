@@ -6,7 +6,7 @@
 /*   By: skuor <skuor@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/02 11:26:00 by skuor             #+#    #+#             */
-/*   Updated: 2026/06/04 16:04:37 by skuor            ###   ########.fr       */
+/*   Updated: 2026/06/04 18:18:13 by skuor            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,8 +56,10 @@ class CmdExec {
 		Server*	_srv;
 
 		bool		checkRegistration(Client *c);
+		
 		void		sendMsg(std::string msg, Client *c, std::string other = "", Channel *ch = NULL);
 		void		sendToAll(std::string msg, Channel &ch);
+		void		sendToAllExcept(std::string msg, Channel &ch, Client *Except);
 
 		void		sendNames(Client *c, Channel & ch);
 
@@ -80,13 +82,19 @@ class CmdExec {
 # define ERR_433 RPL_PREFIX "433 <client> <nick> :Nickname is already in use"
 
 //JOIN
-#define RPL_332 RPL_PREFIX "332 <client> <channel> :<topic>"
-#define RPL_366 RPL_PREFIX "366 <client> <channel> :End of /NAMES list"
-
+# define RPL_332 RPL_PREFIX "332 <client> <channel> :<topic>"
+# define RPL_366 RPL_PREFIX "366 <client> <channel> :End of /NAMES list"
 # define ERR_471 RPL_PREFIX "471 <client> <channel> :Cannot join channel (+l)"
 # define ERR_473 RPL_PREFIX "473 <client> <channel> :Cannot join channel (+i)"
 # define ERR_475 RPL_PREFIX "475 <client> <channel> :Cannot join channel (+k)"
 # define ERR_476 RPL_PREFIX "476 <client> <channel> :Bad Channel Mask"
+
+//PRIVMSG
+# define ERR_401 RPL_PREFIX "401 <client> <nickname> :No such nick"
+# define ERR_403 RPL_PREFIX "403 <client> <channel> :No such channel"
+# define ERR_404 RPL_PREFIX "404 <client> <channel> :Cannot send to channel"
+# define ERR_411 RPL_PREFIX "411 <client> :No recipient given (<command>)"
+# define ERR_412 RPL_PREFIX "412 <client> :No text to send"
 
 
 #endif

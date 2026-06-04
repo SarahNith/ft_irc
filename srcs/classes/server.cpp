@@ -6,7 +6,7 @@
 /*   By: skuor <skuor@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/26 12:09:02 by agouin            #+#    #+#             */
-/*   Updated: 2026/06/04 16:50:35 by skuor            ###   ########.fr       */
+/*   Updated: 2026/06/04 17:42:51 by skuor            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -172,6 +172,15 @@ Client*	Server::getClientByNick(std::string nickname)
 	}
 	return NULL;
 }
+
+Channel*	Server::getChannelByName(std::string name)
+{
+	std::map<std::string, Channel>::iterator it = _channels.find(name);
+	if (it == _channels.end())
+		return NULL;
+	return &it->second;
+}
+
 
 std::map<std::string, Channel>& Server::getChannels()
 {
