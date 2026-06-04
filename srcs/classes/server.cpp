@@ -6,7 +6,7 @@
 /*   By: skuor <skuor@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/26 12:09:02 by agouin            #+#    #+#             */
-/*   Updated: 2026/06/03 12:33:48 by skuor            ###   ########.fr       */
+/*   Updated: 2026/06/04 12:45:48 by skuor            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -125,4 +125,9 @@ Client*	Server::getClientByNick(std::string nickname)
 			return &it->second;
 	}
 	return NULL;
+}
+
+std::map<std::string, Channel>& Server::getChannels()
+{
+	return _channels;
 }

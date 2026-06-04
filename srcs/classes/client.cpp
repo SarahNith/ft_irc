@@ -6,7 +6,7 @@
 /*   By: skuor <skuor@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/27 11:04:01 by skuor             #+#    #+#             */
-/*   Updated: 2026/06/03 18:44:31 by skuor            ###   ########.fr       */
+/*   Updated: 2026/06/04 14:50:41 by skuor            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,6 @@ Client::Client()
 	_correctPassword = false;
 	_allInfo = false;
 	// _completeRegis = false;
-	_sentWelcome = false;
 	_hasNick = false;
 	_hasUser = false;
 }
@@ -42,7 +41,6 @@ Client::Client(int fd)
 	_correctPassword = false;
 	_allInfo = false;
 	// _completeRegis = false;
-	_sentWelcome = false;
 	_hasNick = false;
 	_hasUser = false;
 }
@@ -89,11 +87,6 @@ bool	Client::getCorrectPassword() const
 bool	Client::getAllInfo() const
 {
 	return _allInfo;
-}
-
-bool	Client::getSentWelcome() const
-{
-	return _sentWelcome;
 }
 
 bool	Client::getCompleteRegis() const
@@ -144,11 +137,6 @@ void	Client::setCorrectPassword(bool pw)
 void	Client::setAllInfo(bool allInfo)
 {
 	this->_allInfo = allInfo;
-}
-
-void	Client::setSentWelcome(bool isSent)
-{
-	this->_sentWelcome = isSent;
 }
 
 void	Client::setCompleteRegis(bool completed)

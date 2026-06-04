@@ -6,7 +6,7 @@
 /*   By: skuor <skuor@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/02 11:25:52 by skuor             #+#    #+#             */
-/*   Updated: 2026/06/03 18:54:48 by skuor            ###   ########.fr       */
+/*   Updated: 2026/06/04 15:38:09 by skuor            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,7 +121,7 @@ std::string	CmdExec::replaceAll(std::string str, std::string toReplace, std::str
 }
 
 
-void	CmdExec::sendMsg(std::string msg, Client *c, std::string other)
+void	CmdExec::sendMsg(std::string msg, Client *c, std::string other, Channel *ch)
 {
 	std::string	newMsg = msg;
 	
@@ -133,9 +133,25 @@ void	CmdExec::sendMsg(std::string msg, Client *c, std::string other)
 		newMsg = replaceAll(newMsg, "<nick>", other);
 	newMsg = replaceAll(newMsg, "<user>", c->getUserName());
 	newMsg = replaceAll(newMsg, "<host>", c->getHostname());
+	if (ch != NULL)
+	{
+		newMsg = replaceAll(newMsg, "<channel>", ch->getName());
+		newMsg = replaceAll(newMsg, "<topic>", ch->getTopic());
+	}
 	
 	std::string fullMsg = newMsg + "\r\n";
 	send(c->getClientFd(), fullMsg.c_str(), fullMsg.size(), 0);
+}
+
+void		CmdExec::sendToAll(std::string msg, Channel &ch)
+{
+	std::vector<Client*> members = ch.getMembers();
+	
+	std::vector<Client*>::iterator it;
+	std::vector<Client*>::iterator ite = members.end();
+	
+	for (it = members.begin(); it != ite; it++)
+		sendMsg(msg, *it, "", &ch);
 }
 
 bool	CmdExec::checkRegistration(Client *c)

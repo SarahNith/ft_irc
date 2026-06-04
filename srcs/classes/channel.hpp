@@ -6,7 +6,7 @@
 /*   By: skuor <skuor@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/28 11:37:36 by skuor             #+#    #+#             */
-/*   Updated: 2026/06/02 16:00:34 by skuor            ###   ########.fr       */
+/*   Updated: 2026/06/04 13:23:44 by skuor            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,36 +23,54 @@ class Channel {
 		std::string	getName() const;
 		std::string	getTopic() const;
 		std::string	getMode() const;
-		std::string	getChannelPassword() const;
+		std::string	getChannelKey() const;
 		int			getCapacityLimit() const;
+		std::vector<Client*>	getOpe() const;
+		std::vector<Client*>	getMembers() const;
+		std::vector<Client*>	getInviteList() const;
+		
 
 		void	write(const std::string & msg);
 
 		void	setName(std::string newName);
 		void	setTopic(std::string newTopic);
 		void	setMode(std::string newMode);
-		void	setPassword(std::string newPassword);
-
+		void	setKey(std::string newKey);
+		
 		void	addMember(Client* member);
 		void	removeMember(Client* member);
 		void	addOpe(Client* ope);
 		void	removeOpe(Client* ope);
-
+		void	addToInviteList(Client* invited);
+		void	removeFromInviteList(Client* member);
+		
 		bool	isMember(Client* client);
-		bool	isOpe(Client* client);		
+		bool	isOpe(Client* client);
+		bool	isInvited(Client* client);
+
 
 		
 	private:
 		std::string	_name;
 		std::string	_topic;
 		std::string	_mode;
-		std::string	_channelPassword;
+		std::string	_channelKey;
+		
 		
 		std::vector<Client*>	_operators;
 		std::vector<Client*>	_members;
+		std::vector<Client*>	_inviteList;
+
 
 		int	_capacityLimit;
 };
 
 
 #endif
+
+//MODES
+// · i: Set/remove Invite-only channel
+// · t: Set/remove the restrictions of the TOPIC command to channel operators
+// · k: Set/remove the channel key (password)
+// · o: Give/take channel operator privilege
+// · l: Set/remove the user limit to channel

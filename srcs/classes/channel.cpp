@@ -6,14 +6,14 @@
 /*   By: skuor <skuor@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/28 11:37:46 by skuor             #+#    #+#             */
-/*   Updated: 2026/06/02 16:00:30 by skuor            ###   ########.fr       */
+/*   Updated: 2026/06/04 09:25:54 by skuor            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/base.hpp"
 
 Channel::Channel(Client* client, std::string name)
-	: _name(name), _topic(""), _mode(""), _channelPassword(""), _capacityLimit(-1)
+	: _name(name), _topic(""), _mode(""), _channelKey(""), _capacityLimit(-1)
 {
 	addMember(client);
 	addOpe(client);
@@ -38,15 +38,31 @@ std::string	Channel::getMode() const
 	return _mode;
 }
 
-std::string	Channel::getChannelPassword() const
+std::string	Channel::getChannelKey() const
 {
-	return _channelPassword;
+	return _channelKey;
 }
 
 int			Channel::getCapacityLimit() const
 {
 	return _capacityLimit;
 }
+
+std::vector<Client*>	Channel::getOpe() const
+{
+	return _operators;
+}
+
+std::vector<Client*>	Channel::getMembers() const
+{
+	return _members;
+}
+
+std::vector<Client*>	Channel::getInviteList() const
+{
+	return _inviteList;
+}
+
 
 /* ************ Setters ************ */
 
@@ -65,9 +81,9 @@ void	Channel::setMode(std::string newMode)
 	this->_mode = newMode;
 }
 
-void	Channel::setPassword(std::string newPassword)
+void	Channel::setKey(std::string newKey)
 {
-	this->_channelPassword = newPassword;
+	this->_channelKey = newKey;
 }
 
 /* ************ Member functions ************ */
@@ -99,6 +115,20 @@ void	Channel::removeOpe(Client* ope)
 		_operators.erase(it);
 }
 
+void	Channel::addToInviteList(Client* invited)
+{
+	_inviteList.push_back(invited);
+}
+
+void	Channel::removeFromInviteList(Client* member)
+{
+	std::vector<Client*>::iterator	it = std::find(_inviteList.begin(), _inviteList.end(), member);
+	
+	if (it != _inviteList.end())
+		_inviteList.erase(it);
+}
+
+
 
 bool	Channel::isMember(Client* client)
 {
@@ -118,6 +148,20 @@ bool	Channel::isOpe(Client* client)
 {
 	std::vector<Client *>::iterator	it = _operators.begin();
 	std::vector<Client *>::iterator	ite = _operators.end();
+
+	while (ite != it)
+	{
+		if (*it == client)
+			return true;
+		++it;
+	}
+	return false;
+}
+
+bool	Channel::isInvited(Client* client)
+{
+	std::vector<Client *>::iterator	it = _inviteList.begin();
+	std::vector<Client *>::iterator	ite = _inviteList.end();
 
 	while (ite != it)
 	{

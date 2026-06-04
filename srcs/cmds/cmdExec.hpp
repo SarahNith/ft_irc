@@ -6,7 +6,7 @@
 /*   By: skuor <skuor@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/02 11:26:00 by skuor             #+#    #+#             */
-/*   Updated: 2026/06/03 19:27:15 by skuor            ###   ########.fr       */
+/*   Updated: 2026/06/04 16:04:37 by skuor            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,12 @@ class CmdExec {
 		Server*	_srv;
 
 		bool		checkRegistration(Client *c);
-		void		sendMsg(std::string msg, Client *c, std::string other = "");
+		void		sendMsg(std::string msg, Client *c, std::string other = "", Channel *ch = NULL);
+		void		sendToAll(std::string msg, Channel &ch);
+
+		void		sendNames(Client *c, Channel & ch);
+
+		
 		std::string	replaceAll(std::string msg, std::string toReplace, std::string strReplace);
 };
 
@@ -74,6 +79,14 @@ class CmdExec {
 # define ERR_432 RPL_PREFIX "432 <client> <nick> :Erroneus nickname"
 # define ERR_433 RPL_PREFIX "433 <client> <nick> :Nickname is already in use"
 
+//JOIN
+#define RPL_332 RPL_PREFIX "332 <client> <channel> :<topic>"
+#define RPL_366 RPL_PREFIX "366 <client> <channel> :End of /NAMES list"
+
+# define ERR_471 RPL_PREFIX "471 <client> <channel> :Cannot join channel (+l)"
+# define ERR_473 RPL_PREFIX "473 <client> <channel> :Cannot join channel (+i)"
+# define ERR_475 RPL_PREFIX "475 <client> <channel> :Cannot join channel (+k)"
+# define ERR_476 RPL_PREFIX "476 <client> <channel> :Bad Channel Mask"
 
 
 #endif
