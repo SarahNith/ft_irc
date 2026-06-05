@@ -6,7 +6,7 @@
 /*   By: skuor <skuor@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/04 17:32:09 by skuor             #+#    #+#             */
-/*   Updated: 2026/06/05 10:12:26 by skuor            ###   ########.fr       */
+/*   Updated: 2026/06/05 14:29:03 by skuor            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ void	CmdExec::privmsg(t_cmdParser & cmd, Client *c)
 	{
 		Client *dest = this->_srv->getClientByNick(cmd.params[0]);
 		if (!dest)
-			return (sendMsg(ERR_401, c));
+			return (sendMsg(ERR_401, c, cmd.params[0]));
 		sendMsg(msg, dest);
 	}
 }

@@ -6,7 +6,7 @@
 /*   By: skuor <skuor@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/05 10:39:14 by skuor             #+#    #+#             */
-/*   Updated: 2026/06/05 12:42:40 by skuor            ###   ########.fr       */
+/*   Updated: 2026/06/05 14:10:44 by skuor            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,21 +51,17 @@ void	CmdExec::kick(t_cmdParser & cmd, Client *c)
 
 	for (it = users.begin(); it != users.end(); it++)
 	{
+		std::string reason = cmd.trailing.empty() ? "You have been kicked" : cmd.trailing;
+		
 		std::string msg = ":" + c->getNickName() + "!" + c->getUserName() + "@" + c->getHostname()
-			+ " KICK " + cmd.params[0] + *it;
-			
-		std::string msgWithCom = ":" + c->getNickName() + "!" + c->getUserName() + "@" + c->getHostname()
-			+ " KICK " + cmd.params[0] + *it + " :" + cmd.trailing;
+			+ " KICK " + cmd.params[0] + " " + *it + " :" + reason;
 			
 		Client *dest = this->_srv->getClientByNick(*it);
 		if (!dest || !chan->isMember(dest))
 			sendMsg(ERR_441, c, *it, chan);
 		else
 		{
-			if (cmd.trailing.empty())
-				sendToAllExcept(msg, *chan, c);
-			else
-				sendToAllExcept(msgWithCom, *chan, c);
+			sendToAll(msg, *chan);
 			chan->removeMember(dest);
 		}
 	}

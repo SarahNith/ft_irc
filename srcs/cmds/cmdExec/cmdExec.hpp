@@ -6,7 +6,7 @@
 /*   By: skuor <skuor@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/02 11:26:00 by skuor             #+#    #+#             */
-/*   Updated: 2026/06/05 11:16:36 by skuor            ###   ########.fr       */
+/*   Updated: 2026/06/05 14:27:33 by skuor            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,7 +89,7 @@ class CmdExec {
 # define ERR_476 RPL_PREFIX "476 <client> <channel> :Bad Channel Mask"
 
 //PRIVMSG
-# define ERR_401 RPL_PREFIX "401 <client> <nickname> :No such nick"
+# define ERR_401 RPL_PREFIX "401 <client> <nick> :No such nick"
 # define ERR_403 RPL_PREFIX "403 <client> <channel> :No such channel"
 # define ERR_404 RPL_PREFIX "404 <client> <channel> :Cannot send to channel"
 # define ERR_411 RPL_PREFIX "411 <client> :No recipient given (<command>)"
@@ -99,4 +99,8 @@ class CmdExec {
 # define ERR_441 RPL_PREFIX "441 <client> <nick> <channel> :They aren't on that channel"
 # define ERR_442 RPL_PREFIX "442 <client> <channel> :You're not on that channel"
 # define ERR_482 RPL_PREFIX "482 <client> <channel> :You're not channel operator"
+
+//INVITE
+# define RPL_341 RPL_PREFIX "341 <client> <nick> <channel>"
+# define ERR_443 RPL_PREFIX "443 <client> <nick> <channel> :is already on channel"
 #endif

@@ -6,7 +6,7 @@
 /*   By: skuor <skuor@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/28 11:37:36 by skuor             #+#    #+#             */
-/*   Updated: 2026/06/05 10:09:34 by skuor            ###   ########.fr       */
+/*   Updated: 2026/06/05 14:56:32 by skuor            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,8 +48,6 @@ class Channel {
 		bool	isMember(Client* client);
 		bool	isOpe(Client* client);
 		bool	isInvited(Client* client);
-
-
 		
 	private:
 		std::string	_name;
