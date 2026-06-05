@@ -6,7 +6,7 @@
 /*   By: skuor <skuor@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/04 09:12:19 by skuor             #+#    #+#             */
-/*   Updated: 2026/06/05 10:12:09 by skuor            ###   ########.fr       */
+/*   Updated: 2026/06/05 11:29:02 by skuor            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,8 +83,7 @@ void	CmdExec::join(t_cmdParser & cmd, Client *c)
 {
 	if (cmd.params.size() < 1)
 		return (sendMsg(ERR_461, c, "JOIN"));
-
-			
+		
 	std::map<std::string, std::string> channels = parsingJoin(cmd);
 	std::map<std::string, std::string>::iterator it = channels.begin();
 	std::map<std::string, Channel> &chansList = this->_srv->getChannels();

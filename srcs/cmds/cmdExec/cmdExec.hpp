@@ -6,7 +6,7 @@
 /*   By: skuor <skuor@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/02 11:26:00 by skuor             #+#    #+#             */
-/*   Updated: 2026/06/05 10:03:54 by skuor            ###   ########.fr       */
+/*   Updated: 2026/06/05 11:16:36 by skuor            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,6 @@ class CmdExec {
 		~CmdExec();
 
 		void	execute(t_cmdParser & cmd, Client *Client);
-			
 
 	private:
 	
@@ -96,5 +95,8 @@ class CmdExec {
 # define ERR_411 RPL_PREFIX "411 <client> :No recipient given (<command>)"
 # define ERR_412 RPL_PREFIX "412 <client> :No text to send"
 
-
+//KICK
+# define ERR_441 RPL_PREFIX "441 <client> <nick> <channel> :They aren't on that channel"
+# define ERR_442 RPL_PREFIX "442 <client> <channel> :You're not on that channel"
+# define ERR_482 RPL_PREFIX "482 <client> <channel> :You're not channel operator"
 #endif
