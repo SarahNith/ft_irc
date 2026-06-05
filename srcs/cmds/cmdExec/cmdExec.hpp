@@ -6,7 +6,7 @@
 /*   By: skuor <skuor@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/02 11:26:00 by skuor             #+#    #+#             */
-/*   Updated: 2026/06/05 15:07:46 by skuor            ###   ########.fr       */
+/*   Updated: 2026/06/05 18:30:41 by skuor            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,6 +106,13 @@ class CmdExec {
 
 //TOPIC
 # define RPL_331 RPL_PREFIX "331 <client> <channel> :No topic is set"
-# define RPL_332 RPL_PREFIX "332 <client> <channel> :<topic>"
+
+//MODE
+// # define RPL_221 RPL_PREFIX "221 <client> <modes>"
+// # define RPL_324 RPL_PREFIX "324 <client> <channel> <modestring> <mode arguments>..."
+
+# define ERR_501 RPL_PREFIX "501 <client> :Unknown MODE flag"
+# define ERR_502 RPL_PREFIX "502 <client> :Cant change mode for other users"
+
 
 #endif

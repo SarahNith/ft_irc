@@ -6,7 +6,7 @@
 /*   By: skuor <skuor@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/05 14:13:15 by skuor             #+#    #+#             */
-/*   Updated: 2026/06/05 14:55:35 by skuor            ###   ########.fr       */
+/*   Updated: 2026/06/05 16:50:15 by skuor            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ void	CmdExec::invite(t_cmdParser & cmd, Client *c)
 	if (!chan->isMember(c))
 		return (sendMsg(ERR_442, c, "", chan));
 
-	if (chan->getMode().find('i') != std::string::npos)
+	if (chan->isInviteOnly())
 	{
 		if (!chan->isOpe(c))
 			return (sendMsg(ERR_482, c, "", chan));

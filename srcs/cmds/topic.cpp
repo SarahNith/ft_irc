@@ -6,7 +6,7 @@
 /*   By: skuor <skuor@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/05 15:08:09 by skuor             #+#    #+#             */
-/*   Updated: 2026/06/05 15:48:37 by skuor            ###   ########.fr       */
+/*   Updated: 2026/06/05 16:41:14 by skuor            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ void	CmdExec::topic(t_cmdParser & cmd, Client *c)
 	}
 	else
 	{
-		if (chan->getMode().find('t') != std::string::npos)
+		if (chan->hasTopicRestriction())
 		{
 			if (!chan->isOpe(c))
 				return (sendMsg(ERR_482, c, "", chan));

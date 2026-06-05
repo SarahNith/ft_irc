@@ -6,7 +6,7 @@
 /*   By: skuor <skuor@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/27 11:03:54 by skuor             #+#    #+#             */
-/*   Updated: 2026/06/05 10:02:46 by skuor            ###   ########.fr       */
+/*   Updated: 2026/06/05 17:04:12 by skuor            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,9 +76,6 @@ class Client {
 
 		std::string	_readBuff; //stocke donnees recues du clients pas encore traitees
 		std::string	_toSendBuff; //stocke donnees en attente d'etre envoyees au client;
-		
-		std::string	_userMode;
-
 };
 
 #endif

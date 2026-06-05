@@ -6,7 +6,7 @@
 /*   By: skuor <skuor@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/28 11:37:46 by skuor             #+#    #+#             */
-/*   Updated: 2026/06/05 14:58:45 by skuor            ###   ########.fr       */
+/*   Updated: 2026/06/05 16:40:01 by skuor            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,12 @@
 Channel::Channel() {}
 
 Channel::Channel(Client* client, std::string name)
-	: _name(name), _topic(""), _mode(""), _channelKey(""), _capacityLimit(-1)
+	: _name(name), _topic("")
 {
+	_chanModes.inviteOnly = false;
+	_chanModes.topicRestriction = false;
+	_chanModes.key = "";
+	_chanModes.limit = 0;
 	addMember(client);
 	addOpe(client);
 }
@@ -35,20 +39,31 @@ std::string	Channel::getTopic() const
 	return _topic;
 }
 
-std::string	Channel::getMode() const
-{
-	return _mode;
-}
+// std::string	Channel::getMode() const
+// {
+// 	return _mode;
+// }
 
 std::string	Channel::getChannelKey() const
 {
-	return _channelKey;
+	return _chanModes.key;
 }
 
 size_t		Channel::getCapacityLimit() const
 {
-	return _capacityLimit;
+	return _chanModes.limit;
 }
+
+bool	Channel::isInviteOnly() const
+{
+	return _chanModes.inviteOnly;
+}
+
+bool	Channel::hasTopicRestriction() const
+{
+	return _chanModes.topicRestriction;
+}
+
 
 std::vector<Client*>	Channel::getOpe() const
 {
@@ -78,15 +93,31 @@ void	Channel::setTopic(std::string newTopic)
 	this->_topic = newTopic;
 }
 
-void	Channel::setMode(std::string newMode)
-{
-	this->_mode = newMode;
-}
+// void	Channel::setMode(std::string newMode)
+// {
+// 	this->_mode = newMode;
+// }
 
 void	Channel::setKey(std::string newKey)
 {
-	this->_channelKey = newKey;
+	this->_chanModes.key = newKey;
 }
+
+void	Channel::setLimitCapacity(size_t newLimit)
+{
+	this->_chanModes.limit = newLimit;
+}
+
+void	Channel::setInviteOnly(bool isInviteOnly)
+{
+	this->_chanModes.inviteOnly = isInviteOnly;
+}
+
+void	Channel::setTopicRestriction(bool hasTopRestriction)
+{
+	this->_chanModes.topicRestriction = hasTopRestriction;
+}
+
 
 /* ************ Member functions ************ */
 

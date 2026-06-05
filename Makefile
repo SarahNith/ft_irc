@@ -18,15 +18,14 @@ CLASSES_FILES = channel.cpp client.cpp server.cpp
 CMDEXEC_FILES = cmdExec.cpp sendMsg.cpp
 
 CMD_FILES = join.cpp nick.cpp pass.cpp privmsg.cpp \
-			user.cpp kick.cpp invite.cpp topic.cpp
-
+			user.cpp kick.cpp invite.cpp topic.cpp \
+			mode.cpp
 
 #SRC = $(addprefix $(SRC_DIR), $(SRC_FILES))
 OBJ = $(addprefix $(OBJ_DIR), $(SRC_FILES:.cpp=.o)) \
 	  $(addprefix $(OBJ_DIR), $(CLASSES_FILES:.cpp=.o)) \
 	  $(addprefix $(OBJ_DIR), $(CMD_FILES:.cpp=.o)) \
 	  $(addprefix $(OBJ_DIR), $(CMDEXEC_FILES:.cpp=.o))
-
 
 
 INCLUDES = -I $(INC_DIR)

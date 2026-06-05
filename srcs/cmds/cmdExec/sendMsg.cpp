@@ -6,7 +6,7 @@
 /*   By: skuor <skuor@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/04 18:16:42 by skuor             #+#    #+#             */
-/*   Updated: 2026/06/05 10:37:20 by skuor            ###   ########.fr       */
+/*   Updated: 2026/06/05 17:31:06 by skuor            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,10 @@ void	CmdExec::sendMsg(std::string msg, Client *c, std::string other, Channel *ch
 	if (other.empty())
 		newMsg = replaceAll(newMsg, "<nick>", c->getNickName());
 	else
+	{
 		newMsg = replaceAll(newMsg, "<nick>", other);
+		newMsg = replaceAll(newMsg, "<channel>", other);
+	}
 	newMsg = replaceAll(newMsg, "<user>", c->getUserName());
 	newMsg = replaceAll(newMsg, "<host>", c->getHostname());
 	if (ch != NULL)

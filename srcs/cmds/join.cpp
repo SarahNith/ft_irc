@@ -6,7 +6,7 @@
 /*   By: skuor <skuor@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/04 09:12:19 by skuor             #+#    #+#             */
-/*   Updated: 2026/06/05 15:35:57 by skuor            ###   ########.fr       */
+/*   Updated: 2026/06/05 16:49:39 by skuor            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,7 @@ void	CmdExec::join(t_cmdParser & cmd, Client *c)
 	if (cmd.params.size() < 1)
 		return (sendMsg(ERR_461, c, "JOIN"));
 		
-	std::map<std::string, std::string> channels = parsingJoin(cmd);
+	std::map<std::string, std::string> channels = parsingJoin(cmd); // chan, key
 	std::map<std::string, std::string>::iterator it = channels.begin();
 	std::map<std::string, Channel> &chansList = this->_srv->getChannels();
 
@@ -136,7 +136,7 @@ void	CmdExec::join(t_cmdParser & cmd, Client *c)
 			else
 			{
 				//chan sur invitation
-				if (itSrv->second.getMode().find('i') != std::string::npos)
+				if (itSrv->second.isInviteOnly())
 				{
 					if (!itSrv->second.isInvited(c))
 					{
@@ -146,7 +146,7 @@ void	CmdExec::join(t_cmdParser & cmd, Client *c)
 					}
 				}
 				//chan avec mdp
-				if (itSrv->second.getMode().find('k') != std::string::npos)
+				if (!itSrv->second.getChannelKey().empty())
 				{
 					if (it->second != itSrv->second.getChannelKey())
 					{
@@ -156,7 +156,7 @@ void	CmdExec::join(t_cmdParser & cmd, Client *c)
 					}
 				}
 				//chan avec limitation nb mb
-				if (itSrv->second.getMode().find('l') != std::string::npos)
+				if (itSrv->second.getCapacityLimit())
 				{
 					if (itSrv->second.getMembers().size() >= itSrv->second.getCapacityLimit())
 					{
