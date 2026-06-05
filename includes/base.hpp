@@ -2,6 +2,7 @@
 # define BASE_HPP
 
 #include <string>
+#include <cstring>
 #include <fstream>
 #include <iostream>
 #include <stdlib.h>
@@ -23,9 +24,9 @@
 #include <poll.h>
 
 //class
-#include "../srcs/classes/server.hpp"
 #include "../srcs/classes/client.hpp"
 #include "../srcs/classes/channel.hpp"
+#include "../srcs/classes/server.hpp"
 
 # define SERVER_NAME "ircserv"
 

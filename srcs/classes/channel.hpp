@@ -6,7 +6,7 @@
 /*   By: skuor <skuor@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/28 11:37:36 by skuor             #+#    #+#             */
-/*   Updated: 2026/06/04 13:23:44 by skuor            ###   ########.fr       */
+/*   Updated: 2026/06/05 10:09:34 by skuor            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 
 class Channel {
 	public:
+		Channel();
 		Channel(Client* client, std::string name);
 		~Channel();
 
@@ -24,7 +25,7 @@ class Channel {
 		std::string	getTopic() const;
 		std::string	getMode() const;
 		std::string	getChannelKey() const;
-		int			getCapacityLimit() const;
+		size_t			getCapacityLimit() const;
 		std::vector<Client*>	getOpe() const;
 		std::vector<Client*>	getMembers() const;
 		std::vector<Client*>	getInviteList() const;
@@ -62,7 +63,7 @@ class Channel {
 		std::vector<Client*>	_inviteList;
 
 
-		int	_capacityLimit;
+		size_t	_capacityLimit;
 };
 
 

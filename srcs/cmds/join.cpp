@@ -6,11 +6,11 @@
 /*   By: skuor <skuor@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/04 09:12:19 by skuor             #+#    #+#             */
-/*   Updated: 2026/06/04 17:48:09 by skuor            ###   ########.fr       */
+/*   Updated: 2026/06/05 10:12:09 by skuor            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cmdExec.hpp"
+#include "cmdExec/cmdExec.hpp"
 
 std::map<std::string, std::string>	parsingJoin(t_cmdParser & cmd)
 {
@@ -121,7 +121,8 @@ void	CmdExec::join(t_cmdParser & cmd, Client *c)
 		if (itSrv == chansList.end()) //chan n'existe pas encore
 		{
 			//je cree un nouveau chan et ajoute le user en tant que member et ope
-			chansList[it->first] = Channel(c, it->first);
+			// chansList[it->first] = Channel(c, it->first);
+			chansList.insert(std::make_pair(it->first, Channel(c, it->first)));
 			sendToAll(msg, chansList[it->first]);
 			sendNames(c, chansList[it->first]);
 			it++;

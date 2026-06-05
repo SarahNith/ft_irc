@@ -6,7 +6,7 @@
 /*   By: skuor <skuor@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/04 18:16:42 by skuor             #+#    #+#             */
-/*   Updated: 2026/06/04 18:21:58 by skuor            ###   ########.fr       */
+/*   Updated: 2026/06/05 10:37:20 by skuor            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,16 @@ void	CmdExec::sendMsg(std::string msg, Client *c, std::string other, Channel *ch
 	}
 	
 	std::string fullMsg = newMsg + "\r\n";
-	send(c->getClientFd(), fullMsg.c_str(), fullMsg.size(), 0);
+	size_t	fullSize = fullMsg.size();
+	size_t	sent = 0;
+	
+	while (sent < fullSize)
+	{
+		ssize_t n = send(c->getClientFd(), fullMsg.c_str() + sent, fullSize - sent, 0);
+		if (n == -1)
+			return ;
+		sent += n;
+	}
 }
 
 void		CmdExec::sendToAll(std::string msg, Channel &ch)

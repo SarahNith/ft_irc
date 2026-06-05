@@ -6,7 +6,7 @@
 /*   By: skuor <skuor@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/26 12:00:32 by agouin            #+#    #+#             */
-/*   Updated: 2026/06/04 16:51:22 by skuor            ###   ########.fr       */
+/*   Updated: 2026/06/05 09:59:59 by skuor            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,6 @@ int is_port_correct(std::string str)
 	return (0);
 }
 
-#include "cmds/cmdExec.hpp"
 
 int main(int argc, char **argv)//peut etre env si on veut avoir lheure
 {

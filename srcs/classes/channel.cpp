@@ -6,11 +6,13 @@
 /*   By: skuor <skuor@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/28 11:37:46 by skuor             #+#    #+#             */
-/*   Updated: 2026/06/04 09:25:54 by skuor            ###   ########.fr       */
+/*   Updated: 2026/06/05 10:09:51 by skuor            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/base.hpp"
+
+Channel::Channel() {}
 
 Channel::Channel(Client* client, std::string name)
 	: _name(name), _topic(""), _mode(""), _channelKey(""), _capacityLimit(-1)
@@ -43,7 +45,7 @@ std::string	Channel::getChannelKey() const
 	return _channelKey;
 }
 
-int			Channel::getCapacityLimit() const
+size_t		Channel::getCapacityLimit() const
 {
 	return _capacityLimit;
 }

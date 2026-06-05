@@ -8,19 +8,24 @@ SRC_DIR = ./srcs/
 OBJ_DIR = ./obj/
 INC_DIR = ./includes/
 CMDS_DIR = $(SRC_DIR)cmds/
+CMDEXEC_DIR = $(SRC_DIR)cmds/cmdExec/
 CLASSES_DIR = $(SRC_DIR)classes/
 
 SRC_FILES = main.cpp parsing.cpp
 
 CLASSES_FILES = channel.cpp client.cpp server.cpp
 
-CMDS_FILES = cmdExec.cpp
+CMDEXEC_FILES = cmdExec.cpp sendMsg.cpp
+
+CMD_FILES = join.cpp nick.cpp pass.cpp privmsg.cpp user.cpp
 
 
 #SRC = $(addprefix $(SRC_DIR), $(SRC_FILES))
 OBJ = $(addprefix $(OBJ_DIR), $(SRC_FILES:.cpp=.o)) \
 	  $(addprefix $(OBJ_DIR), $(CLASSES_FILES:.cpp=.o)) \
-	  $(addprefix $(OBJ_DIR), $(CMDS_FILES:.cpp=.o))
+	  $(addprefix $(OBJ_DIR), $(CMD_FILES:.cpp=.o)) \
+	  $(addprefix $(OBJ_DIR), $(CMDEXEC_FILES:.cpp=.o))
+
 
 
 INCLUDES = -I $(INC_DIR)
@@ -53,6 +58,10 @@ $(OBJ_DIR)%.o: $(CLASSES_DIR)%.cpp | $(OBJ_DIR)
 	@$(CXX) $(CXXFLAGS) $(INCLUDES) -c -o $@ $<
 
 $(OBJ_DIR)%.o: $(CMDS_DIR)%.cpp | $(OBJ_DIR)
+	@echo -e "$(YELLOW)Compiling: $< $(DEF_COLOR)"
+	@$(CXX) $(CXXFLAGS) $(INCLUDES) -c -o $@ $<
+
+$(OBJ_DIR)%.o: $(CMDEXEC_DIR)%.cpp | $(OBJ_DIR)
 	@echo -e "$(YELLOW)Compiling: $< $(DEF_COLOR)"
 	@$(CXX) $(CXXFLAGS) $(INCLUDES) -c -o $@ $<
 

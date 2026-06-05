@@ -6,11 +6,11 @@
 /*   By: skuor <skuor@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/03 10:59:08 by skuor             #+#    #+#             */
-/*   Updated: 2026/06/03 19:00:13 by skuor            ###   ########.fr       */
+/*   Updated: 2026/06/05 10:12:18 by skuor            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cmdExec.hpp"
+#include "cmdExec/cmdExec.hpp"
 
 static bool	validNickname(std::string nickname)
 {
@@ -20,7 +20,7 @@ static bool	validNickname(std::string nickname)
 		return false;
 	for (size_t i = 0; i < nickname.length(); i++)
 	{
-		if (!(isalpha(nickname[i]) || isdigit(nickname[i]) || strchr("[]{}\\|", nickname[i])))
+		if (!(isalpha(nickname[i]) || isdigit(nickname[i]) || std::strchr("[]{}\\|", nickname[i])))
 			return false;
 	}
 	if (isdigit(nickname[0]) || nickname[0] == '#' || nickname[0] == ':')

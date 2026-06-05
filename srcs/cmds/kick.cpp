@@ -1,27 +1,14 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   user.cpp                                           :+:      :+:    :+:   */
+/*   kick.cpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: skuor <skuor@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/06/03 19:20:00 by skuor             #+#    #+#             */
-/*   Updated: 2026/06/05 10:12:28 by skuor            ###   ########.fr       */
+/*   Created: 2026/06/05 10:39:14 by skuor             #+#    #+#             */
+/*   Updated: 2026/06/05 10:39:25 by skuor            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cmdExec/cmdExec.hpp"
 
-void	CmdExec::user(t_cmdParser & cmd, Client *c)
-{
-	if (cmd.params.size() < 3 || cmd.trailing.empty() || cmd.params[0].empty())
-		return (sendMsg(ERR_461, c, "USER"));
-	if (c->getCompleteRegis())
-		return (sendMsg(ERR_462, c));
-
-	c->setUserName(cmd.params[0]);
-	c->setRealName(cmd.trailing);
-	
-	c->setHasUser(true);
-	checkRegistration(c);
-}

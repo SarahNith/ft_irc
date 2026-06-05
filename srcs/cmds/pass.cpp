@@ -6,11 +6,11 @@
 /*   By: skuor <skuor@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/03 10:59:52 by skuor             #+#    #+#             */
-/*   Updated: 2026/06/03 18:55:09 by skuor            ###   ########.fr       */
+/*   Updated: 2026/06/05 10:12:22 by skuor            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cmdExec.hpp"
+#include "cmdExec/cmdExec.hpp"
 
 void	CmdExec::pass(t_cmdParser & cmd, Client *c)
 {

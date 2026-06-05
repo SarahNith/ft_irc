@@ -6,11 +6,11 @@
 /*   By: skuor <skuor@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/04 17:32:09 by skuor             #+#    #+#             */
-/*   Updated: 2026/06/04 18:30:14 by skuor            ###   ########.fr       */
+/*   Updated: 2026/06/05 10:12:26 by skuor            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cmdExec.hpp"
+#include "cmdExec/cmdExec.hpp"
 
 void	CmdExec::privmsg(t_cmdParser & cmd, Client *c)
 {
