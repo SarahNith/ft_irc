@@ -6,7 +6,7 @@
 /*   By: skuor <skuor@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/04 09:12:19 by skuor             #+#    #+#             */
-/*   Updated: 2026/06/05 11:29:02 by skuor            ###   ########.fr       */
+/*   Updated: 2026/06/05 15:35:57 by skuor            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,6 @@ void	CmdExec::sendNames(Client *c, Channel & ch)
 	std::vector<Client*>::iterator ite = members.end();
 
 	std::string nickList;
-	
 	
 	for (it = members.begin(); it != ite; it++)
 	{

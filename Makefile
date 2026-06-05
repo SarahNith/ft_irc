@@ -18,7 +18,7 @@ CLASSES_FILES = channel.cpp client.cpp server.cpp
 CMDEXEC_FILES = cmdExec.cpp sendMsg.cpp
 
 CMD_FILES = join.cpp nick.cpp pass.cpp privmsg.cpp \
-			user.cpp kick.cpp invite.cpp
+			user.cpp kick.cpp invite.cpp topic.cpp
 
 
 #SRC = $(addprefix $(SRC_DIR), $(SRC_FILES))

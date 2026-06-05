@@ -6,7 +6,7 @@
 /*   By: skuor <skuor@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/04 17:32:09 by skuor             #+#    #+#             */
-/*   Updated: 2026/06/05 14:29:03 by skuor            ###   ########.fr       */
+/*   Updated: 2026/06/05 15:10:50 by skuor            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ void	CmdExec::privmsg(t_cmdParser & cmd, Client *c)
 	if (cmd.params[0][0] == '#')
 	{
 		Channel *chan = this->_srv->getChannelByName(cmd.params[0]);
-		if (chan == NULL)
+		if (!chan)
 			return (sendMsg(ERR_403, c, "", chan));
 
 		if (!chan->isMember(c))

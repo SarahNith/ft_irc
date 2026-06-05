@@ -6,7 +6,7 @@
 /*   By: skuor <skuor@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/02 11:26:00 by skuor             #+#    #+#             */
-/*   Updated: 2026/06/05 14:27:33 by skuor            ###   ########.fr       */
+/*   Updated: 2026/06/05 15:07:46 by skuor            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,4 +103,9 @@ class CmdExec {
 //INVITE
 # define RPL_341 RPL_PREFIX "341 <client> <nick> <channel>"
 # define ERR_443 RPL_PREFIX "443 <client> <nick> <channel> :is already on channel"
+
+//TOPIC
+# define RPL_331 RPL_PREFIX "331 <client> <channel> :No topic is set"
+# define RPL_332 RPL_PREFIX "332 <client> <channel> :<topic>"
+
 #endif
