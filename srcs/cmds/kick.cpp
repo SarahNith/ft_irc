@@ -6,7 +6,7 @@
 /*   By: skuor <skuor@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/05 10:39:14 by skuor             #+#    #+#             */
-/*   Updated: 2026/06/05 14:10:44 by skuor            ###   ########.fr       */
+/*   Updated: 2026/06/06 12:24:59 by skuor            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,9 +52,9 @@ void	CmdExec::kick(t_cmdParser & cmd, Client *c)
 	for (it = users.begin(); it != users.end(); it++)
 	{
 		std::string reason = cmd.trailing.empty() ? "You have been kicked" : cmd.trailing;
+		std::string prefix = prefixStr(c);
 		
-		std::string msg = ":" + c->getNickName() + "!" + c->getUserName() + "@" + c->getHostname()
-			+ " KICK " + cmd.params[0] + " " + *it + " :" + reason;
+		std::string msg = prefix + " KICK " + cmd.params[0] + " " + *it + " :" + reason;
 			
 		Client *dest = this->_srv->getClientByNick(*it);
 		if (!dest || !chan->isMember(dest))
@@ -63,6 +63,8 @@ void	CmdExec::kick(t_cmdParser & cmd, Client *c)
 		{
 			sendToAll(msg, *chan);
 			chan->removeMember(dest);
+			if (chan->isOpe(dest))
+				chan->removeOpe(dest);
 		}
 	}
 	return ;

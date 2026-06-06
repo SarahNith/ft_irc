@@ -6,7 +6,7 @@
 /*   By: skuor <skuor@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/04 09:12:19 by skuor             #+#    #+#             */
-/*   Updated: 2026/06/05 16:49:39 by skuor            ###   ########.fr       */
+/*   Updated: 2026/06/06 12:43:09 by skuor            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,11 +15,15 @@
 std::map<std::string, std::string>	parsingJoin(t_cmdParser & cmd)
 {
 	std::map<std::string, std::string> channels;
-	
-	std::string chanStr = cmd.params[0];
-	std::string	keyStr = cmd.params[1];
 	if (cmd.params.empty())
 		return channels;
+	
+	
+	std::string chanStr = cmd.params[0];
+	std::string keyStr = "";
+	if (cmd.params.size() >= 2)
+		keyStr = cmd.params[1];
+		
 
 	std::vector<std::string> chans;
 	std::vector<std::string> keys;
@@ -88,6 +92,8 @@ void	CmdExec::join(t_cmdParser & cmd, Client *c)
 	std::map<std::string, Channel> &chansList = this->_srv->getChannels();
 
 	std::map<std::string, Channel>::iterator it1;
+
+	std::string prefix = prefixStr(c);
 	
 	if (cmd.params[0] == "0")
 	{
@@ -95,8 +101,7 @@ void	CmdExec::join(t_cmdParser & cmd, Client *c)
 		{
 			if (it1->second.isMember(c))
 			{
-				std::string partMsg = ":" + c->getNickName() + "!" + c->getUserName() + "@" + c->getHostname()
-					+ " PART " + it1->first;
+				std::string partMsg = prefix + " PART " + it1->first;
 				sendToAll(partMsg, it1->second);
 				it1->second.removeMember(c);
 				it1->second.removeOpe(c);
@@ -113,8 +118,8 @@ void	CmdExec::join(t_cmdParser & cmd, Client *c)
 			it++;
 			continue ;
 		}
-		std::string msg = ":" + c->getNickName() + "!" + c->getUserName() + "@" + c->getHostname()
-					+ " JOIN " + it->first;
+		
+		std::string msg = prefix + " JOIN " + it->first;
 		std::map<std::string, Channel>::iterator itSrv = chansList.find(it->first);
 		if (itSrv == chansList.end()) //chan n'existe pas encore
 		{

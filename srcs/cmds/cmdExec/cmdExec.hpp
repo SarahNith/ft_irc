@@ -6,7 +6,7 @@
 /*   By: skuor <skuor@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/02 11:26:00 by skuor             #+#    #+#             */
-/*   Updated: 2026/06/05 18:30:41 by skuor            ###   ########.fr       */
+/*   Updated: 2026/06/06 11:53:05 by skuor            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,9 +59,12 @@ class CmdExec {
 		void		sendMsg(std::string msg, Client *c, std::string other = "", Channel *ch = NULL);
 		void		sendToAll(std::string msg, Channel &ch);
 		void		sendToAllExcept(std::string msg, Channel &ch, Client *Except);
+		std::string	prefixStr(Client *c);
+
 
 		void		sendNames(Client *c, Channel & ch);
 
+		void		assignModes(t_cmdParser & cmd, Channel *chan, Client *c);
 		
 		std::string	replaceAll(std::string msg, std::string toReplace, std::string strReplace);
 };

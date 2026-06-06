@@ -6,7 +6,7 @@
 /*   By: skuor <skuor@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/05 14:13:15 by skuor             #+#    #+#             */
-/*   Updated: 2026/06/05 16:50:15 by skuor            ###   ########.fr       */
+/*   Updated: 2026/06/06 11:55:48 by skuor            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,8 +39,8 @@ void	CmdExec::invite(t_cmdParser & cmd, Client *c)
 	
 	sendMsg(RPL_341, c, toInvite->getNickName(), chan);
 
-	std::string inviteMsg = ":" + c->getNickName() + "!" + c->getUserName() + "@" + c->getHostname()
-		+ " INVITE " + toInvite->getNickName() + " " + chan->getName();
+	std::string prefix = prefixStr(c);
+	std::string inviteMsg = prefix + " INVITE " + toInvite->getNickName() + " " + chan->getName();
 	
 	sendMsg(inviteMsg, toInvite);
 	chan->addToInviteList(toInvite);

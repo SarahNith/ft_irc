@@ -6,7 +6,7 @@
 /*   By: skuor <skuor@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/04 18:16:42 by skuor             #+#    #+#             */
-/*   Updated: 2026/06/05 17:31:06 by skuor            ###   ########.fr       */
+/*   Updated: 2026/06/06 11:54:55 by skuor            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,4 +69,11 @@ void		CmdExec::sendToAllExcept(std::string msg, Channel &ch, Client *Except)
 		if (*it != Except)
 			sendMsg(msg, *it, "", &ch);
 	}
+}
+
+std::string	CmdExec::prefixStr(Client *c)
+{
+	std::string prefix = ":" + c->getNickName() + "!" + c->getUserName() + "@" + c->getHostname();
+
+	return prefix;
 }

@@ -6,7 +6,7 @@
 /*   By: skuor <skuor@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/02 11:25:52 by skuor             #+#    #+#             */
-/*   Updated: 2026/06/04 18:17:10 by skuor            ###   ########.fr       */
+/*   Updated: 2026/06/06 12:39:26 by skuor            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -130,6 +130,8 @@ bool	CmdExec::checkRegistration(Client *c)
 		return false;
 	else
 	{
+		if (c->getCompleteRegis())
+			return true;
 		sendMsg(RPL_001, c);
 		c->setCompleteRegis(true);
 	}

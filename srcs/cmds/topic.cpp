@@ -6,7 +6,7 @@
 /*   By: skuor <skuor@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/05 15:08:09 by skuor             #+#    #+#             */
-/*   Updated: 2026/06/05 16:41:14 by skuor            ###   ########.fr       */
+/*   Updated: 2026/06/06 12:35:45 by skuor            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,18 +40,18 @@ void	CmdExec::topic(t_cmdParser & cmd, Client *c)
 				return (sendMsg(ERR_482, c, "", chan));
 		}
 
+		std::string prefix = prefixStr(c);
+		
 		if (cmd.trailing == " ")
 		{
 			chan->setTopic("");
-			std::string clearTopicMsg = ":" + c->getNickName() + "!" + c->getUserName() + "@" + c->getHostname()
-				+ " TOPIC " + chan->getName() + " :";
+			std::string clearTopicMsg = prefix + " TOPIC " + chan->getName() + " :";
 			sendToAll(clearTopicMsg, *chan);
 		}
 		else
 		{
 			chan->setTopic(cmd.trailing);
-			std::string newTopicMsg = ":" + c->getNickName() + "!" + c->getUserName() + "@" + c->getHostname()
-				+ " TOPIC " + chan->getName() + " :" + cmd.trailing;
+			std::string newTopicMsg = prefix + " TOPIC " + chan->getName() + " :" + cmd.trailing;
 
 			sendToAll(newTopicMsg, *chan);
 		}

@@ -6,7 +6,7 @@
 /*   By: skuor <skuor@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/04 17:32:09 by skuor             #+#    #+#             */
-/*   Updated: 2026/06/05 17:31:28 by skuor            ###   ########.fr       */
+/*   Updated: 2026/06/06 11:59:37 by skuor            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,8 @@ void	CmdExec::privmsg(t_cmdParser & cmd, Client *c)
 	if (cmd.trailing.empty())
 		return (sendMsg(ERR_412, c));
 
-	std::string msg = ":" + c->getNickName() + "!" + c->getUserName() + "@" + c->getHostname()
-		+ " PRIVMSG " + cmd.params[0] + " :" + cmd.trailing;
+	std::string prefix = prefixStr(c);
+	std::string msg = prefix + " PRIVMSG " + cmd.params[0] + " :" + cmd.trailing;
 		
 	if (cmd.params[0][0] == '#')
 	{
