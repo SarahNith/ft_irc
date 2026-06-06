@@ -6,7 +6,7 @@
 /*   By: skuor <skuor@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/28 11:37:46 by skuor             #+#    #+#             */
-/*   Updated: 2026/06/05 16:40:01 by skuor            ###   ########.fr       */
+/*   Updated: 2026/06/06 18:18:12 by skuor            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,11 +39,6 @@ std::string	Channel::getTopic() const
 	return _topic;
 }
 
-// std::string	Channel::getMode() const
-// {
-// 	return _mode;
-// }
-
 std::string	Channel::getChannelKey() const
 {
 	return _chanModes.key;
@@ -64,7 +59,6 @@ bool	Channel::hasTopicRestriction() const
 	return _chanModes.topicRestriction;
 }
 
-
 std::vector<Client*>	Channel::getOpe() const
 {
 	return _operators;
@@ -80,7 +74,6 @@ std::vector<Client*>	Channel::getInviteList() const
 	return _inviteList;
 }
 
-
 /* ************ Setters ************ */
 
 void	Channel::setName(std::string newName)
@@ -92,11 +85,6 @@ void	Channel::setTopic(std::string newTopic)
 {
 	this->_topic = newTopic;
 }
-
-// void	Channel::setMode(std::string newMode)
-// {
-// 	this->_mode = newMode;
-// }
 
 void	Channel::setKey(std::string newKey)
 {
@@ -161,8 +149,6 @@ void	Channel::removeFromInviteList(Client* member)
 		_inviteList.erase(it);
 }
 
-
-
 bool	Channel::isMember(Client* client)
 {
 	std::vector<Client *>::iterator	it = _members.begin();
@@ -203,4 +189,9 @@ bool	Channel::isInvited(Client* client)
 		++it;
 	}
 	return false;
+}
+
+void	Channel::write(std::string msg)
+{
+	std::cout << YELLOW << _name << " : " << DEFAULT << msg << std::endl;
 }

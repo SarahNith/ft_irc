@@ -6,7 +6,7 @@
 /*   By: skuor <skuor@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/28 11:37:36 by skuor             #+#    #+#             */
-/*   Updated: 2026/06/05 16:43:36 by skuor            ###   ########.fr       */
+/*   Updated: 2026/06/06 18:10:44 by skuor            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,6 @@ class Channel {
 
 		std::string	getName() const;
 		std::string	getTopic() const;
-		// std::string	getMode() const;
 		std::string	getChannelKey() const;
 		size_t		getCapacityLimit() const;
 		bool		isInviteOnly() const;
@@ -33,11 +32,8 @@ class Channel {
 		std::vector<Client*>	getMembers() const;
 		std::vector<Client*>	getInviteList() const;
 
-		void	write(const std::string & msg);
-
 		void	setName(std::string newName);
 		void	setTopic(std::string newTopic);
-		// void	setMode(std::string newMode);
 		void	setKey(std::string newKey);
 		void	setLimitCapacity(size_t limit);
 		void	setInviteOnly(bool isInviteOnly);
@@ -53,6 +49,8 @@ class Channel {
 		bool	isMember(Client* client);
 		bool	isOpe(Client* client);
 		bool	isInvited(Client* client);
+
+		void	write(std::string msg);
 		
 	private:
 
@@ -64,24 +62,15 @@ class Channel {
 			size_t		limit;
 		
 		}	t_modes;
-	
-		std::string	_name;
-		std::string	_topic;
-		// std::string	_mode;
-		// std::string	_channelKey;
-		// size_t	_capacityLimit;
-
 		
 		t_modes		_chanModes;
-				
+	
+		std::string				_name;
+		std::string				_topic;
 		std::vector<Client*>	_operators;
 		std::vector<Client*>	_members;
 		std::vector<Client*>	_inviteList;
-
-
-		
 };
-
 
 #endif
 

@@ -6,7 +6,7 @@
 /*   By: skuor <skuor@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/27 11:03:54 by skuor             #+#    #+#             */
-/*   Updated: 2026/06/05 17:04:12 by skuor            ###   ########.fr       */
+/*   Updated: 2026/06/06 17:56:40 by skuor            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,26 +27,19 @@ class Client {
 		std::string	getUserName() const;
 		std::string	getRealName() const;
 		std::string	getOldNickName() const;
-		std::string getHostname() const;
-		// std::string	getPrefix() const;
-		
-		bool	getCorrectPassword() const;
-		bool	getAllInfo() const;
-		bool	getSentWelcome() const;
-		bool	getCompleteRegis() const;
-		bool	getHasNick() const;
-		bool	getHasUser() const;
-		
-		int		getClientFd() const;
-
-		void	write(const std::string & msg);
+		std::string getHostname() const;	
+		bool		getCorrectPassword() const;
+		bool		getAllInfo() const;
+		bool		getSentWelcome() const;
+		bool		getCompleteRegis() const;
+		bool		getHasNick() const;
+		bool		getHasUser() const;
+		int			getClientFd() const;
 
 		void	setNickName(const std::string & newName);
 		void	setUserName(const std::string & newName);
 		void	setRealName(const std::string & newName);
 		void	setOldNickName(const std::string & newName);
-
-		
 		void	setCorrectPassword(bool pw);
 		void	setAllInfo(bool allInfo);
 		void	setSentWelcome(bool isSent);
@@ -54,8 +47,8 @@ class Client {
 		void	setHasNick(bool hasNick);
 		void	setHasUser(bool hasUser);
 
-
-		
+		void	write(std::string msg);
+				
 	private:
 		int 		_clientFd;
 		bool		_toDisconnect;
@@ -68,14 +61,12 @@ class Client {
 		
 		bool		_correctPassword;
 		bool		_allInfo;
-		bool		_completeRegistration;
-		// bool		_sentWelcome;
-		
+		bool		_completeRegistration;	
 		bool		_hasNick;
 		bool		_hasUser;
 
-		std::string	_readBuff; //stocke donnees recues du clients pas encore traitees
-		std::string	_toSendBuff; //stocke donnees en attente d'etre envoyees au client;
+		// std::string	_readBuff; //stocke donnees recues du clients pas encore traitees
+		// std::string	_toSendBuff; //stocke donnees en attente d'etre envoyees au client;
 };
 
 #endif

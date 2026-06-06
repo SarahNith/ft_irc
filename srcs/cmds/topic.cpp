@@ -6,7 +6,7 @@
 /*   By: skuor <skuor@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/05 15:08:09 by skuor             #+#    #+#             */
-/*   Updated: 2026/06/06 12:35:45 by skuor            ###   ########.fr       */
+/*   Updated: 2026/06/06 17:26:40 by skuor            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,8 @@ void	CmdExec::topic(t_cmdParser & cmd, Client *c)
 		}
 		else
 		{
+			if (cmd.trailing.size() > TOPICLEN)
+				cmd.trailing = cmd.trailing.substr(0, TOPICLEN);
 			chan->setTopic(cmd.trailing);
 			std::string newTopicMsg = prefix + " TOPIC " + chan->getName() + " :" + cmd.trailing;
 

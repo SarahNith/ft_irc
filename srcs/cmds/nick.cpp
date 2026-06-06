@@ -6,7 +6,7 @@
 /*   By: skuor <skuor@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/03 10:59:08 by skuor             #+#    #+#             */
-/*   Updated: 2026/06/05 10:12:18 by skuor            ###   ########.fr       */
+/*   Updated: 2026/06/06 18:06:38 by skuor            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ static bool	validNickname(std::string nickname)
 {
 	if (nickname.empty())
 		return false;
-	if (nickname.size() > 9)
+	if (nickname.size() > NICKLEN)
 		return false;
 	for (size_t i = 0; i < nickname.length(); i++)
 	{
@@ -49,9 +49,13 @@ void	CmdExec::nick(t_cmdParser & cmd, Client *c)
 		std::string msg = ":" + c->getOldNickName() + "!" + c->getUserName() + "@"
 			+ c->getHostname() + " NICK " + nickname;
 		sendMsg(msg, c);
+		c->write("User changed nickname to: " + nickname);
 	}
 	else
+	{
 		c->setNickName(nickname);
+		c->write("User nickname: " + nickname);
+	}
 
 	c->setHasNick(true);
 	checkRegistration(c);

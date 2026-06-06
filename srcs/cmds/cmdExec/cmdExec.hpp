@@ -6,7 +6,7 @@
 /*   By: skuor <skuor@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/02 11:26:00 by skuor             #+#    #+#             */
-/*   Updated: 2026/06/06 16:10:49 by skuor            ###   ########.fr       */
+/*   Updated: 2026/06/06 17:51:29 by skuor            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,7 @@ class CmdExec {
 		~CmdExec();
 
 		void	execute(t_cmdParser & cmd, Client *Client);
+		void	write(std::string msg);
 
 	private:
 	
@@ -69,17 +70,24 @@ class CmdExec {
 		void		sendToAllExcept(std::string msg, Channel &ch, Client *Except);
 		std::string	prefixStr(Client *c);
 
-
 		void		sendNames(Client *c, Channel & ch);
-
 		void		assignModes(t_cmdParser & cmd, Channel *chan, Client *c);
-		
 		std::string	replaceAll(std::string msg, std::string toReplace, std::string strReplace);
 };
+
+# define NICKLEN 9
+# define CHANLEN 10
+# define TOPICLEN 20
 
 #define RPL_PREFIX ":" SERVER_NAME " "
 
 # define RPL_001 RPL_PREFIX "001 <nick> :Welcome to the IRC network <nick>!<user>@<host>"
+# define RPL_002 RPL_PREFIX "002 <client> :Your host is ircserv, running version 1.0"
+# define RPL_003 RPL_PREFIX "003 <client> :This server was created <datetime>"
+# define RPL_004 RPL_PREFIX "004 <client> ircserv 1.0 o itkol"
+# define RPL_005 RPL_PREFIX "005 <client> NICKLEN=9 CHANLEN=10 TOPICLEN=20 :are supported by this server"
+# define RPL_372 RPL_PREFIX "372 <client> :Welcome to ft_irc!"
+# define RPL_376 RPL_PREFIX "376 <client> :End of /MOTD command."
 
 //PASS
 # define ERR_461 RPL_PREFIX "461 <client> <command> :Not enough parameters"

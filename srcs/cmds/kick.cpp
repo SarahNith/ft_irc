@@ -6,30 +6,11 @@
 /*   By: skuor <skuor@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/05 10:39:14 by skuor             #+#    #+#             */
-/*   Updated: 2026/06/06 16:52:41 by skuor            ###   ########.fr       */
+/*   Updated: 2026/06/06 16:56:37 by skuor            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cmdExec/cmdExec.hpp"
-
-// static std::vector<std::string>	parsingUsers(t_cmdParser & cmd)
-// {
-// 	std::vector<std::string>	users;
-// 	if (cmd.params.empty())
-// 		return users;
-
-// 	std::string	param = cmd.params[1];
-
-// 	size_t commaPos = param.find(',');
-// 	while (commaPos != std::string::npos)
-// 	{
-// 		users.push_back(param.substr(0, commaPos));
-// 		param = param.substr(commaPos + 1);
-// 		commaPos = param.find(',');
-// 	}
-// 	users.push_back(param);
-// 	return users;
-// }
 
 void	CmdExec::kick(t_cmdParser & cmd, Client *c)
 {

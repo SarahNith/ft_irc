@@ -6,7 +6,7 @@
 /*   By: skuor <skuor@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/26 12:09:02 by agouin            #+#    #+#             */
-/*   Updated: 2026/06/06 16:44:37 by skuor            ###   ########.fr       */
+/*   Updated: 2026/06/06 17:37:47 by skuor            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,10 @@ Server::Server(int port, std::string password) : _port(port), _password(password
 	this->_listfd.push_back(serverFd);
 	//donc des quonn a une nouvelle connexion ou la mets dans le tableau de fd
 
+	time_t now = time(NULL);
+	_datetime = ctime(&now);
+	if (!_datetime.empty() && _datetime[_datetime.size() - 1] == '\n')
+    	_datetime.erase(_datetime.size() - 1);
 }
 
 Server::~Server()
@@ -187,8 +191,13 @@ std::map<std::string, Channel>& Server::getChannels()
 	return _channels;
 }
 
+std::string	Server::getDatetime() const
+{
+	return _datetime;
+}
 
 void	Server::delChannel(std::string chanName)
 {
 	this->_channels.erase(chanName);
 }
+

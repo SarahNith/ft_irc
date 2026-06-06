@@ -16,6 +16,7 @@ class	Server
 		//voit fonction
 
 		std::string getPassword() const;
+		std::string	getDatetime() const;
 		std::map<std::string, Channel>& getChannels();
 
 		void	run_server();
@@ -47,9 +48,10 @@ class	Server
 		//struct addrinfo*	_servinfo;
 		std::map<const int, Client>	_clients;
 		std::map<std::string, Channel>	_channels;
-		//std::string	_datetime;
+		std::string	_datetime;
 		//std::vector<server_op>	_irc_operators;
 		//std::string	_motd;
+		
 };
 
 

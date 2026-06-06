@@ -6,7 +6,7 @@
 /*   By: skuor <skuor@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/02 11:25:52 by skuor             #+#    #+#             */
-/*   Updated: 2026/06/06 16:10:40 by skuor            ###   ########.fr       */
+/*   Updated: 2026/06/06 18:03:05 by skuor            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,6 +119,13 @@ bool	CmdExec::checkRegistration(Client *c)
 			return true;
 		sendMsg(RPL_001, c);
 		c->setCompleteRegis(true);
+		sendMsg(RPL_002, c);
+		sendMsg(RPL_003, c, this->_srv->getDatetime());
+		sendMsg(RPL_004, c);
+		sendMsg(RPL_005, c);
+		sendMsg(RPL_372, c);
+		sendMsg(RPL_376, c);
 	}
+	write("User registration is done !");
 	return true;
 }

@@ -7,6 +7,7 @@
 #include <iostream>
 #include <stdlib.h>
 #include <sstream>
+#include <ctime>
 
 #include <sys/types.h>
 #include <sys/socket.h>
@@ -15,7 +16,6 @@
 
 //conteneur
 #include <map>
-#include <vector>
 #include <vector>
 #include <algorithm>
 
