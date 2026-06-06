@@ -6,7 +6,7 @@
 /*   By: skuor <skuor@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/02 11:26:00 by skuor             #+#    #+#             */
-/*   Updated: 2026/06/06 15:00:26 by skuor            ###   ########.fr       */
+/*   Updated: 2026/06/06 16:10:49 by skuor            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@ enum Type
 	CAP,
 	PING,
 	QUIT,
+	PART,
 	UNKNOWN
 };
 
@@ -55,7 +56,7 @@ class CmdExec {
 		void	cap(t_cmdParser & cmd, Client *c);
 		void	ping(t_cmdParser & cmd, Client *c);
 		void	quit(t_cmdParser & cmd, Client *c);
-		
+		void	part(t_cmdParser & cmd, Client *c);
 		
 		Type	detectTypeCmd(std::string cmd);
 

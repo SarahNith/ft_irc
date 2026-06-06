@@ -6,7 +6,7 @@
 /*   By: skuor <skuor@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/26 12:09:02 by agouin            #+#    #+#             */
-/*   Updated: 2026/06/04 17:42:51 by skuor            ###   ########.fr       */
+/*   Updated: 2026/06/06 16:44:37 by skuor            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -185,4 +185,10 @@ Channel*	Server::getChannelByName(std::string name)
 std::map<std::string, Channel>& Server::getChannels()
 {
 	return _channels;
+}
+
+
+void	Server::delChannel(std::string chanName)
+{
+	this->_channels.erase(chanName);
 }

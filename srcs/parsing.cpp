@@ -6,7 +6,7 @@
 /*   By: skuor <skuor@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/28 17:50:13 by skuor             #+#    #+#             */
-/*   Updated: 2026/06/06 13:15:59 by skuor            ###   ########.fr       */
+/*   Updated: 2026/06/06 16:20:33 by skuor            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,4 +85,19 @@ t_cmdParser	cmdParser(std::string line)
 		cp.trailing = lastParam.substr(1);
 	
 	return cp;
+}
+
+std::vector<std::string>	parsingParam(std::string param)
+{
+	std::vector<std::string>	paramVec;
+
+	size_t commaPos = param.find(',');
+	while (commaPos != std::string::npos)
+	{
+		paramVec.push_back(param.substr(0, commaPos));
+		param = param.substr(commaPos + 1);
+		commaPos = param.find(',');
+	}
+	paramVec.push_back(param);
+	return paramVec;
 }

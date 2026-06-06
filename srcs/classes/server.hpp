@@ -24,6 +24,7 @@ class	Server
 
 		void	addChannel();
 		void	AddCienttoChannel();
+		void	delChannel(std::string chanName);
 
 		void	ClientData(int fd);
 

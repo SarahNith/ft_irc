@@ -19,7 +19,7 @@ CMDEXEC_FILES = cmdExec.cpp sendMsg.cpp
 
 CMD_FILES = join.cpp nick.cpp pass.cpp privmsg.cpp \
 			user.cpp kick.cpp invite.cpp topic.cpp \
-			mode.cpp cap.cpp
+			mode.cpp cap.cpp ping.cpp quit.cpp part.cpp
 
 #SRC = $(addprefix $(SRC_DIR), $(SRC_FILES))
 OBJ = $(addprefix $(OBJ_DIR), $(SRC_FILES:.cpp=.o)) \

@@ -62,8 +62,6 @@ class Exception : public std::exception
 #include "../classes/client.hpp"
 #include "../classes/channel.hpp"
 
-
-
 //[:<prefix>] <command> [<parameters> [...]] [:<trailing>]
 //ex: :dan!d@localhost PRIVMSG #chan :Hey what's up!
 //ex: JOIN #channel,#channel2 key1,key2
@@ -77,5 +75,5 @@ typedef struct s_cmdParser
 
 }						t_cmdParser;
 
-void	test_parser();
+std::vector<std::string>	parsingParam(std::string param);
 #endif
