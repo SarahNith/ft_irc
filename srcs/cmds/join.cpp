@@ -6,7 +6,7 @@
 /*   By: skuor <skuor@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/04 09:12:19 by skuor             #+#    #+#             */
-/*   Updated: 2026/06/06 12:43:09 by skuor            ###   ########.fr       */
+/*   Updated: 2026/06/06 13:05:09 by skuor            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,14 +17,12 @@ std::map<std::string, std::string>	parsingJoin(t_cmdParser & cmd)
 	std::map<std::string, std::string> channels;
 	if (cmd.params.empty())
 		return channels;
-	
-	
+		
 	std::string chanStr = cmd.params[0];
 	std::string keyStr = "";
 	if (cmd.params.size() >= 2)
 		keyStr = cmd.params[1];
 		
-
 	std::vector<std::string> chans;
 	std::vector<std::string> keys;
 	
@@ -89,8 +87,8 @@ void	CmdExec::join(t_cmdParser & cmd, Client *c)
 		
 	std::map<std::string, std::string> channels = parsingJoin(cmd); // chan, key
 	std::map<std::string, std::string>::iterator it = channels.begin();
-	std::map<std::string, Channel> &chansList = this->_srv->getChannels();
-
+	
+	std::map<std::string, Channel> &chansList = this->_srv->getChannels(); //liste des chans sur le serveur
 	std::map<std::string, Channel>::iterator it1;
 
 	std::string prefix = prefixStr(c);
@@ -178,7 +176,6 @@ void	CmdExec::join(t_cmdParser & cmd, Client *c)
 
 				sendNames(c, itSrv->second);
 			}
-				
 		}
 		it++;			
 	}

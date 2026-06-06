@@ -6,7 +6,7 @@
 /*   By: skuor <skuor@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/04 18:16:42 by skuor             #+#    #+#             */
-/*   Updated: 2026/06/06 11:54:55 by skuor            ###   ########.fr       */
+/*   Updated: 2026/06/06 12:47:09 by skuor            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,4 +76,26 @@ std::string	CmdExec::prefixStr(Client *c)
 	std::string prefix = ":" + c->getNickName() + "!" + c->getUserName() + "@" + c->getHostname();
 
 	return prefix;
+}
+
+std::string	CmdExec::replaceAll(std::string str, std::string toReplace, std::string strReplace)
+{
+	std::string	newStr;
+	size_t	i = 0;
+	while (i < str.length())
+	{
+		if (toReplace == "")
+			return str;
+		if (str.compare(i, toReplace.length(), toReplace) == 0)
+		{
+			newStr += strReplace;
+			i += toReplace.length();
+		}
+		else
+		{
+			newStr += str[i];
+			i++;
+		}
+	}
+	return (newStr);
 }

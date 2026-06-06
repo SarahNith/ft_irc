@@ -6,7 +6,7 @@
 /*   By: skuor <skuor@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/02 11:26:00 by skuor             #+#    #+#             */
-/*   Updated: 2026/06/06 11:53:05 by skuor            ###   ########.fr       */
+/*   Updated: 2026/06/06 13:33:52 by skuor            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@ enum Type
 	INVITE,
 	TOPIC,
 	MODE,
+	CAP,
 	UNKNOWN
 };
 
@@ -49,6 +50,7 @@ class CmdExec {
 		void	invite(t_cmdParser & cmd, Client *c);
 		void	topic(t_cmdParser & cmd, Client *c);
 		void	mode(t_cmdParser & cmd, Client *c);
+		void	cap(t_cmdParser & cmd, Client *c);
 		
 		Type	detectTypeCmd(std::string cmd);
 
@@ -113,9 +115,11 @@ class CmdExec {
 //MODE
 // # define RPL_221 RPL_PREFIX "221 <client> <modes>"
 // # define RPL_324 RPL_PREFIX "324 <client> <channel> <modestring> <mode arguments>..."
-
 # define ERR_501 RPL_PREFIX "501 <client> :Unknown MODE flag"
 # define ERR_502 RPL_PREFIX "502 <client> :Cant change mode for other users"
+
+//CAP
+# define RPL_CAP RPL_PREFIX "CAP * LS :"
 
 
 #endif

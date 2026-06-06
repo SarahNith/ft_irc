@@ -1,30 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pass.cpp                                           :+:      :+:    :+:   */
+/*   cap.cpp                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: skuor <skuor@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/06/03 10:59:52 by skuor             #+#    #+#             */
-/*   Updated: 2026/06/06 13:11:11 by skuor            ###   ########.fr       */
+/*   Created: 2026/06/06 13:28:15 by skuor             #+#    #+#             */
+/*   Updated: 2026/06/06 13:33:33 by skuor            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cmdExec/cmdExec.hpp"
 
-void	CmdExec::pass(t_cmdParser & cmd, Client *c)
+void	CmdExec::cap(t_cmdParser & cmd, Client *c)
 {
-	std::string	correctPw = this->_srv->getPassword();
+	if (cmd.params.empty())
+		return ;
 	
-	if (cmd.params.size() < 1)
-		return (sendMsg(ERR_461, c, "PASS")); 
-	if (c->getCompleteRegis())
-		return (sendMsg(ERR_462, c));
-
-	std::string	password = cmd.params[0];
-
-	if (password != correctPw)
-		return (sendMsg(ERR_464, c));
-	else
-		c->setCorrectPassword(true);
+	if (cmd.params[0] == "LS")
+		return (sendMsg(RPL_CAP, c));
+	else if (cmd.params[0] == "END")
+		return ;
 }
