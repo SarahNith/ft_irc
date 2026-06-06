@@ -20,7 +20,7 @@ class	Server
 
 		void	run_server();
 		void	AddClient();
-		void	delClient();
+		void	delClient(int fd);
 
 		void	addChannel();
 		void	AddCienttoChannel();

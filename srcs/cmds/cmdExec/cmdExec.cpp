@@ -6,7 +6,7 @@
 /*   By: skuor <skuor@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/02 11:25:52 by skuor             #+#    #+#             */
-/*   Updated: 2026/06/06 13:28:07 by skuor            ###   ########.fr       */
+/*   Updated: 2026/06/06 15:01:03 by skuor            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,11 @@ void	CmdExec::execute(t_cmdParser & cmd, Client *Client)
 		case CAP:
 			this->cap(cmd, Client);
 			break ;
+		case PING:
+			this->ping(cmd, Client);
+		case QUIT:
+			this->ping(cmd, Client);
+			break ;
 	}	
 }
 
@@ -86,6 +91,10 @@ Type	CmdExec::detectTypeCmd(std::string cmd)
 		return MODE;
 	else if (cmd == "CAP")
 		return CAP;
+	else if (cmd == "PING")
+		return PING;
+	else if (cmd == "QUIT")
+		return QUIT;
 	else
 		return UNKNOWN;
 }

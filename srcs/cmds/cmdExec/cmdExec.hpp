@@ -6,7 +6,7 @@
 /*   By: skuor <skuor@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/02 11:26:00 by skuor             #+#    #+#             */
-/*   Updated: 2026/06/06 13:33:52 by skuor            ###   ########.fr       */
+/*   Updated: 2026/06/06 15:00:26 by skuor            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,8 @@ enum Type
 	TOPIC,
 	MODE,
 	CAP,
+	PING,
+	QUIT,
 	UNKNOWN
 };
 
@@ -51,6 +53,9 @@ class CmdExec {
 		void	topic(t_cmdParser & cmd, Client *c);
 		void	mode(t_cmdParser & cmd, Client *c);
 		void	cap(t_cmdParser & cmd, Client *c);
+		void	ping(t_cmdParser & cmd, Client *c);
+		void	quit(t_cmdParser & cmd, Client *c);
+		
 		
 		Type	detectTypeCmd(std::string cmd);
 
@@ -121,5 +126,7 @@ class CmdExec {
 //CAP
 # define RPL_CAP RPL_PREFIX "CAP * LS :"
 
+//PING
+# define ERR_409 RPL_PREFIX "409 <client> :No origin specified"
 
 #endif
