@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   client.cpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: skuor <skuor@student.42.fr>                +#+  +:+       +#+        */
+/*   By: agouin <agouin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/27 11:04:01 by skuor             #+#    #+#             */
-/*   Updated: 2026/06/06 18:17:00 by skuor            ###   ########.fr       */
+/*   Updated: 2026/06/08 14:32:13 by agouin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,11 +18,11 @@ Client::Client()
 	_userName = "";
 	_realName = "";
 	_oldNickName = "";
-	_hostname = "localhost" //a modifier
+	_hostname = "localhost"; //a modifier
 	_toDisconnect = false;
 	_correctPassword = false;
 	_allInfo = false;
-	_completeRegis = false;
+	//_completeRegis = false; //je pense que cest : _completeRegistration
 	_hasNick = false;
 	_hasUser = false;
 }
@@ -38,7 +38,7 @@ Client::Client(int fd)
 	_toDisconnect = false;
 	_correctPassword = false;
 	_allInfo = false;
-	_completeRegis = false;
+	//_completeRegis = false;
 	_hasNick = false;
 	_hasUser = false;
 }
@@ -75,6 +75,11 @@ std::string Client::getHostname() const
 int		Client::getClientFd() const
 {
 	return _clientFd;
+}
+
+std::string		Client::getReadBuf()
+{
+	return _readBuff;
 }
 
 bool	Client::getCorrectPassword() const

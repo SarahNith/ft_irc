@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cmdExec.cpp                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: skuor <skuor@student.42.fr>                +#+  +:+       +#+        */
+/*   By: agouin <agouin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/02 11:25:52 by skuor             #+#    #+#             */
-/*   Updated: 2026/06/06 18:03:05 by skuor            ###   ########.fr       */
+/*   Updated: 2026/06/08 15:58:02 by agouin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -126,6 +126,7 @@ bool	CmdExec::checkRegistration(Client *c)
 		sendMsg(RPL_372, c);
 		sendMsg(RPL_376, c);
 	}
-	write("User registration is done !");
+	std::cout << "User registration is done !" << std::endl;
+	//write("User registration is done !");
 	return true;
 }

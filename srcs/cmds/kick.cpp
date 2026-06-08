@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   kick.cpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: skuor <skuor@student.42.fr>                +#+  +:+       +#+        */
+/*   By: agouin <agouin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/05 10:39:14 by skuor             #+#    #+#             */
-/*   Updated: 2026/06/06 16:56:37 by skuor            ###   ########.fr       */
+/*   Updated: 2026/06/08 14:02:52 by agouin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,9 @@ void	CmdExec::kick(t_cmdParser & cmd, Client *c)
 	if (!chan->isOpe(c))
 		return (sendMsg(ERR_482, c, "", chan));
 	
-	std::vector<std::string> users = parsingParams(cmd.params[1]);
+		//de base : 	std::vector<std::string> users = parsingParams(cmd.params[1]);
+
+	std::vector<std::string> users = parsingParam(cmd.params[1]);
 	std::vector<std::string>::iterator	it;
 
 	for (it = users.begin(); it != users.end(); it++)

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   server.cpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: skuor <skuor@student.42.fr>                +#+  +:+       +#+        */
+/*   By: agouin <agouin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/26 12:09:02 by agouin            #+#    #+#             */
-/*   Updated: 2026/06/06 17:37:47 by skuor            ###   ########.fr       */
+/*   Updated: 2026/06/08 15:55:11 by agouin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,31 +115,16 @@ void	Server::AddClient()
 }
 
 
+
 void	Server::ClientData(int fd)
 {
 	char buffer[4096];
 	ssize_t	buf;
 
 	buf = recv(fd, buffer, sizeof(buffer) - 1, 0);
-
-	std::cout << "RECV: [" << buffer << "]" << std::endl;
-	//std::string test = "CAP LS 302";
-	//size_t i = 0;
-	//while(buffer[i] == test[i])
-	//{	
-	//	i++;
-	//}
-	//if (i == test.size())
-	//{
-	//	std::string reply = ":ircserv CAP * LS :\r\n";
-	//	send(fd, reply.c_str(), reply.size(), 0);
-	//	std::cout << RED << "SEND: [" << reply << "]" << DEFAULT << std::endl;
-	//}
-
 	if(buf == 0)
 	{
-		std::cout << MAGENTA << "Client disconnected" << DEFAULT << std::endl;
-		//faut remove client mais je sias pa strop quoi faire a part le supp des listes
+		delClient(fd);
 		return;
 	}
 	if(buf < 0)
@@ -148,7 +133,21 @@ void	Server::ClientData(int fd)
 		return;
 	}
 	buffer[buf] = '\0';
-//std::cout << "Received : " << buffer << std::endl;
+	Client &client = _clients[fd];
+	
+	client.getReadBuf() += buffer;
+	size_t i = client.getReadBuf().find("\r\n") ;
+	while(i != std::string::npos)
+	{
+		std::string line = client.getReadBuf().substr(0, i);
+		client.getReadBuf().erase(0, i + 2);
+		if (!line.empty())
+		{
+			t_cmdParser	cmd = cmdParser(line);
+			CmdExec exec;
+			exec.execute(cmd, &client);
+		}
+	}
 }
 
 
@@ -156,8 +155,6 @@ void Server::write(std::string msg)//voir si je donne un nom au server
 {
 	std::cout << GREEN << "Server : " << DEFAULT << msg << std::endl;	
 }
-
-///_pollfds[0].revents & POLLIN
 
 std::string	Server::getPassword() const
 {
@@ -199,5 +196,15 @@ std::string	Server::getDatetime() const
 void	Server::delChannel(std::string chanName)
 {
 	this->_channels.erase(chanName);
+}
+
+
+void	Server::delClient(int fd)
+{
+	close(fd);
+	_clients.erase(fd);
+	//quoi faire un poll
+	//+ channel
+	std::cout << MAGENTA << "Client disconnected" << DEFAULT << std::endl;
 }
 

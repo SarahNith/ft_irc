@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   mode.cpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: skuor <skuor@student.42.fr>                +#+  +:+       +#+        */
+/*   By: agouin <agouin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/05 15:54:37 by skuor             #+#    #+#             */
-/*   Updated: 2026/06/06 12:37:25 by skuor            ###   ########.fr       */
+/*   Updated: 2026/06/08 14:04:02 by agouin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,9 +118,9 @@ void	CmdExec::assignModes(t_cmdParser & cmd, Channel *chan, Client *c)
 	}
 	std::string prefix = prefixStr(c);
 	
-	std::vector<std::string>::iterator	itArgs = cmd.params.begin() + 1;
+	//std::vector<std::string>::iterator	itArgs = cmd.params.begin() + 1;
 	std::string argsStr;
-	for (itArgs; itArgs != cmd.params.end(); itArgs++)
+	for (std::vector<std::string>::iterator	itArgs = cmd.params.begin() + 1; itArgs != cmd.params.end(); itArgs++)
 		argsStr += *itArgs + " ";
 	std::string msg = prefix + " MODE " + chan->getName() + " " +  argsStr;
 

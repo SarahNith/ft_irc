@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   join.cpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: skuor <skuor@student.42.fr>                +#+  +:+       +#+        */
+/*   By: agouin <agouin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/04 09:12:19 by skuor             #+#    #+#             */
-/*   Updated: 2026/06/06 18:25:18 by skuor            ###   ########.fr       */
+/*   Updated: 2026/06/08 14:02:20 by agouin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,7 @@ void	CmdExec::sendNames(Client *c, Channel & ch)
 	std::string msg = ":ircserv 353 " + c->getNickName() + " = " + ch.getName() + " :" + nickList;
 	sendMsg(msg, c, "", &ch);
 	sendMsg(RPL_366, c, "", &ch);
-	ch.write("Client list sent")
+	ch.write("Client list sent");
 }
 
 void	CmdExec::join(t_cmdParser & cmd, Client *c)
