@@ -6,7 +6,7 @@
 /*   By: skuor <skuor@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/02 11:25:52 by skuor             #+#    #+#             */
-/*   Updated: 2026/06/06 18:03:05 by skuor            ###   ########.fr       */
+/*   Updated: 2026/06/09 10:27:52 by skuor            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,11 +24,12 @@ void	CmdExec::execute(t_cmdParser & cmd, Client *Client)
 {
 	std::string command = cmd.command;
 	Type	cmdType = detectTypeCmd(command);
-
+	
+	write(command);
 	switch(cmdType)
 	{
 		case UNKNOWN:
-			return ;
+			return (sendMsg(ERR_421, Client, command));
 		case PASS:
 			this->pass(cmd, Client);
 			break ;
@@ -126,6 +127,11 @@ bool	CmdExec::checkRegistration(Client *c)
 		sendMsg(RPL_372, c);
 		sendMsg(RPL_376, c);
 	}
-	write("User registration is done !");
+	c->write("User registration is done !");
 	return true;
+}
+
+void	CmdExec::write(std::string msg)
+{
+	std::cout << MAGENTA "Command : " << DEFAULT << msg << std::endl;
 }

@@ -6,7 +6,7 @@
 /*   By: skuor <skuor@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/26 12:09:02 by agouin            #+#    #+#             */
-/*   Updated: 2026/06/06 17:37:47 by skuor            ###   ########.fr       */
+/*   Updated: 2026/06/09 10:40:53 by skuor            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,6 +100,10 @@ void	Server::AddClient()
 	if (fcntl(clientfd, F_SETFL, O_NONBLOCK) == -1) //non bloquant
 		throw(Exception("Error : Fnctl failed"));
 
+	//c'est juste pour recuperer le hostname
+	char hostname[INET_ADDRSTRLEN];
+	inet_ntop(AF_INET, &client_addr.sin_addr, hostname, INET_ADDRSTRLEN);
+
 	pollfd clientPoll;
 	clientPoll.fd = clientfd;
 	clientPoll.events = POLLIN;
@@ -108,8 +112,8 @@ void	Server::AddClient()
 	_listfd.push_back(clientPoll);
 
 	Client newClient(clientfd);
+	newClient.setHostName(hostname);
 	_clients[clientfd] = newClient;
-
 
 	std::cout << YELLOW << "New connection : fd = " << DEFAULT << clientfd << std::endl;
 }

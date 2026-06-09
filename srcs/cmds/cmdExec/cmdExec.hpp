@@ -6,7 +6,7 @@
 /*   By: skuor <skuor@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/02 11:26:00 by skuor             #+#    #+#             */
-/*   Updated: 2026/06/06 17:51:29 by skuor            ###   ########.fr       */
+/*   Updated: 2026/06/09 09:52:16 by skuor            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,6 +80,8 @@ class CmdExec {
 # define TOPICLEN 20
 
 #define RPL_PREFIX ":" SERVER_NAME " "
+
+# define ERR_421 RPL_PREFIX "421 <client> <command> :Unknown command"
 
 # define RPL_001 RPL_PREFIX "001 <nick> :Welcome to the IRC network <nick>!<user>@<host>"
 # define RPL_002 RPL_PREFIX "002 <client> :Your host is ircserv, running version 1.0"

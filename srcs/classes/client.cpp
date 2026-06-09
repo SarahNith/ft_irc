@@ -6,7 +6,7 @@
 /*   By: skuor <skuor@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/27 11:04:01 by skuor             #+#    #+#             */
-/*   Updated: 2026/06/06 18:17:00 by skuor            ###   ########.fr       */
+/*   Updated: 2026/06/09 10:37:39 by skuor            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,11 +18,10 @@ Client::Client()
 	_userName = "";
 	_realName = "";
 	_oldNickName = "";
-	_hostname = "localhost" //a modifier
-	_toDisconnect = false;
+	_hostname = "localhost"; //a modifier
 	_correctPassword = false;
 	_allInfo = false;
-	_completeRegis = false;
+	_completeRegistration = false;
 	_hasNick = false;
 	_hasUser = false;
 }
@@ -35,10 +34,9 @@ Client::Client(int fd)
 	_realName = "";
 	_oldNickName = "";
 	_hostname = "localhost"; // a modifier 
-	_toDisconnect = false;
 	_correctPassword = false;
 	_allInfo = false;
-	_completeRegis = false;
+	_completeRegistration = false;
 	_hasNick = false;
 	_hasUser = false;
 }
@@ -123,6 +121,12 @@ void	Client::setOldNickName(const std::string & newName)
 {
 	this->_oldNickName = newName;		
 }
+
+void	Client::setHostName(const std::string & newName)
+{
+	this->_hostname = newName;		
+}
+
 
 void	Client::setCorrectPassword(bool pw)
 {

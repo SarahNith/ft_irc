@@ -6,7 +6,7 @@
 /*   By: skuor <skuor@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/27 11:03:54 by skuor             #+#    #+#             */
-/*   Updated: 2026/06/06 17:56:40 by skuor            ###   ########.fr       */
+/*   Updated: 2026/06/09 10:36:36 by skuor            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,9 +40,9 @@ class Client {
 		void	setUserName(const std::string & newName);
 		void	setRealName(const std::string & newName);
 		void	setOldNickName(const std::string & newName);
+		void	setHostName(const std::string & newName);
 		void	setCorrectPassword(bool pw);
 		void	setAllInfo(bool allInfo);
-		void	setSentWelcome(bool isSent);
 		void	setCompleteRegis(bool completed);
 		void	setHasNick(bool hasNick);
 		void	setHasUser(bool hasUser);
@@ -51,7 +51,6 @@ class Client {
 				
 	private:
 		int 		_clientFd;
-		bool		_toDisconnect;
 		
 		std::string	_nickName; //affiche pour tlm
 		std::string	_userName; //nom utilisateur systeme

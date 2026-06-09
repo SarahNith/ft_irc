@@ -6,7 +6,7 @@
 /*   By: skuor <skuor@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/06 16:09:23 by skuor             #+#    #+#             */
-/*   Updated: 2026/06/06 16:50:05 by skuor            ###   ########.fr       */
+/*   Updated: 2026/06/09 10:00:57 by skuor            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ void	CmdExec::part(t_cmdParser & cmd, Client *c)
 	if (cmd.params.size() < 1)
 		return (sendMsg(ERR_461, c, "PART"));
 	
-	std::vector<std::string> chansVec = parsingParams(cmd.params[0]);
+	std::vector<std::string> chansVec = parsingParam(cmd.params[0]);
 	std::vector<std::string>::iterator	it;
 
 	for (it = chansVec.begin(); it != chansVec.end(); it++)
@@ -43,6 +43,9 @@ void	CmdExec::part(t_cmdParser & cmd, Client *c)
 		chan->removeMember(c);
 		chan->removeOpe(c);
 		if (chan->getMembers().empty())
+		{
+			chan->write("Channel closed");
 			this->_srv->delChannel(chan->getName());
+		}
 	}	
 }

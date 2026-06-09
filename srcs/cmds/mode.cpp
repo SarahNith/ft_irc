@@ -6,7 +6,7 @@
 /*   By: skuor <skuor@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/05 15:54:37 by skuor             #+#    #+#             */
-/*   Updated: 2026/06/06 12:37:25 by skuor            ###   ########.fr       */
+/*   Updated: 2026/06/09 10:21:14 by skuor            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,11 +22,11 @@ static std::string	createChanModesStr(Channel *chan)
 		chanModesStr += 'k';
 		args += " " + chan->getChannelKey();
 	}
-	if (chan->getCapacityLimit() != 0)
+	if (chan->getLimitCapacity() != 0)
 	{
 		chanModesStr += 'l';
 		std::stringstream	limitCapacity;
-		limitCapacity << chan->getCapacityLimit();
+		limitCapacity << chan->getLimitCapacity();
 		args += " " + limitCapacity.str();
 	}
 	if (chan->isInviteOnly())
@@ -118,9 +118,9 @@ void	CmdExec::assignModes(t_cmdParser & cmd, Channel *chan, Client *c)
 	}
 	std::string prefix = prefixStr(c);
 	
-	std::vector<std::string>::iterator	itArgs = cmd.params.begin() + 1;
+	std::vector<std::string>::iterator	itArgs;
 	std::string argsStr;
-	for (itArgs; itArgs != cmd.params.end(); itArgs++)
+	for (itArgs = cmd.params.begin() + 1; itArgs != cmd.params.end(); itArgs++)
 		argsStr += *itArgs + " ";
 	std::string msg = prefix + " MODE " + chan->getName() + " " +  argsStr;
 

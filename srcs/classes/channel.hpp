@@ -6,7 +6,7 @@
 /*   By: skuor <skuor@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/28 11:37:36 by skuor             #+#    #+#             */
-/*   Updated: 2026/06/06 18:10:44 by skuor            ###   ########.fr       */
+/*   Updated: 2026/06/09 10:21:14 by skuor            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ class Channel {
 		std::string	getName() const;
 		std::string	getTopic() const;
 		std::string	getChannelKey() const;
-		size_t		getCapacityLimit() const;
+		size_t		getLimitCapacity() const;
 		bool		isInviteOnly() const;
 		bool		hasTopicRestriction() const;
 		

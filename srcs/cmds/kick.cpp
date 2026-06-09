@@ -6,7 +6,7 @@
 /*   By: skuor <skuor@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/05 10:39:14 by skuor             #+#    #+#             */
-/*   Updated: 2026/06/06 16:56:37 by skuor            ###   ########.fr       */
+/*   Updated: 2026/06/09 10:26:59 by skuor            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ void	CmdExec::kick(t_cmdParser & cmd, Client *c)
 	if (!chan->isOpe(c))
 		return (sendMsg(ERR_482, c, "", chan));
 	
-	std::vector<std::string> users = parsingParams(cmd.params[1]);
+	std::vector<std::string> users = parsingParam(cmd.params[1]);
 	std::vector<std::string>::iterator	it;
 
 	for (it = users.begin(); it != users.end(); it++)
@@ -45,9 +45,11 @@ void	CmdExec::kick(t_cmdParser & cmd, Client *c)
 			sendToAll(msg, *chan);
 			chan->removeMember(dest);
 			chan->removeOpe(dest);
-			
 		}
 	}
 	if (chan->getMembers().empty())
+	{
+		chan->write("Channel closed");
 		this->_srv->delChannel(chan->getName());
+	}
 }

@@ -6,7 +6,7 @@
 /*   By: skuor <skuor@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/04 09:12:19 by skuor             #+#    #+#             */
-/*   Updated: 2026/06/06 18:25:18 by skuor            ###   ########.fr       */
+/*   Updated: 2026/06/09 10:21:14 by skuor            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,7 @@ void	CmdExec::sendNames(Client *c, Channel & ch)
 	std::string msg = ":ircserv 353 " + c->getNickName() + " = " + ch.getName() + " :" + nickList;
 	sendMsg(msg, c, "", &ch);
 	sendMsg(RPL_366, c, "", &ch);
-	ch.write("Client list sent")
+	ch.write("Client list sent");
 }
 
 void	CmdExec::join(t_cmdParser & cmd, Client *c)
@@ -162,9 +162,9 @@ void	CmdExec::join(t_cmdParser & cmd, Client *c)
 					}
 				}
 				//chan avec limitation nb mb
-				if (itSrv->second.getCapacityLimit())
+				if (itSrv->second.getLimitCapacity())
 				{
-					if (itSrv->second.getMembers().size() >= itSrv->second.getCapacityLimit())
+					if (itSrv->second.getMembers().size() >= itSrv->second.getLimitCapacity())
 					{
 						sendMsg(ERR_471, c, itSrv->first);
 						it++;
