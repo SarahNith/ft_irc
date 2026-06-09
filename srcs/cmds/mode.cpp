@@ -6,7 +6,7 @@
 /*   By: skuor <skuor@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/05 15:54:37 by skuor             #+#    #+#             */
-/*   Updated: 2026/06/09 10:49:39 by skuor            ###   ########.fr       */
+/*   Updated: 2026/06/09 17:07:20 by skuor            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,6 +73,7 @@ void	CmdExec::assignModes(t_cmdParser & cmd, Channel *chan, Client *c)
 				{
 					if (sign == '+')
 					{
+						c->write("set Invite Only");
 						chan->setKey(*it);
 						++it;
 					}

@@ -6,7 +6,7 @@
 /*   By: skuor <skuor@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/04 09:12:19 by skuor             #+#    #+#             */
-/*   Updated: 2026/06/09 10:49:03 by skuor            ###   ########.fr       */
+/*   Updated: 2026/06/09 17:06:00 by skuor            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,9 +83,12 @@ void	CmdExec::sendNames(Client *c, Channel & ch)
 
 void	CmdExec::join(t_cmdParser & cmd, Client *c)
 {
+	if (!checkRegistration(c))
+		return ;
+	
 	if (cmd.params.size() < 1)
 		return (sendMsg(ERR_461, c, "JOIN"));
-		
+	
 	std::map<std::string, std::string> channels = parsingJoin(cmd); // chan, key
 	std::map<std::string, std::string>::iterator it = channels.begin();
 	
@@ -100,6 +103,7 @@ void	CmdExec::join(t_cmdParser & cmd, Client *c)
 		{
 			if (it1->second.isMember(c))
 			{
+				c->write("quit all channels");
 				it1->second.write("Member removed : " + c->getNickName());
 				std::string partMsg = prefix + " PART " + it1->first;
 				sendToAll(partMsg, it1->second);
@@ -129,6 +133,7 @@ void	CmdExec::join(t_cmdParser & cmd, Client *c)
 			sendToAll(msg, chansList[it->first]);
 			sendNames(c, chansList[it->first]);
 			chansList[it->first].write("New chan created");
+			c->write("created a new channel : " + chansList[it->first].getName());
 			it++;
 			continue ;
 		}

@@ -6,7 +6,7 @@
 /*   By: skuor <skuor@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/03 10:59:08 by skuor             #+#    #+#             */
-/*   Updated: 2026/06/06 18:06:38 by skuor            ###   ########.fr       */
+/*   Updated: 2026/06/09 16:22:38 by skuor            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ static bool	validNickname(std::string nickname)
 		return false;
 	for (size_t i = 0; i < nickname.length(); i++)
 	{
-		if (!(isalpha(nickname[i]) || isdigit(nickname[i]) || std::strchr("[]{}\\|", nickname[i])))
+		if (!(isalpha(nickname[i]) || isdigit(nickname[i]) || std::strchr("[]{}\\|_", nickname[i])))
 			return false;
 	}
 	if (isdigit(nickname[0]) || nickname[0] == '#' || nickname[0] == ':')
@@ -30,6 +30,12 @@ static bool	validNickname(std::string nickname)
 
 void	CmdExec::nick(t_cmdParser & cmd, Client *c)
 {
+	if (c == NULL)
+		return ;
+	
+	if (c->getHasUser() && !c->getCorrectPassword())
+		return ;
+		
 	if (cmd.params.size() < 1)
 		return (sendMsg(ERR_431, c));
 	

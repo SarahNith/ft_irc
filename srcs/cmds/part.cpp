@@ -6,7 +6,7 @@
 /*   By: skuor <skuor@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/06 16:09:23 by skuor             #+#    #+#             */
-/*   Updated: 2026/06/09 10:49:46 by skuor            ###   ########.fr       */
+/*   Updated: 2026/06/09 17:32:30 by skuor            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ void	CmdExec::part(t_cmdParser & cmd, Client *c)
 		std::string reason = cmd.trailing.empty() ? "" : cmd.trailing;
 		std::string prefix = prefixStr(c);
 		std::string msg = prefix + " PART " + *it  + " :" + reason;
-		
+		c->write("Quit the channel " + chan->getName());
 		sendToAll(msg, *chan);
 		chan->removeMember(c);
 		chan->removeOpe(c);

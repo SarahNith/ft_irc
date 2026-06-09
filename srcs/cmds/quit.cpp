@@ -6,7 +6,7 @@
 /*   By: skuor <skuor@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/06 14:59:54 by skuor             #+#    #+#             */
-/*   Updated: 2026/06/06 15:18:19 by skuor            ###   ########.fr       */
+/*   Updated: 2026/06/09 17:08:04 by skuor            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@ void	CmdExec::quit(t_cmdParser & cmd, Client *c)
 	{
 		if (it1->second.isMember(c))
 		{
+			c->write("quit the server");
 			std::string msg = prefix + " QUIT :Quit: " + reason;
 			sendToAllExcept(msg, it1->second, c);
 			it1->second.removeMember(c);

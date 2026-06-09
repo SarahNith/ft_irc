@@ -6,7 +6,7 @@
 /*   By: skuor <skuor@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/04 17:32:09 by skuor             #+#    #+#             */
-/*   Updated: 2026/06/06 15:01:33 by skuor            ###   ########.fr       */
+/*   Updated: 2026/06/09 18:25:45 by skuor            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,10 @@ void	CmdExec::privmsg(t_cmdParser & cmd, Client *c)
 	std::string prefix = prefixStr(c);
 	std::string msg = prefix + " PRIVMSG " + cmd.params[0] + " :" + cmd.trailing;
 		
-	if (cmd.params[0][0] == '#')
+	// std::cout << "nb de param: " << cmd.params.size() << std:: endl 
+	// 	<< "cmd.param[0] = " << cmd.params[0] << std::endl
+	// 	<< "trailing : " << cmd.trailing << std::endl;
+ 	if (cmd.params[0][0] == '#')
 	{
 		Channel *chan = this->_srv->getChannelByName(cmd.params[0]);
 		if (!chan)
@@ -35,6 +38,7 @@ void	CmdExec::privmsg(t_cmdParser & cmd, Client *c)
 		if (!chan->isMember(c))
 			return (sendMsg(ERR_404, c, "", chan));
 		
+		c->write("sent a msg to the chan " + chan->getName());
 		sendToAllExcept(msg, *chan, c);
 	}
 	else
@@ -42,6 +46,7 @@ void	CmdExec::privmsg(t_cmdParser & cmd, Client *c)
 		Client *dest = this->_srv->getClientByNick(cmd.params[0]);
 		if (!dest)
 			return (sendMsg(ERR_401, c, cmd.params[0]));
+		c->write("sent a private message to " + dest->getNickName());
 		sendMsg(msg, dest);
 	}
 }

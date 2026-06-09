@@ -6,7 +6,7 @@
 /*   By: skuor <skuor@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/27 11:03:54 by skuor             #+#    #+#             */
-/*   Updated: 2026/06/09 10:47:59 by skuor            ###   ########.fr       */
+/*   Updated: 2026/06/09 15:09:43 by skuor            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,8 @@ class Client {
 		bool		getHasNick() const;
 		bool		getHasUser() const;
 		int			getClientFd() const;
-		std::string	getReadBuf();
+		std::string	&getReadBuf();
+		void	setReadBuf(std::string str);
 
 		void	setNickName(const std::string & newName);
 		void	setUserName(const std::string & newName);

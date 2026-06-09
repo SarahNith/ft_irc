@@ -6,7 +6,7 @@
 /*   By: skuor <skuor@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/27 11:04:01 by skuor             #+#    #+#             */
-/*   Updated: 2026/06/09 10:47:51 by skuor            ###   ########.fr       */
+/*   Updated: 2026/06/09 16:02:50 by skuor            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ Client::Client()
 	_userName = "";
 	_realName = "";
 	_oldNickName = "";
-	_hostname = "localhost"; //a modifier
+	_hostname = "localhost";
 	_correctPassword = false;
 	_allInfo = false;
 	_completeRegistration = false;
@@ -33,7 +33,7 @@ Client::Client(int fd)
 	_userName = "";
 	_realName = "";
 	_oldNickName = "";
-	_hostname = "localhost"; // a modifier 
+	_hostname = "localhost";
 	_correctPassword = false;
 	_allInfo = false;
 	_completeRegistration = false;
@@ -75,9 +75,14 @@ int		Client::getClientFd() const
 	return _clientFd;
 }
 
-std::string		Client::getReadBuf()
+std::string		&Client::getReadBuf()
 {
 	return _readBuff;
+}
+
+void		Client::setReadBuf(std::string str)
+{
+	this->_readBuff = str;
 }
 
 bool	Client::getCorrectPassword() const

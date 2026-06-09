@@ -6,7 +6,7 @@
 /*   By: skuor <skuor@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/03 19:20:00 by skuor             #+#    #+#             */
-/*   Updated: 2026/06/05 10:12:28 by skuor            ###   ########.fr       */
+/*   Updated: 2026/06/09 16:22:50 by skuor            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,11 @@
 
 void	CmdExec::user(t_cmdParser & cmd, Client *c)
 {
+	if (c == NULL)
+		return ;
+	
+	if (c->getHasNick() && !c->getCorrectPassword())
+		return ;
 	if (cmd.params.size() < 3 || cmd.trailing.empty() || cmd.params[0].empty())
 		return (sendMsg(ERR_461, c, "USER"));
 	if (c->getCompleteRegis())

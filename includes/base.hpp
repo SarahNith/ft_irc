@@ -24,6 +24,19 @@
 
 #include <poll.h>
 
+//[:<prefix>] <command> [<parameters> [...]] [:<trailing>]
+//ex: :dan!d@localhost PRIVMSG #chan :Hey what's up!
+//ex: JOIN #channel,#channel2 key1,key2
+
+typedef struct s_cmdParser
+{
+	std::string					prefix;
+	std::string					command;
+	std::vector<std::string>	params;
+	std::string					trailing;
+
+}						t_cmdParser;
+
 //class
 #include "../srcs/classes/client.hpp"
 #include "../srcs/classes/channel.hpp"
@@ -63,19 +76,6 @@ class Exception : public std::exception
 //#include "../classes/server.hpp"
 //#include "../classes/client.hpp"
 //#include "../classes/channel.hpp"
-
-//[:<prefix>] <command> [<parameters> [...]] [:<trailing>]
-//ex: :dan!d@localhost PRIVMSG #chan :Hey what's up!
-//ex: JOIN #channel,#channel2 key1,key2
-
-typedef struct s_cmdParser
-{
-	std::string					prefix;
-	std::string					command;
-	std::vector<std::string>	params;
-	std::string					trailing;
-
-}						t_cmdParser;
 
 std::vector<std::string>	parsingParam(std::string param);
 t_cmdParser	cmdParser(std::string line);

@@ -6,7 +6,7 @@
 /*   By: skuor <skuor@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/02 11:25:52 by skuor             #+#    #+#             */
-/*   Updated: 2026/06/09 10:48:55 by skuor            ###   ########.fr       */
+/*   Updated: 2026/06/09 17:08:56 by skuor            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ void	CmdExec::execute(t_cmdParser & cmd, Client *Client)
 	std::string command = cmd.command;
 	Type	cmdType = detectTypeCmd(command);
 	
-	write(command);
+	// write(command);
 	switch(cmdType)
 	{
 		case UNKNOWN:
@@ -108,6 +108,9 @@ Type	CmdExec::detectTypeCmd(std::string cmd)
 
 bool	CmdExec::checkRegistration(Client *c)
 {
+	if (c == NULL)
+		return false;
+	
 	if (!c->getCorrectPassword())
 		return false;
 	else if (!c->getHasNick())

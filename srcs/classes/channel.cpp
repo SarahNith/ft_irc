@@ -6,7 +6,7 @@
 /*   By: skuor <skuor@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/28 11:37:46 by skuor             #+#    #+#             */
-/*   Updated: 2026/06/09 10:24:26 by skuor            ###   ########.fr       */
+/*   Updated: 2026/06/09 10:56:58 by skuor            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,7 +93,7 @@ void	Channel::setKey(std::string newKey)
 
 void	Channel::setLimitCapacity(size_t newLimit)
 {
-	if (newLimit < 0 || newLimit > 1000)
+	if (newLimit > 1000)
 		return (write("Invalid limit capacity"));
 	this->_chanModes.limit = newLimit;
 }

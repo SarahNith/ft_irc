@@ -6,7 +6,7 @@
 /*   By: skuor <skuor@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/26 12:09:02 by agouin            #+#    #+#             */
-/*   Updated: 2026/06/09 10:48:08 by skuor            ###   ########.fr       */
+/*   Updated: 2026/06/09 16:10:08 by skuor            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,7 +119,6 @@ void	Server::AddClient()
 }
 
 
-
 void	Server::ClientData(int fd)
 {
 	char buffer[4096];
@@ -139,19 +138,38 @@ void	Server::ClientData(int fd)
 	buffer[buf] = '\0';
 	Client &client = _clients[fd];
 	
-	client.getReadBuf() += buffer;
-	size_t i = client.getReadBuf().find("\r\n") ;
-	while(i != std::string::npos)
+
+	//client.getReadBuf() += buffer;
+	client.setReadBuf(client.getReadBuf() + buffer);	//std::cout << client.getReadBuf() << std::endl;
+	size_t i = 0;
+	//
+	//std::cout << client.getReadBuf() << std::endl;
+	//std::cout << "RAW BUFFER = [" << buffer << "]" << std::endl;
+	while((i = client.getReadBuf().find("\r\n")) != std::string::npos)
 	{
+		//std::cout << "bbbb" << std::endl;
 		std::string line = client.getReadBuf().substr(0, i);
+
+
+	//	std::cout << "BEFORE = [" << client.getReadBuf() << "]" << std::endl;
+
 		client.getReadBuf().erase(0, i + 2);
+
+	//	std::cout << "AFTER = [" << client.getReadBuf() << "]" << std::endl;
+		
+		//client.getReadBuf().erase(0, i + 2);
+		//std::cout << "LINE = [" << line << "]" << std::endl;
 		if (!line.empty())
 		{
 			t_cmdParser	cmd = cmdParser(line);
-			CmdExec exec;
+			std::cout << "LINE = [" << line << "]" << std::endl;
+			CmdExec exec(this);
 			exec.execute(cmd, &client);
 		}
 	}
+
+	//	i = client.getReadBuf().find("\r\n");//
+	
 }
 
 
