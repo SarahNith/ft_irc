@@ -6,7 +6,7 @@
 /*   By: skuor <skuor@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/27 11:04:01 by skuor             #+#    #+#             */
-/*   Updated: 2026/06/09 10:37:39 by skuor            ###   ########.fr       */
+/*   Updated: 2026/06/09 10:47:51 by skuor            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,6 +73,11 @@ std::string Client::getHostname() const
 int		Client::getClientFd() const
 {
 	return _clientFd;
+}
+
+std::string		Client::getReadBuf()
+{
+	return _readBuff;
 }
 
 bool	Client::getCorrectPassword() const

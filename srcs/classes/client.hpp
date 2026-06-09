@@ -6,7 +6,7 @@
 /*   By: skuor <skuor@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/27 11:03:54 by skuor             #+#    #+#             */
-/*   Updated: 2026/06/09 10:36:36 by skuor            ###   ########.fr       */
+/*   Updated: 2026/06/09 10:47:59 by skuor            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,7 @@ class Client {
 		bool		getHasNick() const;
 		bool		getHasUser() const;
 		int			getClientFd() const;
+		std::string	getReadBuf();
 
 		void	setNickName(const std::string & newName);
 		void	setUserName(const std::string & newName);
@@ -64,7 +65,7 @@ class Client {
 		bool		_hasNick;
 		bool		_hasUser;
 
-		// std::string	_readBuff; //stocke donnees recues du clients pas encore traitees
+		 std::string	_readBuff; //stocke donnees recues du clients pas encore traitees
 		// std::string	_toSendBuff; //stocke donnees en attente d'etre envoyees au client;
 };
 
