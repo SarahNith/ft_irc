@@ -6,7 +6,7 @@
 /*   By: skuor <skuor@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/26 12:09:02 by agouin            #+#    #+#             */
-/*   Updated: 2026/06/09 16:10:08 by skuor            ###   ########.fr       */
+/*   Updated: 2026/06/10 17:12:30 by skuor            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -162,7 +162,7 @@ void	Server::ClientData(int fd)
 		if (!line.empty())
 		{
 			t_cmdParser	cmd = cmdParser(line);
-			std::cout << "LINE = [" << line << "]" << std::endl;
+			// std::cout << "LINE = [" << line << "]" << std::endl; // affiche ce qy'il y q dans line
 			CmdExec exec(this);
 			exec.execute(cmd, &client);
 		}

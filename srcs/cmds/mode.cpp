@@ -6,7 +6,7 @@
 /*   By: skuor <skuor@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/05 15:54:37 by skuor             #+#    #+#             */
-/*   Updated: 2026/06/09 17:07:20 by skuor            ###   ########.fr       */
+/*   Updated: 2026/06/10 18:47:37 by skuor            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,7 @@ void	CmdExec::assignModes(t_cmdParser & cmd, Channel *chan, Client *c)
 		switch(modeChar)
 		{
 			case 'i':
+				c->write("set invite only");
 				chan->setInviteOnly(sign == '+');
 				break ;
 			case 't':
@@ -73,7 +74,7 @@ void	CmdExec::assignModes(t_cmdParser & cmd, Channel *chan, Client *c)
 				{
 					if (sign == '+')
 					{
-						c->write("set Invite Only");
+						c->write("set a password to the chan");
 						chan->setKey(*it);
 						++it;
 					}
@@ -90,9 +91,15 @@ void	CmdExec::assignModes(t_cmdParser & cmd, Channel *chan, Client *c)
 					else if (!chan->isMember(target))
 						return (sendMsg(ERR_442, target, "", chan));
 					if (sign == '+')
+					{
+						target->write("is now an operator");
 						chan->addOpe(target);
+					}
 					else
+					{
+						target->write("is no longer an operator");
 						chan->removeOpe(target);
+					}
 					++it;
 				}
 				break ;
@@ -104,13 +111,16 @@ void	CmdExec::assignModes(t_cmdParser & cmd, Channel *chan, Client *c)
 						size_t limit;
 						std::stringstream ss(*it);
 						ss >> limit;
-						
+						c->write("set a capacity limit of : " + chan->getLimitCapacity());
 						chan->setLimitCapacity(limit);
 						++it;
 					}
 				}
 				else
 					chan->setLimitCapacity(0);
+				break ;
+			case 'b':
+				return (sendMsg(ERR_368, c, "", chan));
 				break ;
 			default:
 				sendMsg(ERR_501, c, "", chan);
@@ -158,9 +168,6 @@ void	CmdExec::mode(t_cmdParser & cmd, Client *c)
 		Client *target = this->_srv->getClientByNick(cmd.params[0]);
 		if (!target)
 			return (sendMsg(ERR_401, c, cmd.params[0]));
-		
-		if (target != c)
-			return (sendMsg(ERR_502, c));
 
 		if (cmd.params.size() == 1)
 		{

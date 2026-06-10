@@ -6,7 +6,7 @@
 /*   By: skuor <skuor@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/04 09:12:19 by skuor             #+#    #+#             */
-/*   Updated: 2026/06/09 17:06:00 by skuor            ###   ########.fr       */
+/*   Updated: 2026/06/10 17:55:23 by skuor            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,6 +88,9 @@ void	CmdExec::join(t_cmdParser & cmd, Client *c)
 	
 	if (cmd.params.size() < 1)
 		return (sendMsg(ERR_461, c, "JOIN"));
+
+	std::cout << "cmd.param = " << cmd.params[0] << std::endl;
+	std::cout << "cmd.trailing = " << cmd.trailing << std::endl;
 	
 	std::map<std::string, std::string> channels = parsingJoin(cmd); // chan, key
 	std::map<std::string, std::string>::iterator it = channels.begin();
@@ -139,6 +142,8 @@ void	CmdExec::join(t_cmdParser & cmd, Client *c)
 		}
 		else
 		{
+			std::cout << "Chan found: " << itSrv->first << std::endl;
+			
 			if (itSrv->second.isMember(c))
 			{
 				it++;
@@ -161,6 +166,10 @@ void	CmdExec::join(t_cmdParser & cmd, Client *c)
 				{
 					if (it->second != itSrv->second.getChannelKey())
 					{
+						std::cout << "cmd.param = " << cmd.params[0] << std::endl;
+						std::cout << "cmd.trailing = " << cmd.trailing << std::endl;
+						std::cout << std::boolalpha;
+						std::cout << itSrv->second.isMember(c) << std::endl;
 						sendMsg(ERR_475, c, itSrv->first);
 						it++;
 						continue ;
@@ -176,7 +185,10 @@ void	CmdExec::join(t_cmdParser & cmd, Client *c)
 						continue ;
 					}
 				}
+				c->write("Joined the chan: " + itSrv->second.getName());
 				itSrv->second.addMember(c);
+				std::cout << std::boolalpha;
+				std::cout << itSrv->second.isMember(c) << std::endl;
 				sendToAll(msg, itSrv->second);
 
 				if (!itSrv->second.getTopic().empty())
@@ -188,3 +200,4 @@ void	CmdExec::join(t_cmdParser & cmd, Client *c)
 		it++;			
 	}
 }
+	

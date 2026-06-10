@@ -6,7 +6,7 @@
 /*   By: skuor <skuor@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/06 13:37:35 by skuor             #+#    #+#             */
-/*   Updated: 2026/06/06 14:53:39 by skuor            ###   ########.fr       */
+/*   Updated: 2026/06/10 11:22:50 by skuor            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,5 +22,6 @@ void	CmdExec::ping(t_cmdParser & cmd, Client *c)
 		msg = "PONG ircserv :" + cmd.params[0];
 	else if (!cmd.trailing.empty())
 		msg = "PONG ircserv :" + cmd.trailing;
+	write("PONG sent");
 	sendMsg(msg, c);
 }
