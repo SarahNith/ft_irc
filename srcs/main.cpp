@@ -6,7 +6,7 @@
 /*   By: agouin <agouin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/26 12:00:32 by agouin            #+#    #+#             */
-/*   Updated: 2026/06/08 15:15:48 by agouin           ###   ########.fr       */
+/*   Updated: 2026/06/10 18:14:46 by agouin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ int is_port_correct(std::string str)
 		if (std::isdigit(str[i]) == false && ((str[i] != 32) && str[i] != 9))
 			return (-1);
 	}
-	int at = atoi(obtainport(str).c_str());
+	int at = std::atoi(obtainport(str).c_str());
 	if (at <= 0 || at >= 65535) //voir si on prend ces ports
 		return (-1);
 	return (0);
@@ -59,7 +59,7 @@ int main(int argc, char **argv)//peut etre env si on veut avoir lheure
 	}
 	try
 	{
-		Server serv(atoi(obtainport(argv[1]).c_str()), argv[2]);
+		Server serv(std::atoi(obtainport(argv[1]).c_str()), argv[2]);
 		serv.run_server();
 	}
 	catch(const std::exception& e)
@@ -68,5 +68,3 @@ int main(int argc, char **argv)//peut etre env si on veut avoir lheure
 	}
 	return (0);
 }
-
-//plusieurs connexions avant davoir "Error : Recv failed"

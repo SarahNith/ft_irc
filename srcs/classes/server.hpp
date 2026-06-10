@@ -31,6 +31,10 @@ class	Server
 
 		Client*		getClientByNick(std::string nickname);
 		Channel*	getChannelByName(std::string name);
+
+		static void	signalhander(int num);
+
+		std::string itos(int nb);
 		
 
 	private :
@@ -40,17 +44,10 @@ class	Server
 		int	_server_socket_fd;
 		sockaddr_in addr;
 		std::vector<pollfd> _listfd;
-
-		// std::map<int, Client> _clients;
-
-		//voir si util
-		//struct addrinfo	_hints;
-		//struct addrinfo*	_servinfo;
+		static bool _signal;
 		std::map<const int, Client>	_clients;
 		std::map<std::string, Channel>	_channels;
 		std::string	_datetime;
-		//std::vector<server_op>	_irc_operators;
-		//std::string	_motd;
 		
 };
 

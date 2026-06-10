@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   sendMsg.cpp                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: skuor <skuor@student.42.fr>                +#+  +:+       +#+        */
+/*   By: agouin <agouin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/04 18:16:42 by skuor             #+#    #+#             */
-/*   Updated: 2026/06/09 18:05:13 by skuor            ###   ########.fr       */
+/*   Updated: 2026/06/10 17:02:11 by agouin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,9 +41,9 @@ void	CmdExec::sendMsg(std::string msg, Client *c, std::string other, Channel *ch
 	
 	while (sent < fullSize)
 	{
-		std::cout << c->getClientFd() << std::endl; 
+		//std::cout << c->getClientFd() << std::endl; 
 		ssize_t n = send(c->getClientFd(), fullMsg.c_str() + sent, fullSize - sent, 0);
-		std::cout << "n = " << n << std::endl;
+	//	std::cout << "n = " << n << std::endl;
 		if (n == -1)
 		{
 			write("Error: send failed");
