@@ -3,16 +3,18 @@
 /*                                                        :::      ::::::::   */
 /*   server.cpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: skuor <skuor@student.42.fr>                +#+  +:+       +#+        */
+/*   By: agouin <agouin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/26 12:09:02 by agouin            #+#    #+#             */
-/*   Updated: 2026/06/11 16:48:04 by skuor            ###   ########.fr       */
+/*   Updated: 2026/06/11 17:29:41 by agouin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/base.hpp"
 #include <unistd.h>
 #include <fcntl.h>
+
+bool Server::_signal = false;
 
 Server::Server(int port, std::string password) : _port(port), _password(password)
 {
@@ -45,6 +47,7 @@ Server::Server(int port, std::string password) : _port(port), _password(password
 //     short events;   // événements qui nous intéressent
 //     short revents;  // événements détectés par poll() = masque de bits
 // };
+	Server::_signal = false;
 
 	pollfd	serverFd;
 
@@ -52,6 +55,7 @@ Server::Server(int port, std::string password) : _port(port), _password(password
 	serverFd.events = POLLIN;
 	//POLLIN = prévenu si nouvelle connexions
 	serverFd.revents = 0;
+	//this->_listfd = NULL;je pense que cesty cette valeur quil faut que jinit
 	this->_listfd.push_back(serverFd);
 	//donc des quonn a une nouvelle connexion ou la mets dans le tableau de fd
 
@@ -59,6 +63,9 @@ Server::Server(int port, std::string password) : _port(port), _password(password
 	_datetime = ctime(&now);
 	if (!_datetime.empty() && _datetime[_datetime.size() - 1] == '\n')
     	_datetime.erase(_datetime.size() - 1);
+
+	write("Server is running on port : " + itos(_port));
+	write("The password is : " + _password);
 }
 
 Server::~Server()
@@ -69,10 +76,12 @@ Server::~Server()
 
 void	Server::run_server()
 {
-	//je pense que cest pas mal de faire une boucle en fonction du signal ?????
-	while(true) // = serveur
+	signal(SIGINT, this->signalhander);
+	signal(SIGQUIT, this->signalhander);
+	
+	while(Server::_signal != true) // = serveur
 	{
-		if(poll(&_listfd[0], _listfd.size(), -1) == -1)
+		if(poll(&_listfd[0], _listfd.size(), -1) == -1 && Server::_signal != true)
 			throw Exception("Error : Poll failed");
 		for(size_t i = 0; i < _listfd.size(); i++)
 		{
@@ -122,7 +131,7 @@ void	Server::AddClient()
 
 void	Server::ClientData(int fd)
 {
-	char buffer[4096];
+	char buffer[1024];
 	ssize_t	buf;
 
 	buf = recv(fd, buffer, sizeof(buffer) - 1, 0);
@@ -139,36 +148,22 @@ void	Server::ClientData(int fd)
 	buffer[buf] = '\0';
 	Client &client = _clients[fd];
 	
-
-	//client.getReadBuf() += buffer;
-	client.setReadBuf(client.getReadBuf() + buffer);	//std::cout << client.getReadBuf() << std::endl;
+	client.setReadBuf(client.getReadBuf() + buffer);
 	size_t i = 0;
-	//
-	//std::cout << client.getReadBuf() << std::endl;
-	//std::cout << "RAW BUFFER = [" << buffer << "]" << std::endl;
+
 	while((i = client.getReadBuf().find("\r\n")) != std::string::npos)
 	{
-		//std::cout << "bbbb" << std::endl;
 		std::string line = client.getReadBuf().substr(0, i);
-
-
-	//	std::cout << "BEFORE = [" << client.getReadBuf() << "]" << std::endl;
-
 		client.getReadBuf().erase(0, i + 2);
-
-	//	std::cout << "AFTER = [" << client.getReadBuf() << "]" << std::endl;
-		
-		//client.getReadBuf().erase(0, i + 2);
-		// std::cout << "LINE = [" << line << "]" << std::endl;
 		if (!line.empty())
 		{
 			t_cmdParser	cmd = cmdParser(line);
-			// std::cout << "LINE = [" << line << "]" << std::endl; // affiche ce qy'il y q dans line
 			CmdExec exec(this);
 			exec.execute(cmd, &client);
+			if (cmd.command == "QUIT")
+				 return;
 		}
-	}
-	//	i = client.getReadBuf().find("\r\n");//
+	}	
 }
 
 void Server::write(std::string msg)//voir si je donne un nom au server
@@ -219,12 +214,42 @@ void	Server::delChannel(std::string chanName)
 }
 
 
-void	Server::delClient(int fd)
+void	Server::delClient(int fd)//trouver var non init
 {
-	close(fd);
-	_clients.erase(fd);
+	for (size_t i = 0; i < this->_listfd.size(); i++)
+	{
+		if (fd == _listfd[i].fd)
+		{
+			close(fd);
+			this->_listfd.erase(this->_listfd.begin() + i);
+			break;
+		}
+	}
+	//close(fd);
+	for (size_t i = 0; i < this->_clients.size(); ++i)//jai change e ++
+	{
+		if (fd == _clients[i].getClientFd())
+		{
+			_clients.erase(fd);
+			break;
+		}
+	}
+	//_clients.erase(fd);
 	//quoi faire un poll
 	//+ channel
 	std::cout << MAGENTA << "Client disconnected" << DEFAULT << std::endl;
 }
 
+void	Server::signalhander(int num)
+{
+	(void)num;
+	Server::_signal = true;
+	std::cout << RED << "Signal detected" << DEFAULT << std::endl;
+}
+
+std::string Server::itos(int nb)
+{
+	std::stringstream ss;
+	ss << nb;
+	return (ss.str());
+}

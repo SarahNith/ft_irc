@@ -23,6 +23,7 @@
 #include "baseCmd.hpp"
 
 #include <poll.h>
+#include <signal.h>
 
 //[:<prefix>] <command> [<parameters> [...]] [:<trailing>]
 //ex: :dan!d@localhost PRIVMSG #chan :Hey what's up!
