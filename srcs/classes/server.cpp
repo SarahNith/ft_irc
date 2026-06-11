@@ -6,7 +6,7 @@
 /*   By: skuor <skuor@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/26 12:09:02 by agouin            #+#    #+#             */
-/*   Updated: 2026/06/10 17:12:30 by skuor            ###   ########.fr       */
+/*   Updated: 2026/06/11 16:48:04 by skuor            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,6 +113,7 @@ void	Server::AddClient()
 
 	Client newClient(clientfd);
 	newClient.setHostName(hostname);
+
 	_clients[clientfd] = newClient;
 
 	std::cout << YELLOW << "New connection : fd = " << DEFAULT << clientfd << std::endl;
@@ -158,7 +159,7 @@ void	Server::ClientData(int fd)
 	//	std::cout << "AFTER = [" << client.getReadBuf() << "]" << std::endl;
 		
 		//client.getReadBuf().erase(0, i + 2);
-		//std::cout << "LINE = [" << line << "]" << std::endl;
+		// std::cout << "LINE = [" << line << "]" << std::endl;
 		if (!line.empty())
 		{
 			t_cmdParser	cmd = cmdParser(line);
@@ -167,11 +168,8 @@ void	Server::ClientData(int fd)
 			exec.execute(cmd, &client);
 		}
 	}
-
 	//	i = client.getReadBuf().find("\r\n");//
-	
 }
-
 
 void Server::write(std::string msg)//voir si je donne un nom au server
 {

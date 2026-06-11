@@ -6,7 +6,7 @@
 /*   By: skuor <skuor@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/05 15:54:37 by skuor             #+#    #+#             */
-/*   Updated: 2026/06/11 10:14:26 by skuor            ###   ########.fr       */
+/*   Updated: 2026/06/11 16:47:39 by skuor            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ void	CmdExec::assignModes(t_cmdParser & cmd, Channel *chan, Client *c)
 					c->write("set invite only");
 				else
 					c->write("removed invite only");
-					break ;
+				break ;
 			case 't':
 				chan->setTopicRestriction(sign == '+');
 				if (sign == '+')
@@ -174,7 +174,6 @@ void	CmdExec::mode(t_cmdParser & cmd, Client *c)
 			return (sendMsg(ERR_482, c, "", chan));
 
 		assignModes(cmd, chan, c);
-		
 	}
 	else
 	{

@@ -6,7 +6,7 @@
 /*   By: skuor <skuor@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/04 17:32:09 by skuor             #+#    #+#             */
-/*   Updated: 2026/06/09 18:25:45 by skuor            ###   ########.fr       */
+/*   Updated: 2026/06/11 16:45:56 by skuor            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,9 +26,6 @@ void	CmdExec::privmsg(t_cmdParser & cmd, Client *c)
 	std::string prefix = prefixStr(c);
 	std::string msg = prefix + " PRIVMSG " + cmd.params[0] + " :" + cmd.trailing;
 		
-	// std::cout << "nb de param: " << cmd.params.size() << std:: endl 
-	// 	<< "cmd.param[0] = " << cmd.params[0] << std::endl
-	// 	<< "trailing : " << cmd.trailing << std::endl;
  	if (cmd.params[0][0] == '#')
 	{
 		Channel *chan = this->_srv->getChannelByName(cmd.params[0]);
@@ -38,7 +35,7 @@ void	CmdExec::privmsg(t_cmdParser & cmd, Client *c)
 		if (!chan->isMember(c))
 			return (sendMsg(ERR_404, c, "", chan));
 		
-		c->write("sent a msg to the chan " + chan->getName());
+		c->write("sent a message to the chan " + chan->getName());
 		sendToAllExcept(msg, *chan, c);
 	}
 	else

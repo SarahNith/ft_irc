@@ -6,7 +6,7 @@
 /*   By: skuor <skuor@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/02 11:26:00 by skuor             #+#    #+#             */
-/*   Updated: 2026/06/10 18:54:05 by skuor            ###   ########.fr       */
+/*   Updated: 2026/06/11 12:55:13 by skuor            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,29 +97,29 @@ class CmdExec {
 # define ERR_464 RPL_PREFIX "464 <client> :Password incorrect"
 
 //NICK
-# define ERR_431 RPL_PREFIX RED "431 <client> :No nickname given" DEFAULT
-# define ERR_432 RPL_PREFIX RED "432 <client> <nick> :Erroneus nickname" DEFAULT
-# define ERR_433 RPL_PREFIX RED "433 <client> <nick> :Nickname is already in use" DEFAULT
+# define ERR_431 RPL_PREFIX "431 <client> :No nickname given"
+# define ERR_432 RPL_PREFIX "432 <client> <nick> :Erroneus nickname"
+# define ERR_433 RPL_PREFIX "433 <client> <nick> :Nickname is already in use"
 
 //JOIN
 # define RPL_332 RPL_PREFIX "332 <client> <channel> :<topic>"
 # define RPL_366 RPL_PREFIX "366 <client> <channel> :End of /NAMES list"
-# define ERR_471 RPL_PREFIX RED "471 <client> <channel> :Cannot join channel (+l)" DEFAULT
-# define ERR_473 RPL_PREFIX RED "473 <client> <channel> :Cannot join channel (+i)" DEFAULT
-# define ERR_475 RPL_PREFIX RED "475 <client> <channel> :Cannot join channel (+k)" DEFAULT
-# define ERR_476 RPL_PREFIX RED "476 <client> <channel> :Bad Channel Mask" DEFAULT
+# define ERR_471 RPL_PREFIX "471 <client> <channel> :Cannot join channel (+l)"
+# define ERR_473 RPL_PREFIX "473 <client> <channel> :Cannot join channel (+i)"
+# define ERR_475 RPL_PREFIX "475 <client> <channel> :Cannot join channel (+k)"
+# define ERR_476 RPL_PREFIX "476 <client> <channel> :Bad Channel Mask"
 
 //PRIVMSG
-# define ERR_401 RPL_PREFIX RED "401 <client> <nick> :No such nick" DEFAULT
-# define ERR_403 RPL_PREFIX RED "403 <client> <channel> :No such channel" DEFAULT
-# define ERR_404 RPL_PREFIX RED "404 <client> <channel> :Cannot send to channel" DEFAULT
-# define ERR_411 RPL_PREFIX RED "411 <client> :No recipient given (<command>)" DEFAULT
-# define ERR_412 RPL_PREFIX RED "412 <client> :No text to send" DEFAULT
+# define ERR_401 RPL_PREFIX "401 <client> <nick> :No such nick"
+# define ERR_403 RPL_PREFIX "403 <client> <channel> :No such channel"
+# define ERR_404 RPL_PREFIX "404 <client> <channel> :Cannot send to channel"
+# define ERR_411 RPL_PREFIX "411 <client> :No recipient given (<command>)"
+# define ERR_412 RPL_PREFIX "412 <client> :No text to send"
 
 //KICK
-# define ERR_441 RPL_PREFIX RED "441 <client> <nick> <channel> :They aren't on that channel" DEFAULT
-# define ERR_442 RPL_PREFIX RED "442 <client> <channel> :You're not on that channel" DEFAULT
-# define ERR_482 RPL_PREFIX RED "482 <client> <channel> :You're not channel operator" DEFAULT
+# define ERR_441 RPL_PREFIX "441 <client> <nick> <channel> :They aren't on that channel"
+# define ERR_442 RPL_PREFIX "442 <client> <channel> :You're not on that channel"
+# define ERR_482 RPL_PREFIX "482 <client> <channel> :You're not channel operator"
 
 //INVITE
 # define RPL_341 RPL_PREFIX "341 <client> <nick> <channel>"

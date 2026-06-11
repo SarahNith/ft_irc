@@ -6,7 +6,7 @@
 /*   By: skuor <skuor@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/05 10:39:14 by skuor             #+#    #+#             */
-/*   Updated: 2026/06/10 11:17:31 by skuor            ###   ########.fr       */
+/*   Updated: 2026/06/11 16:02:13 by skuor            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ void	CmdExec::kick(t_cmdParser & cmd, Client *c)
 			return (sendMsg(ERR_441, c, *it, chan));
 		
 		dest->write("was kicked by " + c->getNickName());
-		std::string reason = cmd.trailing.empty() ? "You have been kicked" : cmd.trailing;
+		std::string reason = cmd.trailing.empty() ? "A member has been kicked" : cmd.trailing;
 		std::string prefix = prefixStr(c);
 		std::string msg = prefix + " KICK " + cmd.params[0] + " " + *it + " :" + reason;
 			

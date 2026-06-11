@@ -6,7 +6,7 @@
 /*   By: skuor <skuor@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/03 10:59:08 by skuor             #+#    #+#             */
-/*   Updated: 2026/06/09 16:22:38 by skuor            ###   ########.fr       */
+/*   Updated: 2026/06/11 12:42:41 by skuor            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ void	CmdExec::nick(t_cmdParser & cmd, Client *c)
 		return ;
 	
 	if (c->getHasUser() && !c->getCorrectPassword())
-		return ;
+		return (write("You must enter PASS first"));
 		
 	if (cmd.params.size() < 1)
 		return (sendMsg(ERR_431, c));

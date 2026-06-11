@@ -3,16 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   main.cpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: agouin <agouin@42.fr>                      +#+  +:+       +#+        */
+/*   By: skuor <skuor@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/26 12:00:32 by agouin            #+#    #+#             */
-/*   Updated: 2026/06/08 15:15:48 by agouin           ###   ########.fr       */
+/*   Updated: 2026/06/11 16:45:28 by skuor            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-
 #include "../includes/base.hpp"
-
 
 std::string obtainport(std::string str)
 {
@@ -26,7 +24,6 @@ std::string obtainport(std::string str)
 		end--;
 	return (str.substr(beg, end - beg));
 }
-
 
 int is_port_correct(std::string str)
 {
@@ -44,11 +41,10 @@ int is_port_correct(std::string str)
 			return (-1);
 	}
 	int at = atoi(obtainport(str).c_str());
-	if (at <= 0 || at >= 65535) //voir si on prend ces ports
+	if (at < 1024 || at >= 65535)
 		return (-1);
 	return (0);
 }
-
 
 int main(int argc, char **argv)//peut etre env si on veut avoir lheure
 {

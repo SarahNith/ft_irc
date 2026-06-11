@@ -6,7 +6,7 @@
 /*   By: skuor <skuor@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/03 10:59:52 by skuor             #+#    #+#             */
-/*   Updated: 2026/06/06 13:11:11 by skuor            ###   ########.fr       */
+/*   Updated: 2026/06/11 12:29:42 by skuor            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,5 +26,8 @@ void	CmdExec::pass(t_cmdParser & cmd, Client *c)
 	if (password != correctPw)
 		return (sendMsg(ERR_464, c));
 	else
+	{
+		c->write("Correct password !");
 		c->setCorrectPassword(true);
+	}
 }
