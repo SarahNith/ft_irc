@@ -31,6 +31,9 @@ class	Server
 
 		Client*		getClientByNick(std::string nickname);
 		Channel*	getChannelByName(std::string name);
+		void		getClientByFd(int fd);
+
+		void		delChannels(Client *c);
 
 		static void	signalhander(int num);
 

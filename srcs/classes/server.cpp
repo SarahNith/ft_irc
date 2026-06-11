@@ -6,7 +6,7 @@
 /*   By: agouin <agouin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/26 12:09:02 by agouin            #+#    #+#             */
-/*   Updated: 2026/06/10 18:56:18 by agouin           ###   ########.fr       */
+/*   Updated: 2026/06/11 17:20:22 by agouin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ Server::Server(int port, std::string password) : _port(port), _password(password
 //     short revents;  // événements détectés par poll() = masque de bits
 // };
 	Server::_signal = false;
-
+	//this->_channels = NULL;
 	pollfd	serverFd;
 
 	serverFd.fd = _server_socket_fd;
@@ -136,6 +136,7 @@ void	Server::ClientData(int fd)
 	buf = recv(fd, buffer, sizeof(buffer) - 1, 0);
 	if(buf == 0)
 	{
+		getClientByFd(fd);//jai pas reussi a tester si ca marchais 
 		delClient(fd);
 		return;
 	}
@@ -148,6 +149,7 @@ void	Server::ClientData(int fd)
 	Client &client = _clients[fd];
 	
 	client.setReadBuf(client.getReadBuf() + buffer);
+
 	size_t i = 0;
 
 	while((i = client.getReadBuf().find("\r\n")) != std::string::npos)
@@ -190,6 +192,21 @@ Client*	Server::getClientByNick(std::string nickname)
 	return NULL;
 }
 
+void	Server::getClientByFd(int fd)
+{
+	std::map<const int, Client>::iterator it;
+	std::map<const int, Client>::iterator ite = _clients.end();
+
+	for (it = _clients.begin(); it != ite; it++)
+	{
+		if (it->second.getClientFd() == fd)
+		{
+			delChannels(&it->second);
+			break ; 
+		}
+	}
+}
+
 Channel*	Server::getChannelByName(std::string name)
 {
 	std::map<std::string, Channel>::iterator it = _channels.find(name);
@@ -215,7 +232,22 @@ void	Server::delChannel(std::string chanName)
 }
 
 
-void	Server::delClient(int fd)//trouver var non init
+void	Server::delChannels(Client *c)
+{
+	std::map<std::string, Channel> &chansList = this->getChannels(); //liste des chans sur le serveur
+	std::map<std::string, Channel>::iterator it1;
+
+	for (it1 = chansList.begin(); it1 != chansList.end(); it1++)
+	{
+		if (it1->second.isMember(c))
+		{
+			it1->second.removeMember(c);
+			it1->second.removeOpe(c);
+		}
+	}
+}
+
+void	Server::delClient(int fd)
 {
 	for (size_t i = 0; i < this->_listfd.size(); i++)
 	{
@@ -226,8 +258,7 @@ void	Server::delClient(int fd)//trouver var non init
 			break;
 		}
 	}
-	//close(fd);
-	for (size_t i = 0; i < this->_clients.size(); ++i)//jai change e ++
+	for (size_t i = 3; i < this->_clients.size(); i++)
 	{
 		if (fd == _clients[i].getClientFd())
 		{
@@ -235,9 +266,7 @@ void	Server::delClient(int fd)//trouver var non init
 			break;
 		}
 	}
-	//_clients.erase(fd);
-	//quoi faire un poll
-	//+ channel
+	
 	std::cout << MAGENTA << "Client disconnected" << DEFAULT << std::endl;
 }
 
