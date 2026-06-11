@@ -6,7 +6,7 @@
 /*   By: skuor <skuor@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/05 15:08:09 by skuor             #+#    #+#             */
-/*   Updated: 2026/06/06 17:26:40 by skuor            ###   ########.fr       */
+/*   Updated: 2026/06/11 10:26:08 by skuor            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,7 @@ void	CmdExec::topic(t_cmdParser & cmd, Client *c)
 		
 		if (cmd.trailing == " ")
 		{
+			c->write("removed the topic on " + chan->getName());
 			chan->setTopic("");
 			std::string clearTopicMsg = prefix + " TOPIC " + chan->getName() + " :";
 			sendToAll(clearTopicMsg, *chan);
@@ -54,7 +55,7 @@ void	CmdExec::topic(t_cmdParser & cmd, Client *c)
 				cmd.trailing = cmd.trailing.substr(0, TOPICLEN);
 			chan->setTopic(cmd.trailing);
 			std::string newTopicMsg = prefix + " TOPIC " + chan->getName() + " :" + cmd.trailing;
-
+			c->write("changed the topic on " + chan->getName());
 			sendToAll(newTopicMsg, *chan);
 		}
 	}

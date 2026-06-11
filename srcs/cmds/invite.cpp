@@ -6,7 +6,7 @@
 /*   By: skuor <skuor@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/05 14:13:15 by skuor             #+#    #+#             */
-/*   Updated: 2026/06/06 11:55:48 by skuor            ###   ########.fr       */
+/*   Updated: 2026/06/11 10:16:40 by skuor            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,7 @@ void	CmdExec::invite(t_cmdParser & cmd, Client *c)
 	std::string prefix = prefixStr(c);
 	std::string inviteMsg = prefix + " INVITE " + toInvite->getNickName() + " " + chan->getName();
 	
+	c->write("invited " + toInvite->getNickName() + "to the chan");
 	sendMsg(inviteMsg, toInvite);
 	chan->addToInviteList(toInvite);
 

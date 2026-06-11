@@ -6,7 +6,7 @@
 /*   By: skuor <skuor@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/04 09:12:19 by skuor             #+#    #+#             */
-/*   Updated: 2026/06/10 17:55:23 by skuor            ###   ########.fr       */
+/*   Updated: 2026/06/11 10:24:19 by skuor            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -131,7 +131,6 @@ void	CmdExec::join(t_cmdParser & cmd, Client *c)
 		if (itSrv == chansList.end()) //chan n'existe pas encore
 		{
 			//je cree un nouveau chan et ajoute le user en tant que member et ope
-			// chansList[it->first] = Channel(c, it->first);
 			chansList.insert(std::make_pair(it->first, Channel(c, it->first)));
 			sendToAll(msg, chansList[it->first]);
 			sendNames(c, chansList[it->first]);
@@ -141,9 +140,7 @@ void	CmdExec::join(t_cmdParser & cmd, Client *c)
 			continue ;
 		}
 		else
-		{
-			std::cout << "Chan found: " << itSrv->first << std::endl;
-			
+		{			
 			if (itSrv->second.isMember(c))
 			{
 				it++;
@@ -156,6 +153,7 @@ void	CmdExec::join(t_cmdParser & cmd, Client *c)
 				{
 					if (!itSrv->second.isInvited(c))
 					{
+						c->write("cannot join the chan because :is not invited");
 						sendMsg(ERR_473, c, itSrv->first);
 						it++;
 						continue ;
@@ -166,10 +164,7 @@ void	CmdExec::join(t_cmdParser & cmd, Client *c)
 				{
 					if (it->second != itSrv->second.getChannelKey())
 					{
-						std::cout << "cmd.param = " << cmd.params[0] << std::endl;
-						std::cout << "cmd.trailing = " << cmd.trailing << std::endl;
-						std::cout << std::boolalpha;
-						std::cout << itSrv->second.isMember(c) << std::endl;
+						c->write("cannot join the chan because :password");
 						sendMsg(ERR_475, c, itSrv->first);
 						it++;
 						continue ;
@@ -180,6 +175,7 @@ void	CmdExec::join(t_cmdParser & cmd, Client *c)
 				{
 					if (itSrv->second.getMembers().size() >= itSrv->second.getLimitCapacity())
 					{
+						c->write("cannot join the chan because :limit capacity");
 						sendMsg(ERR_471, c, itSrv->first);
 						it++;
 						continue ;
@@ -187,8 +183,6 @@ void	CmdExec::join(t_cmdParser & cmd, Client *c)
 				}
 				c->write("Joined the chan: " + itSrv->second.getName());
 				itSrv->second.addMember(c);
-				std::cout << std::boolalpha;
-				std::cout << itSrv->second.isMember(c) << std::endl;
 				sendToAll(msg, itSrv->second);
 
 				if (!itSrv->second.getTopic().empty())

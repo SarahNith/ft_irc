@@ -6,7 +6,7 @@
 /*   By: skuor <skuor@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/05 15:54:37 by skuor             #+#    #+#             */
-/*   Updated: 2026/06/10 18:47:37 by skuor            ###   ########.fr       */
+/*   Updated: 2026/06/11 10:14:26 by skuor            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,11 +63,18 @@ void	CmdExec::assignModes(t_cmdParser & cmd, Channel *chan, Client *c)
 		switch(modeChar)
 		{
 			case 'i':
-				c->write("set invite only");
 				chan->setInviteOnly(sign == '+');
-				break ;
+				if (sign == '+')
+					c->write("set invite only");
+				else
+					c->write("removed invite only");
+					break ;
 			case 't':
 				chan->setTopicRestriction(sign == '+');
+				if (sign == '+')
+					c->write("set topic restriction");
+				else
+					c->write("removed topic restriction");
 				break ;
 			case 'k':
 				if (it != ite)
@@ -79,7 +86,10 @@ void	CmdExec::assignModes(t_cmdParser & cmd, Channel *chan, Client *c)
 						++it;
 					}
 					else
+					{
+						c->write("removed the password of the chan");
 						chan->setKey("");
+					}
 				}
 				break ;
 			case 'o':
@@ -111,13 +121,16 @@ void	CmdExec::assignModes(t_cmdParser & cmd, Channel *chan, Client *c)
 						size_t limit;
 						std::stringstream ss(*it);
 						ss >> limit;
-						c->write("set a capacity limit of : " + chan->getLimitCapacity());
+						c->write("set a capacity limit");
 						chan->setLimitCapacity(limit);
 						++it;
 					}
 				}
 				else
+				{
+					c->write("removed the capacity limit");
 					chan->setLimitCapacity(0);
+				}
 				break ;
 			case 'b':
 				return (sendMsg(ERR_368, c, "", chan));
