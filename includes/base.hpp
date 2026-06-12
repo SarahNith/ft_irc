@@ -20,7 +20,6 @@
 #include <algorithm>
 
 #include "colors.hpp"
-#include "baseCmd.hpp"
 
 #include <poll.h>
 #include <signal.h>
@@ -51,17 +50,8 @@ class Exception : public std::exception
 {
 	public:
 
-		Exception(std::string msg) : str(msg)
-		{
-
-		}
-
-		~Exception() throw() 
-		{
-
-		}
-
-		
+		Exception(std::string msg) : str(msg) {}
+		~Exception() throw() {}
 
         const char* what() const throw()
 		{
@@ -69,14 +59,8 @@ class Exception : public std::exception
 		}
 
 	private :
-	
 		std::string str;
 };
-
-
-//#include "../classes/server.hpp"
-//#include "../classes/client.hpp"
-//#include "../classes/channel.hpp"
 
 std::vector<std::string>	parsingParam(std::string param);
 t_cmdParser	cmdParser(std::string line);
