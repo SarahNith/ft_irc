@@ -6,7 +6,7 @@
 /*   By: skuor <skuor@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/12 10:12:51 by skuor             #+#    #+#             */
-/*   Updated: 2026/06/12 15:53:38 by skuor            ###   ########.fr       */
+/*   Updated: 2026/06/15 18:38:55 by skuor            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,10 @@ void	Bot::connectToServer()
 		
 	if (connect(this->_fd, (struct sockaddr*)&addr, sizeof(addr)) < 0)
 		throw Exception("Error : Connection failed");
+	struct timeval tv;
+	tv.tv_sec = 1;
+	tv.tv_usec = 0;
+	setsockopt(_fd, SOL_SOCKET, SO_RCVTIMEO, &tv, sizeof(tv));
 }
 
 void	Bot::recvLoop()
@@ -39,8 +43,10 @@ void	Bot::recvLoop()
 	buf = recv(_fd, buffer, sizeof(buffer) - 1, 0);
 	if(buf == 0)
 		return ;
-	if(buf < 0)
+	if (buf < 0)
 	{
+		if (errno == EAGAIN || errno == EWOULDBLOCK)
+			return;  // timeout normal, pas une erreur
 		std::cerr << RED << "Error : Recv failed" << DEFAULT << std::endl;
 		return;
 	}

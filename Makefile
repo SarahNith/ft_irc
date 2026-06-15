@@ -11,6 +11,8 @@ CMDS_DIR = $(SRC_DIR)cmds/
 CMDEXEC_DIR = $(SRC_DIR)cmds/cmdExec/
 CLASSES_DIR = $(SRC_DIR)classes/
 
+BOT_DIR = ./bot/
+
 SRC_FILES = main.cpp parsing.cpp
 
 CLASSES_FILES = channel.cpp client.cpp server.cpp
@@ -69,10 +71,25 @@ clean:
 	@rm -rf $(OBJ_DIR)
 	@echo -e "$(MAGENTA)$(NAME) object directory cleaned!$(DEFAULT)"
 
-fclean: clean
+#########  BOT  ######### 
+bot:
+	@$(MAKE) -C $(BOT_DIR) --no-print-directory
+	@echo -e "$(MAGENTA)Bot compiled!$(DEFAULT)"
+
+bot_clean:
+	@$(MAKE) -C $(BOT_DIR) clean --no-print-directory
+
+bot_fclean:
+	@$(MAKE) -C $(BOT_DIR) fclean --no-print-directory
+
+re_bot : bot_clean bot_fclean all
+
+
+#########  CLEAN ALL  ######### 
+fclean: clean bot_fclean
 	@rm -f $(NAME)
 	@echo -e "$(CYAN)$(NAME) executables and objects removed succesfully!$(DEFAULT)"
 
 re: clean fclean all
 
-.PHONY: all clean fclean re
+.PHONY: all clean fclean re bot bot_clean bot_fclean
