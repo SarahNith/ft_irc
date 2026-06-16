@@ -6,13 +6,16 @@
 /*   By: skuor <skuor@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/12 10:12:19 by skuor             #+#    #+#             */
-/*   Updated: 2026/06/15 18:50:09 by skuor            ###   ########.fr       */
+/*   Updated: 2026/06/16 11:22:15 by skuor            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/bot.hpp"
 
-Bot::Bot(std::string ip, int port, std::string password) : _ip(ip), _port(port), _password(password) {}
+Bot::Bot(std::string ip, int port, std::string password) : _ip(ip), _port(port), _password(password)
+{
+	this->_loadBannedWords();
+}
 
 Bot::~Bot() {}
 
@@ -49,7 +52,7 @@ void	Bot::sendMsg(std::string msg)
 void	Bot::registerBot()
 {
 	std::string passMsg = "PASS " + _password;
-	std::string	nickMsg = "NICK BotCensor";
+	std::string	nickMsg = "NICK Bot";
 	std::string userMsg = "USER Bot 0 * :Bot Censor";
 
 	_write("Sending PASS, NICK and USER");
@@ -63,25 +66,33 @@ t_botParser	Bot::_parsingLine(std::string line)
 	//:nick!user@host PRIVMSG #channel :contenu du message
 	t_botParser	bp;
 	size_t pos = 0;
+	size_t wsPos = 0;
 
 	if (line.empty())
 		return bp;
 
 	if (line[0] == ':')
 	{
-		pos = line.find('!');
-		if (pos != std::string::npos)
+		std::string prefix;
+		wsPos = line.find_first_of(" \t", 0);
+		if (wsPos != std::string::npos)
 		{
-			bp.nick = line.substr(1, pos - 1);
-			pos = pos + 1;
+			prefix = line.substr(1, wsPos - 1);
+			pos = prefix.find('!');
+			if (pos != std::string::npos)
+			{
+				bp.nick = prefix.substr(0, pos);
+				pos = wsPos + 1;
+
+			}
+			else
+				pos = wsPos + 1;
 		}
-		else
-			pos = line.length();
 	}
 
 	pos = skip_ws(line, pos);
 
-	size_t wsPos = line.find_first_of(" \t", pos);
+	wsPos = line.find_first_of(" \t", pos);
 	if (wsPos != std::string::npos)
 	{
 		bp.command = line.substr(pos, wsPos - pos);
@@ -115,7 +126,7 @@ t_botParser	Bot::_parsingLine(std::string line)
 void	Bot::_loadBannedWords()
 {
 	std::string	line;
-	_srcFile.open("bannedWords.txt");
+	_srcFile.open("bot/bannedWords.txt");
 	if (!_srcFile.is_open())
 	{
 		std::cerr << "Unable to open file" << std::endl;
@@ -143,6 +154,7 @@ void	Bot::handleLine(std::string line)
 	_write("command: [" + bp.command + "]");
 	_write("channel: [" + bp.channel + "]");
 	_write("nick: [" + bp.nick + "]");
+	_write("msg: [" + bp.msg + "]");
 	
 	if (bp.command == "PING")
 	{
@@ -163,7 +175,12 @@ void	Bot::handleLine(std::string line)
 		_write("Cannot JOIN the channel: +k");
 		_channel = "";
 	}
-	
+	if (bp.command == "366")
+	{
+		_write("Asked for operator status");
+		std::string msg = "PRIVMSG " + _channel + " :[BOT] Hello! Please give me operator status with /mode #chan +o Bot";
+		sendMsg(msg);
+	}
 	if (bp.command == "PRIVMSG")
 	{		
 		std::vector<std::string>::iterator it;
@@ -188,7 +205,7 @@ void	Bot::handleLine(std::string line)
 				}
 				else if (_warnings[bp.nick] > 2)
 				{
-					_write("kicked " + bp.nick);
+					_write("Kicked " + bp.nick);
 					std::string kickMsg = "KICK " + _channel + " " + bp.nick + " :You have been kicked for using banned words.";
 					sendMsg(kickMsg);
 				}

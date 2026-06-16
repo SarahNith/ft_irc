@@ -82,7 +82,7 @@ bot_clean:
 bot_fclean:
 	@$(MAKE) -C $(BOT_DIR) fclean --no-print-directory
 
-re_bot : bot_clean bot_fclean all
+re_bot : bot_clean bot
 
 
 #########  CLEAN ALL  ######### 

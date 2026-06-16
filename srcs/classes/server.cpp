@@ -6,7 +6,7 @@
 /*   By: skuor <skuor@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/26 12:09:02 by agouin            #+#    #+#             */
-/*   Updated: 2026/06/12 11:10:28 by skuor            ###   ########.fr       */
+/*   Updated: 2026/06/16 10:25:59 by skuor            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -272,7 +272,7 @@ void	Server::signalhander(int num)
 {
 	(void)num;
 	Server::_signal = true;
-	std::cout << RED << "Signal detected" << DEFAULT << std::endl;
+	std::cout << std::endl << RED << "Signal detected" << DEFAULT << std::endl;
 }
 
 std::string Server::itos(int nb)

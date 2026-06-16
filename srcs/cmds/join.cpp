@@ -6,7 +6,7 @@
 /*   By: skuor <skuor@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/04 09:12:19 by skuor             #+#    #+#             */
-/*   Updated: 2026/06/11 10:24:19 by skuor            ###   ########.fr       */
+/*   Updated: 2026/06/16 11:18:18 by skuor            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,8 +89,8 @@ void	CmdExec::join(t_cmdParser & cmd, Client *c)
 	if (cmd.params.size() < 1)
 		return (sendMsg(ERR_461, c, "JOIN"));
 
-	std::cout << "cmd.param = " << cmd.params[0] << std::endl;
-	std::cout << "cmd.trailing = " << cmd.trailing << std::endl;
+	// std::cout << "cmd.param = " << cmd.params[0] << std::endl;
+	// std::cout << "cmd.trailing = " << cmd.trailing << std::endl;
 	
 	std::map<std::string, std::string> channels = parsingJoin(cmd); // chan, key
 	std::map<std::string, std::string>::iterator it = channels.begin();

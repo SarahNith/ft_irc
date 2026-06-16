@@ -6,7 +6,7 @@
 /*   By: skuor <skuor@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/12 10:12:51 by skuor             #+#    #+#             */
-/*   Updated: 2026/06/15 18:38:55 by skuor            ###   ########.fr       */
+/*   Updated: 2026/06/16 10:26:21 by skuor            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,5 +80,5 @@ void	Bot::_signalhander(int num)
 {
 	(void)num;
 	Bot::_signal = true;
-	std::cout << RED << "Signal detected" << DEFAULT << std::endl;
+	std::cout << std::endl << RED << "Signal detected" << DEFAULT << std::endl;
 }
