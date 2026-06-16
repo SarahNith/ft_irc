@@ -6,7 +6,7 @@
 /*   By: skuor <skuor@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/04 09:12:19 by skuor             #+#    #+#             */
-/*   Updated: 2026/06/16 11:18:18 by skuor            ###   ########.fr       */
+/*   Updated: 2026/06/16 16:35:26 by skuor            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -128,10 +128,29 @@ void	CmdExec::join(t_cmdParser & cmd, Client *c)
 		
 		std::string msg = prefix + " JOIN " + it->first;
 		std::map<std::string, Channel>::iterator itSrv = chansList.find(it->first);
+		// if (itSrv == chansList.end()) //chan n'existe pas encore
+		// {
+		// 	//je cree un nouveau chan et ajoute le user en tant que member et ope
+		// 	chansList.insert(std::make_pair(it->first, Channel(c, it->first)));
+		// 	sendToAll(msg, chansList[it->first]);
+		// 	sendNames(c, chansList[it->first]);
+		// 	chansList[it->first].write("New chan created");
+		// 	c->write("created a new channel : " + chansList[it->first].getName());
+		// 	it++;
+		// 	continue ;
+		// }
 		if (itSrv == chansList.end()) //chan n'existe pas encore
 		{
 			//je cree un nouveau chan et ajoute le user en tant que member et ope
 			chansList.insert(std::make_pair(it->first, Channel(c, it->first)));
+			Client *Bot = this->_srv->getClientByNick("Bot");
+			if (Bot)
+			{
+				chansList[it->first].addMember(Bot);
+				chansList[it->first].addOpe(Bot);
+			}
+			else
+				return ;
 			sendToAll(msg, chansList[it->first]);
 			sendNames(c, chansList[it->first]);
 			chansList[it->first].write("New chan created");

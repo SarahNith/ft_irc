@@ -6,7 +6,7 @@
 /*   By: skuor <skuor@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/12 10:12:19 by skuor             #+#    #+#             */
-/*   Updated: 2026/06/16 11:22:15 by skuor            ###   ########.fr       */
+/*   Updated: 2026/06/16 17:21:15 by skuor            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,6 +64,8 @@ void	Bot::registerBot()
 t_botParser	Bot::_parsingLine(std::string line)
 {
 	//:nick!user@host PRIVMSG #channel :contenu du message
+
+	//:nick!user@host JOIN #channel
 	t_botParser	bp;
 	size_t pos = 0;
 	size_t wsPos = 0;
@@ -114,6 +116,13 @@ t_botParser	Bot::_parsingLine(std::string line)
 		bp.channel = line.substr(findHashtag);
 		pos = wsPos + 1;
 	}
+	else
+	{
+		size_t findHashtag = line.find('#', pos);
+		if (findHashtag == std::string::npos)
+			return bp;
+		bp.channel = line.substr(findHashtag);
+	}
 	
 	pos = skip_ws(line, pos);
 	size_t findMsg = line.find(':', pos);
@@ -147,14 +156,13 @@ void	Bot::_loadBannedWords()
 
 void	Bot::handleLine(std::string line)
 {
-	
 	_write("Received: " + line);
 
 	t_botParser bp = _parsingLine(line);
-	_write("command: [" + bp.command + "]");
-	_write("channel: [" + bp.channel + "]");
-	_write("nick: [" + bp.nick + "]");
-	_write("msg: [" + bp.msg + "]");
+	// _write("command: [" + bp.command + "]");
+	// _write("channel: [" + bp.channel + "]");
+	// _write("nick: [" + bp.nick + "]");
+	// _write("msg: [" + bp.msg + "]");
 	
 	if (bp.command == "PING")
 	{
@@ -162,25 +170,31 @@ void	Bot::handleLine(std::string line)
 		_write("PONG sent");
 		sendMsg(pingMsg);
 	}
-
-	if (bp.command == "INVITE")
+	if (bp.command == "JOIN")
 	{   
 		_channel = bp.channel;
 		_write("joined the channel " + _channel);
 		std::string joinMsg = "JOIN " + _channel;
 		sendMsg(joinMsg);
 	}
-	if (bp.command == "475")
-	{
-		_write("Cannot JOIN the channel: +k");
-		_channel = "";
-	}
-	if (bp.command == "366")
-	{
-		_write("Asked for operator status");
-		std::string msg = "PRIVMSG " + _channel + " :[BOT] Hello! Please give me operator status with /mode #chan +o Bot";
-		sendMsg(msg);
-	}
+	// if (bp.command == "INVITE")
+	// {   
+	// 	_channel = bp.channel;
+	// 	_write("joined the channel " + _channel);
+	// 	std::string joinMsg = "JOIN " + _channel;
+	// 	sendMsg(joinMsg);
+	// }
+	// if (bp.command == "475")
+	// {
+	// 	_write("Cannot JOIN the channel: +k");
+	// 	_channel = "";
+	// }
+	// if (bp.command == "366")
+	// {
+	// 	_write("Asked for operator status");
+	// 	std::string msg = "PRIVMSG " + _channel + " :[BOT] Hello! Please give me operator status with /mode #chan +o Bot";
+	// 	sendMsg(msg);
+	// }
 	if (bp.command == "PRIVMSG")
 	{		
 		std::vector<std::string>::iterator it;
@@ -208,6 +222,7 @@ void	Bot::handleLine(std::string line)
 					_write("Kicked " + bp.nick);
 					std::string kickMsg = "KICK " + _channel + " " + bp.nick + " :You have been kicked for using banned words.";
 					sendMsg(kickMsg);
+					_warnings[bp.nick] == 0;
 				}
 				break ;
 			}
@@ -218,5 +233,5 @@ void	Bot::handleLine(std::string line)
 
 void	Bot::_write(std::string msg)
 {
-	std::cout << YELLOW << "Bot : " << DEFAULT << msg << std::endl;
+	std::cout << YELLOW << "[Bot] " << DEFAULT << msg << std::endl;
 }
