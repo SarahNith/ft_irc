@@ -3,7 +3,9 @@
 # FT_IRC
 
 ## Description
+ft_irc is an implementation of an IRC (Internet Relay Chat) server, written in C++98. The goal of this project is to understand and reproduce, at a low level, how a real-time text communication protocol actually works: handling multiple concurrent client connections, parsing and validating raw IRC messages, and managing channels and user permissions.
 
+The server supports client authentication via password, nickname/username registration, joining and leaving channels, sending and receiving both private and channel messages, and the full set of channel operator commands — KICK, INVITE, TOPIC, and MODE (invite-only, topic restriction, channel key, user limit, and operator privilege).
 
 ## Instructions
 
@@ -25,7 +27,7 @@ Once you launch the server, you have to open a new terminal and start irssi, whi
 4. ```bash
 	/connect 127.0.0.1 <port> <password>
 	``` 
-When irssi is running, you have to connect to the server with the port and the password you set at the launch of the server.
+When irssi is running, you have to connect to with the port and the password you set at the launch of the server.
 Once the connection with the server is established, Irssi will fill the PASS, NICK and USER automatically.
 
 ### Usage commands on Irssi
@@ -34,15 +36,30 @@ Once the connection with the server is established, Irssi will fill the PASS, NI
 #Creating and/or joining a channel
 /join <#channel>
 
+##Leaving all channels at once
+/quote JOIN 0
+
 #Changing your nickname
 /nick <your new nickname>
 
 #Sending a private message to someone
-/msg <nickname> <your message>
+/msg <user> <your message>
 
 #Adding, removing or updating the channel topic
 /topic <new topic>
 /topic -delete <#channel>
+
+#Inviting someone to a channel
+/invite <user> <#channel>
+
+#Kicking someone from the channel (you have to be an operator)
+/kick [<#channel>] <user> [<reason>]
+
+#Leaving a channel
+/part [<message>]
+
+#Leaving the server
+/quit [<message>]
 
 #Changing modes:
 ##Adding/Removing a channel password
@@ -57,16 +74,17 @@ Once the connection with the server is established, Irssi will fill the PASS, NI
 /mode <#channel> +i
 /mode <#channel> -i
 
+##Setting/removing the restrictions of the TOPIC command to channel operators
+/mode +t
+/mode -t
 
-
+##Giving/taking channel operator privilege
+/mode <#channel> +o <user>
+/mode <#channel> -o <user>
 ``` 
-
 
 ## Resources
 https://modern.ircdocs.horse/#irc-concepts
 https://www.rfc-editor.org/info/rfc1459/
 https://irssi.org/
-
-
-
 https://claude.ai/new - AI was mainly used for a better understanding of key concepts and subject requirements throughout the project.
