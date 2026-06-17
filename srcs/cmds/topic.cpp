@@ -6,7 +6,7 @@
 /*   By: skuor <skuor@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/05 15:08:09 by skuor             #+#    #+#             */
-/*   Updated: 2026/06/11 15:50:20 by skuor            ###   ########.fr       */
+/*   Updated: 2026/06/17 11:28:59 by skuor            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ void	CmdExec::topic(t_cmdParser & cmd, Client *c)
 		return (sendMsg(ERR_442, c, "", chan));
 	
 	
-	if (cmd.trailing.empty()) // checking topic
+	if (!cmd.hasTrailing) // checking topic
 	{
 		if (chan->getTopic().empty())
 			sendMsg(RPL_331, c, "", chan);
@@ -42,7 +42,7 @@ void	CmdExec::topic(t_cmdParser & cmd, Client *c)
 
 		std::string prefix = prefixStr(c);
 		
-		if (cmd.trailing == "")
+		if (cmd.hasTrailing && cmd.trailing == "")
 		{
 			c->write("removed the topic on " + chan->getName());
 			chan->setTopic("");

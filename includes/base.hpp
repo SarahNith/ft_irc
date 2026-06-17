@@ -34,7 +34,7 @@ typedef struct s_cmdParser
 	std::string					command;
 	std::vector<std::string>	params;
 	std::string					trailing;
-
+	bool						hasTrailing;
 }						t_cmdParser;
 
 //class

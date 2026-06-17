@@ -6,7 +6,7 @@
 /*   By: skuor <skuor@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/28 17:50:13 by skuor             #+#    #+#             */
-/*   Updated: 2026/06/11 16:45:05 by skuor            ###   ########.fr       */
+/*   Updated: 2026/06/17 11:29:42 by skuor            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@ static size_t	skip_ws(std::string line, size_t i)
 t_cmdParser	cmdParser(std::string line)
 {
 	t_cmdParser cp;
+	cp.hasTrailing = false;
 	size_t	pos = 0;
 	
 	if (line.empty())
@@ -68,6 +69,7 @@ t_cmdParser	cmdParser(std::string line)
 		if (param[0] == ':')
 		{
 			cp.trailing = param.substr(1);
+			cp.hasTrailing = true;
 			break ;
 		}
 		cp.params.push_back(param);
@@ -82,8 +84,10 @@ t_cmdParser	cmdParser(std::string line)
 	if (lastParam[0] != ':')
 		cp.params.push_back(lastParam);
 	else
+	{
 		cp.trailing = lastParam.substr(1);
-	
+		cp.hasTrailing = true;
+	}
 	return cp;
 }
 
