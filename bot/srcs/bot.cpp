@@ -6,7 +6,7 @@
 /*   By: skuor <skuor@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/12 10:12:19 by skuor             #+#    #+#             */
-/*   Updated: 2026/06/16 17:21:15 by skuor            ###   ########.fr       */
+/*   Updated: 2026/06/17 14:59:00 by skuor            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -222,7 +222,7 @@ void	Bot::handleLine(std::string line)
 					_write("Kicked " + bp.nick);
 					std::string kickMsg = "KICK " + _channel + " " + bp.nick + " :You have been kicked for using banned words.";
 					sendMsg(kickMsg);
-					_warnings[bp.nick] == 0;
+					_warnings[bp.nick] = 0;
 				}
 				break ;
 			}
