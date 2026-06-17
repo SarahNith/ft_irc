@@ -6,7 +6,7 @@
 /*   By: skuor <skuor@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/04 09:12:19 by skuor             #+#    #+#             */
-/*   Updated: 2026/06/16 16:35:26 by skuor            ###   ########.fr       */
+/*   Updated: 2026/06/17 12:55:50 by skuor            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -149,8 +149,6 @@ void	CmdExec::join(t_cmdParser & cmd, Client *c)
 				chansList[it->first].addMember(Bot);
 				chansList[it->first].addOpe(Bot);
 			}
-			else
-				return ;
 			sendToAll(msg, chansList[it->first]);
 			sendNames(c, chansList[it->first]);
 			chansList[it->first].write("New chan created");
