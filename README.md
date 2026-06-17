@@ -31,7 +31,6 @@ When irssi is running, you have to connect to with the port and the password you
 Once the connection with the server is established, Irssi will fill the PASS, NICK and USER automatically.
 
 ### Usage commands on Irssi
-
 ```bash
 #Creating and/or joining a channel
 /join <#channel>
@@ -82,6 +81,27 @@ Once the connection with the server is established, Irssi will fill the PASS, NI
 /mode <#channel> +o <user>
 /mode <#channel> -o <user>
 ``` 
+
+### Bonus
+#### File transfer
+```bash
+#Sending a file
+/dcc send <user> <"path to file">
+
+#Receiving a file
+/dcc get <user> <file>
+``` 
+
+#### Bot
+1. ```bash
+	make bot
+	``` 
+Compiling bot
+
+2. ```bash
+	./bot/ircBot 127.0.0.1 <port> <password>  
+	``` 
+Launching the bot
 
 ## Resources
 https://modern.ircdocs.horse/#irc-concepts
