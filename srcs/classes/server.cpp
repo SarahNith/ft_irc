@@ -6,7 +6,7 @@
 /*   By: skuor <skuor@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/26 12:09:02 by agouin            #+#    #+#             */
-/*   Updated: 2026/06/16 10:25:59 by skuor            ###   ########.fr       */
+/*   Updated: 2026/06/19 17:15:42 by skuor            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,9 +18,13 @@ bool Server::_signal = false;
 
 Server::Server(int port, std::string password) : _port(port), _password(password)
 {
+	end = 1;
 	this->_server_socket_fd = socket(AF_INET, SOCK_STREAM, 0); //protocole par defaut
 	if (_server_socket_fd < 0)
+	{
+		close(_server_socket_fd);
 		throw Exception("Error : Socket creation failed");
+	}
 	this->addr.sin_family = AF_INET; //bien IPV4
 	this->addr.sin_port = htons(port);
 	this->addr.sin_addr.s_addr = htonl(INADDR_ANY);//permet d'écouter sur tout les interfaces
@@ -30,14 +34,26 @@ Server::Server(int port, std::string password) : _port(port), _password(password
 	 int options = 1; //le premeir sur puisque sinon j'aurais eu un message comme "bind: Address already in use"
 	// deuxième je sais pas 
 	 if (setsockopt(this->_server_socket_fd, SOL_SOCKET, SO_REUSEADDR, &options, sizeof(options)) == -1)
+	 {
+		close(_server_socket_fd);
 	 	throw(Exception("Error: server options could not be set"));
+	 }
 	 if (fcntl(this->_server_socket_fd, F_SETFL, O_NONBLOCK) == -1)
+	 {
+		close(_server_socket_fd);
 	 	throw(Exception("Error: server fcntl failed"));
+	 }
 	//"Ce socket (int) est maintenant responsable du port 8080."
 	if (bind(_server_socket_fd, (sockaddr*)&addr, sizeof(addr)) < 0)
+	{
+		close(_server_socket_fd);
 		throw Exception("Error : Bind failed");
+	}
 	if (listen(_server_socket_fd, SOMAXCONN) < 0)//deveint socket passif = serveur = accepter les demandes de connexions
+	{
+		close(_server_socket_fd);
 		throw Exception("Error : Listen failed");
+	}
 	//SOMAXCONN = taille de la file d'attente pour les connexions
 
 
@@ -66,11 +82,17 @@ Server::Server(int port, std::string password) : _port(port), _password(password
 
 	write("Server is running on port : " + itos(_port));
 	write("The password is : " + _password);
+	end = 0;
 }
 
 Server::~Server()
 {
-	
+	std::map<int, Client>::iterator it;
+	for(it = _clients.begin(); it != _clients.end(); it++)
+	{
+		close(it->second.getClientFd());
+	}
+	close(_server_socket_fd);
 }
 
 
@@ -256,14 +278,15 @@ void	Server::delClient(int fd)
 			break;
 		}
 	}
-	for (size_t i = 3; i < this->_clients.size(); i++)
-	{
-		if (fd == _clients[i].getClientFd())
-		{
-			_clients.erase(fd);
-			break;
-		}
-	}
+	// for (size_t i = 3; i < this->_clients.size(); i++)
+	// {
+		//if (fd == _clients[i].getClientFd())
+		//{
+		//	_clients.erase(fd);
+		//	break;
+		//}
+		_clients.erase(fd);
+	//}
 	
 	std::cout << MAGENTA << "Client disconnected" << DEFAULT << std::endl;
 }

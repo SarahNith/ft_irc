@@ -43,6 +43,7 @@ class	Server
 	private :
 
 		int	_port;
+		int end;
 		std::string _password;
 		int	_server_socket_fd;
 		sockaddr_in addr;

@@ -104,7 +104,7 @@ Compiling bot
 Launching the bot
 
 ## Resources
-https://modern.ircdocs.horse/#irc-concepts
-https://www.rfc-editor.org/info/rfc1459/
-https://irssi.org/
+https://modern.ircdocs.horse/#irc-concepts <br>
+https://www.rfc-editor.org/info/rfc1459/ <br>
+https://irssi.org/ <br>
 https://claude.ai/new - AI was mainly used for a better understanding of key concepts and subject requirements throughout the project.

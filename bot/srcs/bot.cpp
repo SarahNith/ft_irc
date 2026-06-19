@@ -6,7 +6,7 @@
 /*   By: skuor <skuor@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/12 10:12:19 by skuor             #+#    #+#             */
-/*   Updated: 2026/06/17 14:59:00 by skuor            ###   ########.fr       */
+/*   Updated: 2026/06/19 17:20:27 by skuor            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,10 @@ Bot::Bot(std::string ip, int port, std::string password) : _ip(ip), _port(port),
 	this->_loadBannedWords();
 }
 
-Bot::~Bot() {}
+Bot::~Bot()
+{
+	close(this->_fd);
+}
 
 static bool	isWhitespace(char ws)
 {
@@ -177,24 +180,24 @@ void	Bot::handleLine(std::string line)
 		std::string joinMsg = "JOIN " + _channel;
 		sendMsg(joinMsg);
 	}
-	// if (bp.command == "INVITE")
-	// {   
-	// 	_channel = bp.channel;
-	// 	_write("joined the channel " + _channel);
-	// 	std::string joinMsg = "JOIN " + _channel;
-	// 	sendMsg(joinMsg);
-	// }
-	// if (bp.command == "475")
-	// {
-	// 	_write("Cannot JOIN the channel: +k");
-	// 	_channel = "";
-	// }
-	// if (bp.command == "366")
-	// {
-	// 	_write("Asked for operator status");
-	// 	std::string msg = "PRIVMSG " + _channel + " :[BOT] Hello! Please give me operator status with /mode #chan +o Bot";
-	// 	sendMsg(msg);
-	// }
+	if (bp.command == "INVITE")
+	{   
+		_channel = bp.channel;
+		_write("joined the channel " + _channel);
+		std::string joinMsg = "JOIN " + _channel;
+		sendMsg(joinMsg);
+	}
+	if (bp.command == "475")
+	{
+		_write("Cannot JOIN the channel: +k");
+		_channel = "";
+	}
+	if (bp.command == "366")
+	{
+		_write("Asked for operator status");
+		std::string msg = "PRIVMSG " + _channel + " :[BOT] Hello! Please give me operator status with /mode #chan +o Bot";
+		sendMsg(msg);
+	}
 	if (bp.command == "PRIVMSG")
 	{		
 		std::vector<std::string>::iterator it;
